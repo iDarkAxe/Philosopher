@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/09 10:53:14 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/02/09 12:02:09 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,17 @@ int	parse_args(int argc, char **argv, t_philo *philo)
 	if (argc == 6)
 		philo->nb_eat = ft_atoi(argv[5]);
 	else
-		philo->nb_eat = -1;
-	printf("nb_philo: %zu\ntime_to_die: %d\ntime_to_eat: %d\ntime_to_sleep:\
-		%d\nnb_eat: %d\n",
-		philo->nb_philo,
-		philo->time_to_die,
-		philo->time_to_eat,
-		philo->time_to_sleep,
+		philo->nb_eat = 0;
+	if (philo->nb_philo <= 0 || philo->time_to_die <= 0
+		|| philo->time_to_eat <= 0 || philo->time_to_sleep <= 0
+		|| philo->nb_eat < 0)
+	{
+		write(2, "Error:\nInvalid Arguments\n", 25);
+		return (1);
+	}
+	printf("nb_philo: %zu\ntime_to_die: %d\ntime_to_eat:\
+		%d\ntime_to_sleep:%d\nnb_eat: %d\n", philo->nb_philo, \
+		philo->time_to_die, philo->time_to_eat, philo->time_to_sleep, \
 		philo->nb_eat);
 	return (0);
 }
@@ -53,8 +57,7 @@ int	parse_args(int argc, char **argv, t_philo *philo)
  */
 static char	verify_char(char letter)
 {
-	if ((letter >= '0' && letter <= '9') || letter == ' ' || letter == '-'
-		|| letter == '+')
+	if ((letter >= '0' && letter <= '9') || letter == ' ' || letter == '+')
 		return (letter);
 	return (0);
 }
