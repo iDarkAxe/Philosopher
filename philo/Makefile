@@ -97,7 +97,6 @@ clean-lib:
 
 clean-bin:
 	rm -f $(NAME)
-	rm -f checker
 
 clean-obj:
 	@$(MAKE) clean
