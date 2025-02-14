@@ -17,5 +17,6 @@ jobs:
       
       - name: Run Norminette on SRCS and INCS
         run: |
+          cd philo
           norminette src inc | tee norm_results.txt
           if grep -q "Error" norm_results.txt; then exit 1; fi
