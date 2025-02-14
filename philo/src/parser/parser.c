@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/09 12:02:09 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/02/14 18:55:45 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,17 @@ static char	verify_char(char letter);
 static int	verify_arguments(int argc, char **argv);
 static int	ft_atoi(const char *nptr);
 
+/**
+ * @brief Parse arguments and store them in the philo structure
+ * Uses simple atoi function to convert strings to int
+ * 
+ * @param argc number of arguments
+ * @param argv array of strings
+ * @param philo pointer to the philo structure
+ * @return int 0 if OK, 1 if error
+ */
 int	parse_args(int argc, char **argv, t_philo *philo)
 {
-	(void)argc;
-	(void)argv;
 	if (verify_arguments(argc, argv) == -1)
 	{
 		write(2, "Error:\nWrong arguments\n", 24);
@@ -42,16 +49,12 @@ int	parse_args(int argc, char **argv, t_philo *philo)
 		write(2, "Error:\nInvalid Arguments\n", 25);
 		return (1);
 	}
-	printf("nb_philo: %zu\ntime_to_die: %d\ntime_to_eat:\
-		%d\ntime_to_sleep:%d\nnb_eat: %d\n", philo->nb_philo, \
-		philo->time_to_die, philo->time_to_eat, philo->time_to_sleep, \
-		philo->nb_eat);
 	return (0);
 }
 
 /**
  * @brief Verify if a single character is unauthorized
- *
+ *	
  * @param letter character tested
  * @return char letter if authorized, 0 if not
  */
