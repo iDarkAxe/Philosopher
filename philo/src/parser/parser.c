@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/14 18:55:45 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/02/15 11:33:31 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,32 @@ static int	verify_arguments(int argc, char **argv);
 static int	ft_atoi(const char *nptr);
 
 /**
- * @brief Parse arguments and store them in the philo structure
+ * @brief Parse arguments and store them in the rules structure
  * Uses simple atoi function to convert strings to int
  * 
  * @param argc number of arguments
  * @param argv array of strings
- * @param philo pointer to the philo structure
+ * @param rules pointer to the rules structure
  * @return int 0 if OK, 1 if error
  */
-int	parse_args(int argc, char **argv, t_philo *philo)
+int	parse_args(int argc, char **argv, t_rules *rules)
 {
 	if (verify_arguments(argc, argv) == -1)
 	{
 		write(2, "Error:\nWrong arguments\n", 24);
 		return (1);
 	}
-	philo->nb_philo = ft_atoi(argv[1]);
-	philo->time_to_die = ft_atoi(argv[2]);
-	philo->time_to_eat = ft_atoi(argv[3]);
-	philo->time_to_sleep = ft_atoi(argv[4]);
+	rules->nb_philo = ft_atoi(argv[1]);
+	rules->time_to_die = ft_atoi(argv[2]);
+	rules->time_to_eat = ft_atoi(argv[3]);
+	rules->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		philo->nb_eat = ft_atoi(argv[5]);
+		rules->nb_eat = ft_atoi(argv[5]);
 	else
-		philo->nb_eat = 0;
-	if (philo->nb_philo <= 0 || philo->time_to_die <= 0
-		|| philo->time_to_eat <= 0 || philo->time_to_sleep <= 0
-		|| philo->nb_eat < 0)
+		rules->nb_eat = 0;
+	if (rules->nb_philo <= 0 || rules->time_to_die <= 0
+		|| rules->time_to_eat <= 0 || rules->time_to_sleep <= 0
+		|| rules->nb_eat < 0)
 	{
 		write(2, "Error:\nInvalid Arguments\n", 25);
 		return (1);
