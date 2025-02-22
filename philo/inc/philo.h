@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/21 19:48:38 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/02/22 17:58:49 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,57 @@
 # define PHILO_H
 
 # include <pthread.h>
+# include <sys/time.h>
 # include <unistd.h>
+
+enum					e_living_state
+{
+	NOT_STARTED = 0,
+	LIVING = 1,
+	DEAD = -1
+};
 
 typedef struct timeval	t_timeval;
 
-typedef struct s_rules t_rules;
+typedef struct s_rules	t_rules;
 typedef struct s_philo
 {
-	t_rules *rules;
-	int id;
-	pthread_t		philosopher;
-	int				nb_eat;
-	int				forks;
-	int				*eat_count;
-	int				*last_eat;
-}	t_philo;
+	t_rules				*rules;
+	int					id;
+	enum e_living_state	living_state;
+	pthread_t			philosopher;
+	int					nb_eat;
+	int					forks;
+	int					*eat_count;
+	int					*last_eat;
+}						t_philo;
 
-struct s_rules
+struct					s_rules
 {
-	int				nb_philo;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				nb_eat;
-	t_philo			*philo;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t is_printing;
+	int					nb_philo;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					nb_eat;
+	t_philo				*philo;
+	pthread_mutex_t		*forks;
+	t_timeval			time_at_start;
+	pthread_mutex_t		is_printing;
+	int					is_everyone_ready;
 };
 
-int	parse_args(int argc, char **argv, t_rules *rules);
+void	*ft_calloc(size_t element_count, size_t element_size);
+
+// PARSER
+int		parse_args(int argc, char **argv, t_rules *rules);
+
+// PHILO
+int		init_philo(t_rules *rules);
+void	*philo_routine(void *arg);
+int		free_philo(t_rules *rules, int count);
+
+// THREAD
+int		are_all_threads_dead(t_rules *rules);
+int		thread_creation(t_rules *rules);
 
 #endif

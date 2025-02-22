@@ -18,6 +18,8 @@ CC_DEBUG_CFLAGS = -g3 -D DEBUG=1 -Weverything -Wno-padded -pedantic -O2 -Wwrite-
 # Source directories
 P_SRC = src/
 P_PARSER = parser/
+P_THREAD = thread/
+P_PHILO = philo/
 
 # Object directories
 P_OBJ = .obj/
@@ -39,10 +41,17 @@ INC = \
 
 # Source files
 SRC = \
-	main.c
+	main.c \
+	ft_calloc.c
 
 PARSER = \
 	parser.c
+
+THREAD = \
+	ft_thread.c
+
+PHILO = \
+	philo.c
 
 LIBS = \
 	libpush_swap.a
@@ -54,7 +63,9 @@ LIBS = \
 #############################################################################################
 SRCS =	\
 	$(addprefix $(P_SRC), $(SRC)) \
-	$(addprefix $(P_SRC)$(P_PARSER), $(PARSER)) 
+	$(addprefix $(P_SRC)$(P_PARSER), $(PARSER)) \
+	$(addprefix $(P_SRC)$(P_PHILO), $(PHILO)) \
+	$(addprefix $(P_SRC)$(P_THREAD), $(THREAD)) 
 
 # List of object files (redirect to P_OBJ)
 OBJS = $(subst $(P_SRC), $(P_OBJ), $(SRCS:.c=.o))
