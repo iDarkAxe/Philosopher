@@ -1,21 +1,5 @@
 #!/bin/sh
 
-FAILED=0
-SUCESS=0
-
-LOG_FILE=~/philosopher/philo/log
-RESULT_FILE=~/philosopher/philo/result
-
-GREENCOLOR="\033[0;32m"
-REDCOLOR="\033[0;31m"
-ENDCOLOR="\033[0m"
-
-# Check Arguments rejecting
-make
-rm -rf $LOG_FILE
-rm -rf $RESULT_FILE
-testArgs
-
 testArg()
 {
 	ARG="$1 $2 $3 $4 $5"

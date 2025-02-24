@@ -1,40 +1,25 @@
 #!/bin/sh
 
 FAILED=0
-SUCESS=0
+SUCCESS=0
 
-LOG_FILE=~/philosopher/philo/log
-RESULT_FILE=~/philosopher/philo/result
-
-GREENCOLOR="\033[0;32m"
-REDCOLOR="\033[0;31m"
-ENDCOLOR="\033[0m"
-
-# Check Arguments rejecting
-make
-rm -rf $LOG_FILE
-rm -rf $RESULT_FILE
-testArgs
-
-testArg()
-{
+testArg() {
 	ARG="$1 $2 $3 $4 $5"
-	./philo	$ARG  2>> log 1>> result
+	./philo $ARG 2>>$LOG_FILE 1>>$RESULT_FILE
 	RESULT=$?
 	if [ $RESULT != 0 ]; then
 		echo "\033[0;31mFailed at $ARG\033[0m"
-		echo "Failed at $ARG\n" >> log
+		echo "Failed at $ARG\n" >>$LOG_FILE
 		FAILED=$((FAILED + 1))
 	fi
 	if [ $RESULT = 0 ]; then
-		SUCESS=$((SUCESS + 1))
+		SUCCESS=$((SUCCESS + 1))
 		echo "\033[0;32mSuccess at $ARG\033[0m"
-		echo "Success at $ARG\n" >> result
+		echo "Success at $ARG\n" >>$RESULT_FILE
 	fi
 }
 
-testArg_4()
-{
+testArg_4() {
 	testArg 1 1 1 1
 	testArg 0 1 1 1
 	testArg 1 0 1 1
@@ -48,8 +33,7 @@ testArg_4()
 	testArg 0 1 1 0
 	echo "Check Arguments rejecting done for 4 arguments"
 }
-testArg_5()
-{
+testArg_5() {
 	testArg 1 1 1 1 1
 	testArg 0 1 1 1 1
 	testArg 1 0 1 1 1
@@ -75,10 +59,8 @@ testArg_5()
 	echo "Check Arguments rejecting done for 5 arguments"
 }
 
-testArg_4_var()
-{
+testArg_4_var() {
 	echo "Testing with different values"
-	testArg 1 1 1 1
 	testArg -2 1 1 1
 	testArg 1 -2 1 1
 	testArg 1 1 -2 1
@@ -92,9 +74,7 @@ testArg_4_var()
 	echo "Check Arguments rejecting done for 4 arguments"
 }
 
-testArg_5_var()
-{
-	testArg 1 1 1 1 1
+testArg_5_var() {
 	testArg -2 1 1 1 1
 	testArg 1 -2 1 1 1
 	testArg 1 1 -2 1 1
@@ -119,9 +99,7 @@ testArg_5_var()
 	echo "Check Arguments rejecting done for 5 arguments"
 }
 
-testArg_5_letter()
-{
-	testArg 1 1 1 1 1
+testArg_5_letter() {
 	testArg e 1 1 1 1
 	testArg 1 e 1 1 1
 	testArg 1 1 e 1 1
@@ -146,8 +124,7 @@ testArg_5_letter()
 	echo "Check Arguments rejecting done for 5 arguments"
 }
 
-testArgs()
-{
+testArgs() {
 	echo "Testing with 4 arguments"
 	testArg_4
 	testArg_4_var
@@ -155,10 +132,14 @@ testArgs()
 	testArg_5
 	testArg_5_var
 	testArg_5_letter
-	echo "Backup complete. Files copied to: "
-	FOLDER='\e]8;;file:///'$NEW_BACKUP_DIR'\e\\'log file for errors'\e]8;;\e\\'
-	FOLDER='\e]8;;file:///'$NEW_BACKUP_DIR'\e\\'result file for sucess'\e]8;;\e\\'
-
-	~/philosopher/philo/log
-	echo "Total tests: $((SUCESS + FAILED)) for \033[0;32m$SUCESS success\033[0m and \033[0;31m$FAILED failed\033[0m"
+	echo "Tests complete."
+	echo "Total tests: $((SUCCESS + FAILED)) for \033[0;32m$SUCCESS success\033[0m and \033[0;31m$FAILED failed\033[0m"
+	echo ""
+	echo "Files copied to: "
+	FILE='\e]8;;file://'$LOG_FILE'\e\\'"ERRORS :"'\e]8;;\e\\'
+	echo $FILE
+	echo "file://$LOG_FILE"
+	FILE='\e]8;;file://'$RESULT_FILE'\e\\'"SUCCESS :"'\e]8;;\e\\'
+	echo $FILE
+	echo "file://$RESULT_FILE"
 }

@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/15 11:33:31 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/02/24 09:09:37 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	parse_args(int argc, char **argv, t_rules *rules)
 {
 	if (verify_arguments(argc, argv) == -1)
 	{
-		write(2, "Error:\nWrong arguments\n", 24);
+		write(2, "Error:\nWrong arguments\n", 23);
 		return (1);
 	}
 	rules->nb_philo = ft_atoi(argv[1]);

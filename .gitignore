@@ -3,3 +3,5 @@
 **/*.o
 **/.obj/
 philo/philo
+philo/tests/log
+philo/tests/result
