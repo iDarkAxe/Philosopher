@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:42:07 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/22 17:42:58 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/02/25 11:20:52 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+void		*ft_calloc(size_t element_count, size_t element_size);
 static void	ft_bzero(void *s, size_t n);
 
 /**

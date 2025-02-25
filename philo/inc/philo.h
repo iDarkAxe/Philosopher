@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/22 17:58:49 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/02/25 09:36:49 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,19 @@ struct					s_rules
 	int					is_everyone_ready;
 };
 
-void	*ft_calloc(size_t element_count, size_t element_size);
+t_timeval				getdeltatime(struct timeval start_time);
+void					*ft_calloc(size_t element_count, size_t element_size);
 
 // PARSER
-int		parse_args(int argc, char **argv, t_rules *rules);
+int						parse_args(int argc, char **argv, t_rules *rules);
 
 // PHILO
-int		init_philo(t_rules *rules);
-void	*philo_routine(void *arg);
-int		free_philo(t_rules *rules, int count);
+int						init_philo(t_rules *rules);
+void					*philo_routine(void *arg);
+int						free_philo(t_rules *rules, int count);
 
 // THREAD
-int		are_all_threads_dead(t_rules *rules);
-int		thread_creation(t_rules *rules);
+int						are_all_threads_dead(t_rules *rules);
+int						thread_creation(t_rules *rules);
 
 #endif

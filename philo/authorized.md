@@ -27,21 +27,20 @@ Shouldn't be used in the routine itself, but it works.
 
 ---
 ### Mutex Creation and Destroy ###
-Need to check usability and error returns
-
 `pthread_mutex_init(mutex_address)`,
-Initialise a mutex properly
+Initialise a mutex so it can be locked or unlocked afterwise
 
 `pthread_mutex_destroy(mutex_address)`
 Valgrind doesn't show if a mutex is correctly destroyed so... ?
 
 ---
 ### Mutex Manipulation ###
-Need to check if it's blockant
+`pthread_mutex_lock`
+Makes the thread wait indefinitely until the mutex is available. It puts the thread in a suspended state.
 
-`pthread_mutex_lock`,
 `pthread_mutex_unlock`
+Makes the mutex available for all the thread that could run (thread limit is defined by the hosting machine) so it break's the suspended state of the thread that 'won' the right to use the ressource
 
-## Never used # #
 `pthread_join`
 Waits for a thread to finish it's routine and frees its memory.
+The advantage is that you don't need to detach the thread that is concerned. The function is BLOCKANT so the thread is suspended until the thread finishes. If it's already finished, the functions ends instantly and redeems memory of the thread.

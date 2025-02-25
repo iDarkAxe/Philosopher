@@ -42,19 +42,19 @@ INC = \
 # Source files
 SRC = \
 	main.c \
-	ft_calloc.c
+	ft_calloc.c \
+	ft_time.c
 
 PARSER = \
 	parser.c
 
 THREAD = \
-	ft_thread.c
+	ft_thread_detach.c
 
 PHILO = \
 	philo.c
 
 LIBS = \
-	libpush_swap.a
 
 #############################################################################################
 #                                                                                           #
@@ -141,7 +141,6 @@ debug-checker:
 
 debug-cc:
 	@$(MAKE) $(NAME) CFLAGS="$(CC_DEBUG_CFLAGS)" CC="$(CC_DEBUG)"
-	@$(MAKE) checker CFLAGS="$(CC_DEBUG_CFLAGS)" CC="$(CC_DEBUG)"
 
 # Debugging print
 debug-print:
@@ -153,16 +152,20 @@ debug-print-separator:
 	@echo "$(On_Yellow)____________________$(Color_Off)"
 	@echo ""
 
+define check_var
+	@if [ "$(strip $(1))" = "" ]; then \
+		echo "$(Red)No $(2) found$(Color_Off)"; \
+	else \
+		echo "$(Red)$(2): \n\t$(Blue)$(1)$(Color_Off)"; \
+	fi
+endef
+
 debug-print-project:
-	@echo "$(Red)Project:\n\t$(Blue)$(NAME)$(Color_Off)"
-	@echo ""
-	@echo "$(Red)SRCS:\n\t$(Blue)$(SRCS)$(Color_Off)"
-	@echo ""
-	@echo "$(Red)OBJS:\n\t$(Blue)$(OBJS)$(Color_Off)"
-	@echo ""
-	@echo "$(Red)INCS:\n\t$(Blue)$(INCS)$(Color_Off)"
-	@echo ""
-	@echo "$(Red)LIBS:\n\t$(Blue)$(LIBS)$(Color_Off)"
+	$(call check_var,$(NAME),"Project")
+	$(call check_var,$(SRCS),"SRCS")
+	$(call check_var,$(OBJS),"OBJS")
+	$(call check_var,$(INCS),"INCS")
+	$(call check_var,$(LIBS),"LIBS")
 
 #############################################################################################
 #                                                                                           #

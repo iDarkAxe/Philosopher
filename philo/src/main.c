@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:45:40 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/22 17:57:06 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/02/25 10:47:04 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * @brief Main function of the program philo
+ * 
+ * @param argc argument count
+ * @param argv array of arguments
+ * @return int 0 OK, otherwise error (1)
+ */
 int	main(int argc, char **argv)
 {
 	t_rules	rules;
