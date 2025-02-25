@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/25 09:36:49 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/02/25 13:48:03 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int						free_philo(t_rules *rules, int count);
 
 // THREAD
 int						are_all_threads_dead(t_rules *rules);
+int						are_all_threads_state(t_rules *rules,
+							enum e_living_state state);
 int						thread_creation(t_rules *rules);
 
 #endif

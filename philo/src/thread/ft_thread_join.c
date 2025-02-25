@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:53:27 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/25 11:29:26 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/02/25 13:25:04 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,29 @@ int	are_all_threads_dead(t_rules *rules)
 		i++;
 	}
 	printf("And all threads joined\n");
+	return (1);
+}
+
+/**
+ * @brief Check if all threads dead or not
+ * Each thread update it's state itself
+ * If a thread get killed by something, there's no way to end the function
+ * 
+ * @param rules rules of the program
+ * @return int 1 is all threads are dead, 
+ * otherwise 0 is at least one thread is not dead (LIVING or NOT_STARTED)
+ */
+int	are_all_threads_state(t_rules *rules, enum e_living_state state)
+{
+	int	i;
+
+	i = 0;
+	while (i < rules->nb_philo)
+	{
+		if (rules->philo[i].living_state != state)
+			return (0);
+		i++;
+	}
 	return (1);
 }
 

@@ -49,7 +49,7 @@ PARSER = \
 	parser.c
 
 THREAD = \
-	ft_thread_detach.c
+	ft_thread_join.c
 
 PHILO = \
 	philo.c
