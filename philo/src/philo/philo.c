@@ -58,7 +58,7 @@ static void	print_message(t_philo *philo, struct timeval *time,
 	if (state == NOT_STARTED)
 		printf(" is not started\n");
 	else if (state == LIVING)
-		printf(" is not started\n");
+		printf(" is living\n");
 	else if (state == DEAD)
 		printf(" is dying\n");
 	pthread_mutex_unlock(&philo->rules->is_printing);

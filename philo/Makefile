@@ -85,7 +85,7 @@ INCS = $(addprefix $(P_INC), $(INC))
 all: 
 	@$(MAKE) $(NAME)
 
-# Create push_swap executable
+# Create $(NAME) executable
 $(NAME): $(P_OBJ)main.o $(OBJS)
 	$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -o $(NAME) $(OBJS) -L$(P_LIB)
 
@@ -136,16 +136,13 @@ flcear: fclean
 debug:
 	@$(MAKE) $(NAME) CFLAGS="$(CFLAGS_DEBUG)"
 
-debug-checker:
-	@$(MAKE) checker CFLAGS="$(CFLAGS_DEBUG)"
-
 debug-cc:
 	@$(MAKE) $(NAME) CFLAGS="$(CC_DEBUG_CFLAGS)" CC="$(CC_DEBUG)"
 
 # Debugging print
 debug-print:
 	@$(MAKE) debug-print-project
-	@$(MAKE) debug-print-separator
+# @$(MAKE) debug-print-separator
 
 debug-print-separator:
 	@echo ""
