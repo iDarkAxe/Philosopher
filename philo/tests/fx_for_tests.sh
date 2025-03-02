@@ -3,6 +3,18 @@
 FAILED=0
 SUCCESS=0
 
+sendInfos()
+{
+	LOG_FILE=$1
+	RESULT_FILE=$2
+}
+
+print()
+{
+	echo "Log vaut $LOG_FILE"
+	echo "Res vaut $RESULT_FILE"
+}
+
 testArg() {
 	ARG="$1 $2 $3 $4 $5"
 	./philo $ARG 2>>$LOG_FILE 1>>$RESULT_FILE
@@ -33,6 +45,7 @@ testArg_4() {
 	testArg 0 1 1 0
 	echo "Check Arguments rejecting done for 4 arguments"
 }
+
 testArg_5() {
 	testArg 1 1 1 1 1
 	testArg 0 1 1 1 1
