@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/25 13:54:27 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/03/13 12:16:13 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,14 @@ void	*philo_routine(void *arg)
 	if (philo == NULL)
 		return (NULL);
 	philo->living_state = LIVING;
-	while (philo->rules->is_everyone_ready != philo->rules->nb_philo)
+	while (philo->rules->is_everyone_ready != philo->rules->nb_philo && are_all_threads_state(philo->rules, LIVING) == 0)
 		usleep(10);
-	print_message(philo, &time_at_death, LIVING);
-	print_message(philo, &time_at_death, DEAD);
-	philo->living_state = DEAD;
+	print_message(philo, &time_at_death, TAKE_FORK);
+	print_message(philo, &time_at_death, SLEEPING);
+	print_message(philo, &time_at_death, THINKING);
+	usleep(100);
+	print_message(philo, &time_at_death, DIED);
+	philo->living_state = DIED;
 	return (philo);
 }
 
@@ -53,14 +56,21 @@ static void	print_message(t_philo *philo, struct timeval *time,
 		enum e_living_state state)
 {
 	pthread_mutex_lock(&philo->rules->is_printing);
-	*time = getdeltatime(philo->rules->time_at_start);
-	printf("[%4ld:%6ld] philo %-2d", time->tv_sec, time->tv_usec, philo->id);
+	gettimeofday(time, NULL);
+	printf("%ld %d", (time->tv_sec * 1000) + (time->tv_usec / 1000), philo->id);
 	if (state == NOT_STARTED)
-		printf(" is not started\n");
+		printf(" is not started");
 	else if (state == LIVING)
-		printf(" is living\n");
-	else if (state == DEAD)
-		printf(" is dying\n");
+		printf(" is living");
+	else if (state == DIED)
+		printf(" died");
+	else if (state == TAKE_FORK)
+		printf(" has taken a fork");
+	else if (state == SLEEPING)
+		printf(" is sleeping");
+	else if (state == THINKING)
+		printf(" is thinking");
+	printf("\n");
 	pthread_mutex_unlock(&philo->rules->is_printing);
 }
 

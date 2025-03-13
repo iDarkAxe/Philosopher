@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/25 13:48:03 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/03/13 11:52:45 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ enum					e_living_state
 {
 	NOT_STARTED = 0,
 	LIVING = 1,
-	DEAD = -1
+	DIED = -1,
+	TAKE_FORK = 2,
+	EATING = 3,
+	SLEEPING = 4,
+	THINKING = 5
 };
 
 typedef struct timeval	t_timeval;
@@ -31,8 +35,8 @@ typedef struct s_philo
 {
 	t_rules				*rules;
 	int					id;
-	enum e_living_state	living_state;
 	pthread_t			philosopher;
+	enum e_living_state	living_state;
 	int					nb_eat;
 	int					forks;
 	int					*eat_count;
@@ -48,7 +52,7 @@ struct					s_rules
 	int					nb_eat;
 	t_philo				*philo;
 	pthread_mutex_t		*forks;
-	t_timeval			time_at_start;
+	t_timeval			time_at_start;	
 	pthread_mutex_t		is_printing;
 	int					is_everyone_ready;
 };

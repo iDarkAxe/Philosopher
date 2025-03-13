@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:53:27 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/25 13:25:04 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/03/13 11:34:47 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int	are_all_threads_dead(t_rules *rules)
 	i = 0;
 	while (i < rules->nb_philo)
 	{
-		if (rules->philo[i].living_state != DEAD)
+		if (rules->philo[i].living_state != DIED)
 			return (0);
 		i++;
 	}
-	printf("All philos are dead\n");
+	// printf("All philos are dead\n");
 	i = 0;
 	while (i < rules->nb_philo)
 	{
@@ -41,7 +41,7 @@ int	are_all_threads_dead(t_rules *rules)
 			return (2);
 		i++;
 	}
-	printf("And all threads joined\n");
+	// printf("And all threads joined\n");
 	return (1);
 }
 

@@ -37,7 +37,7 @@ P_LIB = lib/
 #############################################################################################
 # Headers
 INC = \
-	ft_pushswap.h
+	philo.h
 
 # Source files
 SRC = \
@@ -86,13 +86,13 @@ all:
 	@$(MAKE) $(NAME)
 
 # Create $(NAME) executable
-$(NAME): $(P_OBJ)main.o $(OBJS)
-	$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -o $(NAME) $(OBJS) -L$(P_LIB)
+$(NAME): $(P_OBJ)main.o $(OBJS) $(INCS)
+	$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -o $(NAME) $(OBJS)
 
 # Custom rule to compilate all .c with there path
-$(P_OBJ)%.o: $(P_SRC)%.c
+$(P_OBJ)%.o: $(P_SRC)%.c $(INCS)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -c $< -o $@
+	$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -I ft_printf/ -c $< -o $@
 
 #############################################################################################
 #                                                                                           #
