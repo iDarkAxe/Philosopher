@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:53:27 by ppontet           #+#    #+#             */
-/*   Updated: 2025/03/13 11:34:47 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/03/18 14:24:36 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @return int 1 is all threads are dead, 
  * otherwise 0 is at least one thread is not dead (LIVING or NOT_STARTED)
  */
-int	are_all_threads_dead(t_rules *rules)
+int	are_all_threads_dead(const t_const_rules *rules)
 {
 	int	i;
 
@@ -33,7 +33,8 @@ int	are_all_threads_dead(t_rules *rules)
 			return (0);
 		i++;
 	}
-	// printf("All philos are dead\n");
+	if (DEBUG == 1)
+		printf("All philos are dead\n");
 	i = 0;
 	while (i < rules->nb_philo)
 	{
@@ -41,7 +42,8 @@ int	are_all_threads_dead(t_rules *rules)
 			return (2);
 		i++;
 	}
-	// printf("And all threads joined\n");
+	if (DEBUG == 1)
+		printf("And all threads joined\n");
 	return (1);
 }
 
@@ -54,7 +56,7 @@ int	are_all_threads_dead(t_rules *rules)
  * @return int 1 is all threads are dead, 
  * otherwise 0 is at least one thread is not dead (LIVING or NOT_STARTED)
  */
-int	are_all_threads_state(t_rules *rules, enum e_living_state state)
+int	are_all_threads_state(const t_const_rules *rules, enum e_living_state state)
 {
 	int	i;
 
@@ -74,7 +76,7 @@ int	are_all_threads_state(t_rules *rules, enum e_living_state state)
  * @param rules rules of the program
  * @return int 0 OK, otherwise error (1)
  */
-int	thread_creation(t_rules *rules)
+int	thread_creation(t_const_rules *rules, t_shared_ressources *shared)
 {
 	int		i;
 
@@ -84,7 +86,7 @@ int	thread_creation(t_rules *rules)
 		if (pthread_create(&rules->philo[i].philosopher, NULL, &philo_routine,
 				&rules->philo[i]) != 0)
 		{
-			free_philo(rules, rules->nb_philo);
+			free_philo(rules, shared, i);
 			write(2, "Error pthread_create\n", 22);
 			return (1);
 		}

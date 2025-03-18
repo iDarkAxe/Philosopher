@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/24 09:09:37 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/03/18 14:09:33 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_atoi(const char *nptr);
  * @param rules pointer to the rules structure
  * @return int 0 if OK, 1 if error
  */
-int	parse_args(int argc, char **argv, t_rules *rules)
+int	parse_args(int argc, char **argv, t_const_rules *rules)
 {
 	if (verify_arguments(argc, argv) == -1)
 	{
