@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/03/18 14:09:33 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/12 12:14:42 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_atoi(const char *nptr);
 /**
  * @brief Parse arguments and store them in the rules structure
  * Uses simple atoi function to convert strings to int
- * 
+ *
  * @param argc number of arguments
  * @param argv array of strings
  * @param rules pointer to the rules structure
@@ -31,7 +31,7 @@ int	parse_args(int argc, char **argv, t_const_rules *rules)
 {
 	if (verify_arguments(argc, argv) == -1)
 	{
-		write(2, "Error:\nWrong arguments\n", 23);
+		error_message(WRONG_ARGUMENT);
 		return (1);
 	}
 	rules->nb_philo = ft_atoi(argv[1]);
@@ -42,11 +42,11 @@ int	parse_args(int argc, char **argv, t_const_rules *rules)
 		rules->nb_eat = ft_atoi(argv[5]);
 	else
 		rules->nb_eat = 0;
-	if (rules->nb_philo <= 0 || rules->time_to_die <= 0
-		|| rules->time_to_eat <= 0 || rules->time_to_sleep <= 0
-		|| rules->nb_eat < 0)
+	if (rules->nb_philo <= 0 || rules->nb_philo >= 400
+		|| rules->time_to_die <= 0 || rules->time_to_eat <= 0
+		|| rules->time_to_sleep <= 0 || rules->nb_eat < 0)
 	{
-		write(2, "Error:\nInvalid Arguments\n", 25);
+		error_message(ARGUMENT_INVALID);
 		return (1);
 	}
 	return (0);
@@ -54,7 +54,7 @@ int	parse_args(int argc, char **argv, t_const_rules *rules)
 
 /**
  * @brief Verify if a single character is unauthorized
- *	
+ *
  * @param letter character tested
  * @return char letter if authorized, 0 if not
  */

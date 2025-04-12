@@ -43,7 +43,8 @@ INC = \
 SRC = \
 	main.c \
 	ft_calloc.c \
-	ft_time.c
+	ft_time.c \
+	error_message.c
 
 PARSER = \
 	parser.c
@@ -87,12 +88,14 @@ all:
 
 # Create $(NAME) executable
 $(NAME): $(P_OBJ)main.o $(OBJS) $(INCS)
-	$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -o $(NAME) $(OBJS)
+	@echo "$(Green)Creating executable $@$(Color_Off)"
+	@$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -o $(NAME) $(OBJS)
 
 # Custom rule to compilate all .c with there path
 $(P_OBJ)%.o: $(P_SRC)%.c $(INCS)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -I ft_printf/ -c $< -o $@
+	@echo "$(Cyan)Compiling $<$(Color_Off)"
+	@$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -I ft_printf/ -c $< -o $@
 
 #############################################################################################
 #                                                                                           #

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_thread copy.c                                   :+:      :+:    :+:   */
+/*   ft_thread_detach.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:53:27 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/25 11:20:04 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/12 12:25:31 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
  * @brief Check if all threads dead or not
  * Each thread update it's state itself
  * If a thread get killed by something, there's no way to end the function
- * 
+ *
  * @param rules rules of the program
- * @return int 1 is all threads are dead, 
+ * @return int 1 is all threads are dead,
  * otherwise 0 is at least one thread is not dead (LIVING or NOT_STARTED)
  */
 int	are_all_threads_dead(t_rules *rules)
@@ -27,9 +27,9 @@ int	are_all_threads_dead(t_rules *rules)
 	int	i;
 
 	i = 0;
-	while (i < rules->nb_philo)
+	while (i < rules->rules.nb_philo)
 	{
-		if (rules->philo[i].living_state != DEAD)
+		if (rules->rules.philo[i].living_state != DIED)
 			return (0);
 		i++;
 	}
@@ -39,32 +39,32 @@ int	are_all_threads_dead(t_rules *rules)
 
 /**
  * @brief Create all threads and detach them immediately
- * 
+ *
  * @param rules rules of the program
  * @return int 0 OK, otherwise error (1)
  */
 int	thread_creation(t_rules *rules)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (i < rules->nb_philo)
+	while (i < rules->rules.nb_philo)
 	{
-		if (pthread_create(&rules->philo[i].philosopher, NULL, &philo_routine,
-				&rules->philo[i]) != 0)
+		if (pthread_create(&rules->rules.philo[i].philosopher, NULL,
+				&philo_routine, &rules->rules.philo[i]) != 0)
 		{
-			free_philo(rules, rules->nb_philo);
-			write(2, "Error pthread_create\n", 22);
+			free_philo(rules, rules->rules.nb_philo, i);
+			error_message(PTHREAD_CREATING);
 			return (1);
 		}
-		if (pthread_detach(rules->philo[i].philosopher) != 0)
+		if (pthread_detach(rules->rules.philo[i].philosopher) != 0)
 		{
-			free_philo(rules, rules->nb_philo);
-			write(2, "Error pthread_detach\n", 21);
+			free_philo(rules, rules->rules.nb_philo, i);
+			error_message(PTHREAD_DETACH);
 			return (1);
 		}
 		i++;
-		rules->is_everyone_ready++;
+		rules->rules.is_everyone_ready++;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:53:27 by ppontet           #+#    #+#             */
-/*   Updated: 2025/03/18 14:24:36 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/12 12:26:53 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	are_all_threads_state(const t_const_rules *rules, enum e_living_state state)
  * @param rules rules of the program
  * @return int 0 OK, otherwise error (1)
  */
-int	thread_creation(t_const_rules *rules, t_shared_ressources *shared)
+int	thread_creation(t_const_rules *rules, t_shared *shared)
 {
 	int		i;
 
@@ -87,7 +87,7 @@ int	thread_creation(t_const_rules *rules, t_shared_ressources *shared)
 				&rules->philo[i]) != 0)
 		{
 			free_philo(rules, shared, i);
-			write(2, "Error pthread_create\n", 22);
+			error_message(PTHREAD_CREATING);
 			return (1);
 		}
 		i++;
