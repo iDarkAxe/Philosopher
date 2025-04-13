@@ -6,53 +6,70 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:03:57 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/13 14:05:34 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/13 17:25:00 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_philos(t_const_rules rules, t_shared *shared, t_philo **philo)
+/**
+ * @brief Initialize the philosophers
+ * 
+ * @param rules structure of const rules
+ * @param shared structure of shared variables
+ * @param philo head of philosopher structure
+ * @return int 
+ */
+int	init_philos(t_const_rules *rules, t_shared *shared, t_philo **philo)
 {
 	int	count;
 
-	*philo = ft_calloc(sizeof(t_philo), rules.nb_philo);
+	*philo = ft_calloc(sizeof(t_philo), (size_t)rules->nb_philo);
 	if (*philo == NULL)
 		return (1);
 	count = 0;
-	while (count < rules.nb_philo)
+	shared->ready = 0;
+	while (count < rules->nb_philo)
 	{
 		(*philo)[count].id = count;
 		(*philo)[count].shared = shared;
-		(*philo)[count].const_rules = ft_calloc(sizeof(t_const_rules), 1);
-		if ((*philo)[count].const_rules == NULL)
-		{
-			free_philos(*philo, count);
-			return (2);
-		}
-		ft_memcpy((void *)(*philo)[count].const_rules, (void *)&rules,
-			sizeof(t_const_rules));
+		(*philo)[count].const_rules = rules;
 		count++;
 	}
 	return (0);
 }
 
-int	init_forks_mutex(t_shared *shared, int count)
+/**
+ * @brief Initialize and allocates the forks and mutex
+ * 
+ * @param shared structure of shared variables
+ * @param count number of element
+ * @return int 
+ */
+static int	init_forks_mutex(t_shared *shared, int count)
 {
 	if (pthread_mutex_init(&shared->print, NULL) != 0)
 		return (1);
 	if (pthread_mutex_init(&shared->read_shared, NULL) != 0)
 		return (2);
 	shared->forks_nbr = NULL;
-	shared->forks = ft_calloc(sizeof(pthread_mutex_t), count);
+	shared->forks = ft_calloc(sizeof(pthread_mutex_t), (size_t)count);
 	if (shared->forks == NULL)
 		return (3);
-	shared->forks_nbr = ft_calloc(sizeof(enum e_bool), count);
+	shared->forks_nbr = ft_calloc(sizeof(enum e_bool), (size_t)count);
 	if (shared->forks_nbr == NULL)
 		return (4);
 	return (0);
 }
 
+/**
+ * @brief Initialize the forks and mutex
+ * 
+ * @param shared structure of shared variables
+ * @param philo philosopher structure
+ * @param count number of element
+ * @return int 
+ */
 int	init_mutex(t_shared *shared, t_philo *philo, int count)
 {
 	int	index;

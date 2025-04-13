@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:42:07 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/13 14:00:39 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/13 17:27:35 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ void	ft_bzero(void *s, size_t n)
  */
 void	*ft_memcpy(void *destination, const void *source, size_t size)
 {
-	char	*dest_pointer;
-	char	*src_pointer;
-	size_t	index;
+	char		*dest_pointer;
+	const char	*src_pointer;
+	size_t		index;
 
 	dest_pointer = (char *)destination;
-	src_pointer = (char *)source;
+	src_pointer = (const char *)source;
 	index = 0;
 	if (destination == source)
 		return (destination);

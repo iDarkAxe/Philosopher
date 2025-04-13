@@ -6,13 +6,11 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/13 11:59:10 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/13 15:52:16 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-//! @TODO: remove this include and printf
-#include <stdio.h>
 
 static char	verify_char(char letter);
 static int	verify_arguments(int argc, char **argv);

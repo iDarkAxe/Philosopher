@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:06:21 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/13 11:54:43 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/13 17:15:40 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ ssize_t	error_message(enum e_error_message state)
 	else if (state == WRONG_ARGUMENT)
 		return (write(2, "Error:\nArguments should be only integers\n", 41));
 	else if (state == ARGUMENT_INVALID)
-		return (write(2, "Values accepted :\n\tnb_philo 0-400\n\tdie_time > 0\n\teat_time > 0\n\tsleep_time > 0\n\tnb_eat \t>= 0\n", 92));
+		return (write(2,
+				"Values accepted :\n\tnb_philo 0-400\n\tdie_time > 0\n\t\
+				eat_time > 0\n\tsleep_time > 0\n\tnb_eat \t>= 0\n", 92));
 	else if (state == RULES_NOT_CREATED)
 		return (write(2, "Error:\nCreation of rules\n", 25));
 	else if (state == PTHREAD_DETACH)

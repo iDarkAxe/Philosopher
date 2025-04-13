@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/13 14:05:24 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/13 17:16:00 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ struct							s_const_rules
 
 struct							s_philo
 {
-	t_const_rules				*const_rules;
+	const t_const_rules			*const_rules;
 	t_shared					*shared;
 	pthread_t					philosopher;
 	int							id;
@@ -63,6 +63,7 @@ struct							s_philo
 
 struct							s_shared
 {
+	int							ready;
 	enum e_bool					*forks_nbr;
 	pthread_mutex_t				*forks;
 	pthread_mutex_t				print;
@@ -88,21 +89,23 @@ int								parse_args(int argc, char **argv,
 									t_const_rules *rules);
 
 // Init
-int init_philos(t_const_rules rules, t_shared *shared, t_philo **philo);
-int init_forks_mutex(t_shared *shared, int count);
-int init_mutex(t_shared *shared, t_philo *philo, int count);
-
+int								init_philos(t_const_rules *rules,
+									t_shared *shared, t_philo **philo);
+// int init_forks_mutex(t_shared *shared, int count);
+int								init_mutex(t_shared *shared, t_philo *philo,
+									int count);
 
 // Free
-void free_shared(t_shared *shared, int count, int flag);
-void free_philos(t_philo *philo, int count);
+void							free_shared(t_shared *shared, int count,
+									int flag);
+void							free_philos(t_philo *philo, int count);
 
 // Utils
 void							*ft_calloc(size_t element_count,
 									size_t element_size);
 void							ft_bzero(void *s, size_t n);
-void	*ft_memcpy(void *destination, const void *source, size_t size);
-;
+void							*ft_memcpy(void *destination,
+									const void *source, size_t size);
 
 // Error handling
 ssize_t							error_message(enum e_error_message state);
