@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:45:40 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/12 13:03:01 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/13 14:05:54 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,35 @@
  */
 int	main(int argc, char **argv)
 {
-	t_rules	rules;
+	t_const_rules rules;
+	t_shared shared;
+	t_philo *philo;
 
-	if (argc < 5 || argc > 6)
+	if (parse_args(argc, argv, &rules) != 0)
+		return (1);
+	if (init_philos(rules, &shared, &philo) != 0)
 	{
-		error_message(NBR_OF_ARGUMENT_INVALID);
-		return (1);
+		printf("Erreur Init philos\n");
+		return (2);
 	}
-	if (parse_args(argc, argv, &rules.rules) != 0)
-		return (1);
-	if (init_philo(&rules) != 0)
+	if (init_mutex(&shared, philo, rules.nb_philo) != 0)
 	{
-		error_message(RULES_NOT_CREATED);
-		free_philo(&rules.rules, &rules.shared, rules.rules.nb_philo);
-		return (1);
+		printf("Erreur Init Mutex\n");
+		return (3);
 	}
-	gettimeofday(&rules.rules.time_at_start, NULL);
-	pthread_mutex_init(&rules.shared.is_printing, NULL);
-	pthread_mutex_init(&rules.shared.read_rules, NULL);
-	if (thread_creation(&rules.rules, &rules.shared) != 0)
-		return (1);
-	while (1)
+
+	int count;
+
+	count = 0;
+	while (count < rules.nb_philo)
 	{
-		pthread_mutex_lock(&rules.shared.read_rules);
-		if (are_all_threads_dead(&rules.rules) != 0)
-			break ;
-		pthread_mutex_unlock(&rules.shared.read_rules);
-		usleep(10);
+		if (count % 2 == 0)
+			(philo)[count].const_rules->nb_eat_target = 10;
+		printf("id:%d %d %d %d %d %d\n", (philo)[count].id, (philo)[count].const_rules->nb_philo, (philo)[count].const_rules->time_to_die, (philo)[count].const_rules->time_to_eat, (philo)[count].const_rules->time_to_sleep, (philo)[count].const_rules->nb_eat_target);
+		count++;
 	}
-	free_philo(&rules.rules, &rules.shared, rules.rules.nb_philo);
+	free_philos(philo, rules.nb_philo);
+	free_shared(&shared, rules.nb_philo, 0);
+	// free(philo);
 	return (0);
 }

@@ -42,18 +42,21 @@ INC = \
 # Source files
 SRC = \
 	main.c \
-	ft_calloc.c \
-	ft_time.c \
-	error_message.c
+	error_message.c \
+	ft_utils.c \
+	ft_free.c \
+	ft_init.c \
+
+# ft_time.c \
 
 PARSER = \
 	parser.c
 
-THREAD = \
-	ft_thread_join.c
+# THREAD = \
+# 	ft_thread_join.c
 
-PHILO = \
-	philo.c
+# PHILO = \
+# 	philo.c
 
 LIBS = \
 
@@ -84,7 +87,8 @@ INCS = $(addprefix $(P_INC), $(INC))
 #                                                                                           #
 #############################################################################################
 all: 
-	@$(MAKE) $(NAME)
+	@$(MAKE) debug
+# @$(MAKE) $(NAME)
 
 # Create $(NAME) executable
 $(NAME): $(P_OBJ)main.o $(OBJS) $(INCS)

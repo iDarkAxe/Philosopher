@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"Doxyfile": "doxyfile",
+		"ft_printf.h": "c",
+		"philo.h": "c",
+		"pthread.h": "c"
+	}
+}

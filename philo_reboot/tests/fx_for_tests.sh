@@ -15,7 +15,8 @@ print()
 	echo "Res vaut $RESULT_FILE"
 }
 
-testArg() {
+testArg() 
+{
 	ARG="$1 $2 $3 $4 $5"
 	./philo $ARG 2>>$LOG_FILE 1>>$RESULT_FILE
 	RESULT=$?

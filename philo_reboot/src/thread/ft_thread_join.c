@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:53:27 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/12 12:26:53 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/12 15:04:17 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
  * @brief Check if all threads dead or not
  * Each thread update it's state itself
  * If a thread get killed by something, there's no way to end the function
- * 
+ *
  * @param rules rules of the program
- * @return int 1 is all threads are dead, 
+ * @return int 1 is all threads are dead,
  * otherwise 0 is at least one thread is not dead (LIVING or NOT_STARTED)
  */
 int	are_all_threads_dead(const t_const_rules *rules)
@@ -51,9 +51,9 @@ int	are_all_threads_dead(const t_const_rules *rules)
  * @brief Check if all threads dead or not
  * Each thread update it's state itself
  * If a thread get killed by something, there's no way to end the function
- * 
+ *
  * @param rules rules of the program
- * @return int 1 is all threads are dead, 
+ * @return int 1 is all threads are dead,
  * otherwise 0 is at least one thread is not dead (LIVING or NOT_STARTED)
  */
 int	are_all_threads_state(const t_const_rules *rules, enum e_living_state state)
@@ -72,15 +72,22 @@ int	are_all_threads_state(const t_const_rules *rules, enum e_living_state state)
 
 /**
  * @brief Create all threads and detach them immediately
- * 
+ *
  * @param rules rules of the program
  * @return int 0 OK, otherwise error (1)
  */
 int	thread_creation(t_const_rules *rules, t_shared *shared)
 {
-	int		i;
+	int	i;
 
 	i = 0;
+	if (pthread_mutex_init(&shared->is_printing, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&shared->read_rules, NULL) != 0)
+	{
+		pthread_mutex_destroy(&shared->is_printing);
+		return (1);
+	}
 	while (i < rules->nb_philo)
 	{
 		if (pthread_create(&rules->philo[i].philosopher, NULL, &philo_routine,
@@ -91,7 +98,9 @@ int	thread_creation(t_const_rules *rules, t_shared *shared)
 			return (1);
 		}
 		i++;
+		pthread_mutex_lock(&shared->read_rules);
 		rules->is_everyone_ready++;
+		pthread_mutex_unlock(&shared->read_rules);
 	}
 	return (0);
 }

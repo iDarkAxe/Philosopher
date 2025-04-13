@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/12 12:14:42 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/13 11:59:10 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,27 @@ static int	ft_atoi(const char *nptr);
  */
 int	parse_args(int argc, char **argv, t_const_rules *rules)
 {
-	if (verify_arguments(argc, argv) == -1)
+	if (argc < 5 || argc > 6)
 	{
-		error_message(WRONG_ARGUMENT);
+		error_message(NBR_OF_ARGUMENT_INVALID);
 		return (1);
 	}
+	if (verify_arguments(argc, argv) == -1)
+		return (2);
 	rules->nb_philo = ft_atoi(argv[1]);
 	rules->time_to_die = ft_atoi(argv[2]);
 	rules->time_to_eat = ft_atoi(argv[3]);
 	rules->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		rules->nb_eat = ft_atoi(argv[5]);
+		rules->nb_eat_target = ft_atoi(argv[5]);
 	else
-		rules->nb_eat = 0;
+		rules->nb_eat_target = 0;
 	if (rules->nb_philo <= 0 || rules->nb_philo >= 400
 		|| rules->time_to_die <= 0 || rules->time_to_eat <= 0
-		|| rules->time_to_sleep <= 0 || rules->nb_eat < 0)
+		|| rules->time_to_sleep <= 0 || rules->nb_eat_target < 0)
 	{
 		error_message(ARGUMENT_INVALID);
-		return (1);
+		return (3);
 	}
 	return (0);
 }
@@ -84,7 +86,10 @@ static int	verify_arguments(int argc, char **argv)
 		while (argv[arg_index][index] != '\0')
 		{
 			if (verify_char(argv[arg_index][index]) == 0)
+			{
+				error_message(WRONG_ARGUMENT);
 				return (-1);
+			}
 			index++;
 		}
 		arg_index++;

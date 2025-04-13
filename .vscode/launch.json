@@ -7,7 +7,7 @@
         "request": "launch",
         "program": "${workspaceFolder}/philo/philo",
         "args": [
-          4 5 4 8 85
+          "140", "10", "10", "10", "0"
         ],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",

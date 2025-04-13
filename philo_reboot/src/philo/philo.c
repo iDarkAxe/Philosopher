@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/12 12:54:55 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/04/12 17:06:54 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,37 @@ void	*philo_routine(void *arg)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->shared->read_rules);
-		if (philo->rules->is_everyone_ready == philo->rules->nb_philo
-			&& are_all_threads_state(philo->rules, LIVING) != 0)
+		if (philo->rules->is_everyone_ready == philo->rules->nb_philo)
+		{
+			pthread_mutex_unlock(&philo->shared->read_rules);
 			break ;
+		}
 		pthread_mutex_unlock(&philo->shared->read_rules);
 		usleep(10);
 	}
 	gettimeofday(&philo->time_at_wakeup, NULL);
-	while (philo->living_state != DIED)
+	while (1)
 	{
 		philo->living_state = LIVING;
 		gettimeofday(&time_day, NULL);
 		gettimeofday(&time_delta, NULL);
 		time_delta = getdeltatime(time_day);
+		pthread_mutex_lock(&philo->shared->read_rules);
 		if (1 || philo->rules->time_to_die <= ((time_delta.tv_sec * 1000)
 				+ (time_delta.tv_usec / 1000)))
 		{
 			print_message(philo, &time_day, DIED);
+			philo->living_state = DIED;
+			pthread_mutex_unlock(&philo->shared->read_rules);
 			return (philo);
 		}
+		pthread_mutex_unlock(&philo->shared->read_rules);
 		print_message(philo, &time_day, TAKE_FORK);
 		// After eating
 		print_message(philo, &time_day, SLEEPING);
 		usleep(philo->rules->time_to_sleep * 1000);
 		break ;
 	}
-	// print_message(philo, &time_day, TAKE_FORK);
-	print_message(philo, &time_day, TAKE_FORK);
-	// print_message(philo, &time_day, SLEEPING);
-	// print_message(philo, &time_day, THINKING);
-	// usleep(10000);
-	// print_message(philo, &time_day, DIED);
 	philo->living_state = DIED;
 	return (philo);
 }
@@ -114,17 +114,17 @@ static void	print_message(t_philo *philo, struct timeval *time,
 int	init_philo(t_rules *rules)
 {
 	rules->shared.forks = NULL;
-	rules->rules.philo = ft_calloc(sizeof(t_philo),
-			(size_t)rules->rules.nb_philo);
+	rules->rules.philo = ft_calloc((size_t)rules->rules.nb_philo,
+			sizeof(t_philo));
 	if (rules->rules.philo == NULL)
 		return (1);
-	rules->shared.forks = malloc(sizeof(pthread_mutex_t)
-			* (unsigned int)rules->rules.nb_philo);
+	rules->shared.forks = ft_calloc(sizeof(pthread_mutex_t),
+			(unsigned int)rules->rules.nb_philo);
 	if (rules->shared.forks == NULL)
 		return (1);
 	rules->rules.is_everyone_ready = 0;
 	if (init_philos(&rules->rules, &rules->shared) != 0)
-		return (1);
+		return (2);
 	return (0);
 }
 
@@ -167,10 +167,12 @@ int	free_philo(t_const_rules *rules, t_shared *shared, int count)
 {
 	int	i;
 
-	if (rules->philo != NULL)
+	i = 0;
+	while (i < count)
 	{
-		free((void *)rules->philo);
-		rules->philo = NULL;
+		if (pthread_join(rules->philo[i].philosopher, NULL) != 0)
+			return (2);
+		i++;
 	}
 	i = 0;
 	while (shared->forks != NULL && i < count)
@@ -178,10 +180,18 @@ int	free_philo(t_const_rules *rules, t_shared *shared, int count)
 		pthread_mutex_destroy(&shared->forks[i]);
 		i++;
 	}
+	if (rules->philo != NULL)
+	{
+		free((void *)rules->philo);
+		rules->philo = NULL;
+	}
 	if (shared->forks != NULL)
 	{
 		free((void *)shared->forks);
 		shared->forks = NULL;
 	}
+	pthread_mutex_destroy(&shared->is_printing);
+	// pthread_mutex_unlock(&shared->read_rules);
+	pthread_mutex_destroy(&shared->read_rules);
 	return (0);
 }

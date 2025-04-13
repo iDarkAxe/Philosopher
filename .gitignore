@@ -5,3 +5,8 @@
 philo/philo
 philo/tests/log
 philo/tests/result
+philo/result
+philo_reboot/philo
+philo_reboot/result
+philo_reboot/tests/log
+philo_reboot/tests/result

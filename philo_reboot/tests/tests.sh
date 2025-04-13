@@ -3,8 +3,8 @@
 # export LOG_FILE=~/philosopher/philo/tests/log
 # export RESULT_FILE=~/philosopher/philo/tests/result
 
-LOG_FILE=~/philosopher/philo/tests/log
-RESULT_FILE=~/philosopher/philo/tests/result
+LOG_FILE=~/Documents/philosopher_reboot/philo_reboot/tests/log
+RESULT_FILE=~/Documents/philosopher_reboot/philo_reboot/tests/result
 
 GREENCOLOR="\033[0;32m"
 REDCOLOR="\033[0;31m"
@@ -21,6 +21,6 @@ fi
 make
 rm -rf $LOG_FILE
 rm -rf $RESULT_FILE
-. ~/philosopher/philo/tests/fx_for_tests.sh
+. ~/Documents/philosopher_reboot/philo_reboot/tests/fx_for_tests.sh
 sendInfos $LOG_FILE $RESULT_FILE
 testArgs
