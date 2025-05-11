@@ -11,8 +11,6 @@
 `usleep`
 Pauses the thread for a time so other thread can work
 
-
-
 `gettimeofday(t_timeval, NULL)` (second is unused)
 
 2 long, tv_sec (since EPOCH) and tv_usec;
@@ -21,8 +19,6 @@ return != 0 if error
 
 `pthread_create (thread, attr, routine, args_of_routine)`
 Create a thread with attributes (not authorized here), the routine is the function to be executed by the thread.
-
-
 
 ---
 

@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:03:57 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/13 17:25:00 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/11 16:11:39 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	init_philos(t_const_rules *rules, t_shared *shared, t_philo **philo)
 		(*philo)[count].const_rules = rules;
 		count++;
 	}
+	shared->is_running = 1;
 	return (0);
 }
 
@@ -77,7 +78,7 @@ int	init_mutex(t_shared *shared, t_philo *philo, int count)
 	index = init_forks_mutex(shared, count);
 	if (index != 0)
 	{
-		free_shared(shared, 0, 0);
+		free_shared(shared, 0, index);
 		free_philos(philo, count);
 		return (3);
 	}

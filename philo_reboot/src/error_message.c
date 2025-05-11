@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:06:21 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/13 17:15:40 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/11 16:40:29 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,9 @@
 
 ssize_t	error_message(enum e_error_message state)
 {
-	if (state == NBR_OF_ARGUMENT_INVALID)
-		return (write(2, "Error:\nWrong number of arguments\n", 33));
-	else if (state == TOO_MUCH_PHILOS)
-		return (write(2, "Error:\nToo much philos, should be under 400\n", 44));
-	else if (state == WRONG_ARGUMENT)
-		return (write(2, "Error:\nArguments should be only integers\n", 41));
-	else if (state == ARGUMENT_INVALID)
-		return (write(2,
-				"Values accepted :\n\tnb_philo 0-400\n\tdie_time > 0\n\t\
-				eat_time > 0\n\tsleep_time > 0\n\tnb_eat \t>= 0\n", 92));
-	else if (state == RULES_NOT_CREATED)
-		return (write(2, "Error:\nCreation of rules\n", 25));
-	else if (state == PTHREAD_DETACH)
-		return (write(2, "Error pthread_detach\n", 21));
-	else if (state == PTHREAD_CREATING)
-		return (write(2, "Error pthread_create\n", 21));
-	return (0);
+	static const char	*msg[] = {NBR_OF_ARGUMENT_INVALID_MSG,
+		ARGUMENT_INVALID_MSG, WRONG_ARGUMENT_MSG, TOO_MUCH_PHILOS_MSG,
+		RULES_NOT_CREATED_MSG, PTHREAD_CREATING_MSG, PTHREAD_DETACH_MSG};
+
+	return (write(2, msg[(int)state], ft_strlen(msg[(int)state])));
 }

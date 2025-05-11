@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/13 15:52:16 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/10 16:43:17 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	parse_args(int argc, char **argv, t_const_rules *rules)
 		rules->nb_eat_target = ft_atoi(argv[5]);
 	else
 		rules->nb_eat_target = 0;
-	if (rules->nb_philo <= 0 || rules->nb_philo >= 400
+	if (rules->nb_philo <= 0 || rules->nb_philo >= 40000
 		|| rules->time_to_die <= 0 || rules->time_to_eat <= 0
 		|| rules->time_to_sleep <= 0 || rules->nb_eat_target < 0)
 	{

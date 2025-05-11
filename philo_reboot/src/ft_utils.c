@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:42:07 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/13 17:27:35 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/11 15:31:33 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 void	*ft_calloc(size_t element_count, size_t element_size);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *destination, const void *source, size_t size);
+size_t	ft_strlen(const char *str);
 
 /**
  * @brief Allocates a new memory zone, and set all bits to zero
@@ -91,4 +92,16 @@ void	*ft_memcpy(void *destination, const void *source, size_t size)
 		size--;
 	}
 	return (destination);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	count;
+
+	if (str == NULL)
+		return (0);
+	count = 0;
+	while (str[count] != '\0')
+		count++;
+	return (count);
 }

@@ -46,8 +46,8 @@ SRC = \
 	ft_utils.c \
 	ft_free.c \
 	ft_init.c \
+	ft_time.c \
 
-# ft_time.c \
 
 PARSER = \
 	parser.c
@@ -55,8 +55,9 @@ PARSER = \
 # THREAD = \
 # 	ft_thread_join.c
 
-# PHILO = \
-# 	philo.c
+PHILO = \
+	philo-utils.c \
+	philo.c
 
 LIBS = \
 
