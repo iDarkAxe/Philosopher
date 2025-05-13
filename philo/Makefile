@@ -1,13 +1,14 @@
 .PHONY : all clean fclean re bonus clean-lib clean-bin clean-obj debug debug-cc debug-print
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ofast
+CFLAGS = -Wall -Wextra -Werror -02 $(WAIT_STATE)
 DEPENDANCIES = -MMD -MP
 NO_DIR = --no-print-directory
 MAKE := $(MAKE) -j $(NO_DIR)
 NAME = philo
 
 # Debugging flags
-CFLAGS_DEBUG = -Wall -Wextra -g3 -D DEBUG=1
+WAIT_STATE= -D WAIT_EVERYONE=1
+CFLAGS_DEBUG = -Wall -Wextra -g3 -D DEBUG=1 $(WAIT_STATE)
 CC_DEBUG = clang
 CC_DEBUG_CFLAGS = -g3 -D DEBUG=1 -Weverything -Wno-padded -pedantic -O2 -Wwrite-strings -Wconversion -fsanitize=address -fsanitize=leak
 #############################################################################################
@@ -47,7 +48,7 @@ SRC = \
 	ft_free.c \
 	ft_init.c \
 	ft_time.c \
-
+	debug-print.c
 
 PARSER = \
 	parser.c

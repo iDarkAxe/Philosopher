@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:02:20 by ppontet           #+#    #+#             */
-/*   Updated: 2025/04/13 17:25:28 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/12 11:27:23 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	free_shared(t_shared *shared, int count, int flag)
 	if (flag == 2 || flag == 0)
 		pthread_mutex_destroy(&shared->print);
 	pthread_mutex_destroy(&shared->read_shared);
+	pthread_mutex_destroy(&shared->meal_access);
 	if (shared->forks != NULL)
 	{
 		free(shared->forks);

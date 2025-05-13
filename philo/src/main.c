@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:45:40 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/11 16:30:32 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 13:10:52 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int			thread_manip(t_const_rules *rules, t_shared *shared,
-				t_philo *philo);
+int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo);
 
-int	thread_manip(t_const_rules *rules, t_shared *shared, t_philo *philo)
+int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo)
 {
 	int	count;
 
@@ -40,6 +39,7 @@ int	thread_manip(t_const_rules *rules, t_shared *shared, t_philo *philo)
 		pthread_join(philo[count].philosopher, NULL);
 		count++;
 	}
+	print_eat(philo);
 	return (0);
 }
 
@@ -52,9 +52,9 @@ int	thread_manip(t_const_rules *rules, t_shared *shared, t_philo *philo)
  */
 int	main(int argc, char **argv)
 {
-	t_const_rules	rules;
-	t_shared		shared;
-	t_philo			*philo;
+	t_rules		rules;
+	t_shared	shared;
+	t_philo		*philo;
 
 	if (parse_args(argc, argv, &rules) != 0)
 		return (1);

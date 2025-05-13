@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:03:57 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/11 16:11:39 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 12:48:38 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@
  * @param philo head of philosopher structure
  * @return int 
  */
-int	init_philos(t_const_rules *rules, t_shared *shared, t_philo **philo)
+int	init_philos(t_rules *rules, t_shared *shared, t_philo **philo)
 {
 	int	count;
 
+	if (!rules || !shared || !philo)
+		return (1);
 	*philo = ft_calloc(sizeof(t_philo), (size_t)rules->nb_philo);
 	if (*philo == NULL)
 		return (1);
@@ -33,7 +35,7 @@ int	init_philos(t_const_rules *rules, t_shared *shared, t_philo **philo)
 	{
 		(*philo)[count].id = count;
 		(*philo)[count].shared = shared;
-		(*philo)[count].const_rules = rules;
+		(*philo)[count].rules = rules;
 		count++;
 	}
 	shared->is_running = 1;
@@ -60,6 +62,8 @@ static int	init_forks_mutex(t_shared *shared, int count)
 	shared->forks_nbr = ft_calloc(sizeof(enum e_bool), (size_t)count);
 	if (shared->forks_nbr == NULL)
 		return (4);
+	if (pthread_mutex_init(&shared->meal_access, NULL) != 0)
+		return (5);
 	return (0);
 }
 
