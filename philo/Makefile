@@ -1,16 +1,16 @@
 .PHONY : all clean fclean re bonus clean-lib clean-bin clean-obj debug debug-cc debug-print
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -02 $(WAIT_STATE)
+CFLAGS = -Wall -Wextra -Werror $(WAIT_STATE) -pthread
 DEPENDANCIES = -MMD -MP
 NO_DIR = --no-print-directory
 MAKE := $(MAKE) -j $(NO_DIR)
 NAME = philo
 
 # Debugging flags
-WAIT_STATE= -D WAIT_EVERYONE=1
+WAIT_STATE= -D WAIT_EVERYONE=0
 CFLAGS_DEBUG = -Wall -Wextra -g3 -D DEBUG=1 $(WAIT_STATE)
 CC_DEBUG = clang
-CC_DEBUG_CFLAGS = -g3 -D DEBUG=1 -Weverything -Wno-padded -pedantic -O2 -Wwrite-strings -Wconversion -fsanitize=address -fsanitize=leak
+CC_DEBUG_CFLAGS = -g3 -D DEBUG=1 -Weverything -Wno-padded -pedantic -Wwrite-strings -Wconversion -fsanitize=address -fsanitize=leak
 #############################################################################################
 #                                                                                           #
 #                                         DIRECTORIES                                       #
@@ -58,6 +58,7 @@ PARSER = \
 
 PHILO = \
 	philo-utils.c \
+	philo-eating.c \
 	philo.c
 
 LIBS = \
@@ -95,7 +96,7 @@ all:
 # Create $(NAME) executable
 $(NAME): $(P_OBJ)main.o $(OBJS) $(INCS)
 	@echo "$(Green)Creating executable $@$(Color_Off)"
-	@$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -o $(NAME) $(OBJS)
+	@$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -o $(NAME) $(OBJS) 
 
 # Custom rule to compilate all .c with there path
 $(P_OBJ)%.o: $(P_SRC)%.c $(INCS)

@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/13 13:14:48 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 14:13:35 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ struct					s_time
 struct					s_rules
 {
 	int					nb_philo;
+	struct timeval		start;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
@@ -92,7 +93,7 @@ struct					s_philo
 	t_time				time;
 	int					id;
 	int					nb_eat;
-	int					state;
+	enum e_bool			is_dead;
 };
 
 struct					s_shared
@@ -102,6 +103,7 @@ struct					s_shared
 	enum e_bool			*forks_nbr;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		print;
+	pthread_mutex_t		is_running_access;
 	pthread_mutex_t		meal_access;
 	pthread_mutex_t		read_shared;
 };
@@ -116,11 +118,15 @@ int						init_philos(t_rules *rules, t_shared *shared,
 int						init_mutex(t_shared *shared, t_philo *philo, int count);
 
 // Philo
-void					philo_routine(t_philo *philo);
+int						philo_routine(t_philo *philo);
 void					*start_routine(void *ptr);
 void					print_message(t_philo *philo,
 							enum e_philo_state p_state);
 int						is_running(t_philo *philo);
+int						try_taking_fork(t_philo *philo, char is_left);
+int						set_back_fork(t_philo *philo, char is_left);
+int						try_eating(t_philo *philo);
+int						has_everyone_ate(t_philo *philo);
 
 // Free
 void					free_shared(t_shared *shared, int count, int flag);
@@ -135,7 +141,8 @@ size_t					ft_strlen(const char *str);
 
 // Time
 size_t					get_time(void);
-void					ft_usleep(size_t wait_time);
+size_t					get_dtime(t_philo *philo);
+void					ft_usleep(size_t wait_time, t_philo *philo);
 void					waits_for_equals(pthread_mutex_t *mutex,
 							const int *const value1, const int *const value2);
 int						does_have_time(t_philo *philo,

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # export LOG_FILE=~/philosopher/philo/tests/log
 # export RESULT_FILE=~/philosopher/philo/tests/result

@@ -6,42 +6,40 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/13 13:06:43 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 14:25:17 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdio.h>
 
-// TAKE A LEFT FORK
-// pthread_mutex_lock(&philo->shared->forks[philo->id]);
-// TAKE A RIGHT FORK
-// pthread_mutex_lock(&philo->shared->forks[(philo->id + 1)
-// % philo->rules->nb_philo]);
+static void	philo_died(t_philo *philo);
 
-void	philo_routine(t_philo *philo)
+static void	philo_died(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->shared->is_running_access);
+	if (philo->shared->is_running == TRUE)
+	{
+		printf("%ld\t%d\tdied\n", get_dtime(philo), philo->id);
+		philo->shared->is_running = FALSE;
+	}
+	pthread_mutex_unlock(&philo->shared->is_running_access);
+	philo->is_dead = TRUE;
+}
+
+int	philo_routine(t_philo *philo)
 {
 	if (philo == NULL)
-		return ;
+		return (0);
 	print_message(philo, THINKING);
-	does_have_time(philo, TOOK_FORK);
-	pthread_mutex_lock(&philo->shared->forks[philo->id]);
-	print_message(philo, TOOK_FORK);
-	pthread_mutex_lock(&philo->shared->forks[(philo->id + 1)
-		% philo->rules->nb_philo]);
-	print_message(philo, TOOK_FORK);
-	pthread_mutex_lock(&philo->shared->meal_access);
-	print_message(philo, EATING);
-	philo->time.last_meal = get_time();
-	philo->nb_eat += 1;
-	pthread_mutex_unlock(&philo->shared->forks[(philo->id + 1)
-		% philo->rules->nb_philo]);
-	pthread_mutex_unlock(&philo->shared->forks[philo->id]);
-	pthread_mutex_unlock(&philo->shared->meal_access);
-	ft_usleep(philo->rules->time_to_eat);
+	if (try_eating(philo) == 0)
+		return (0);
+	if (does_have_time(philo, SLEEPING) == 1)
+		return (0);
 	print_message(philo, SLEEPING);
-	ft_usleep(philo->rules->time_to_sleep);
+	usleep((__useconds_t)philo->rules->time_to_sleep * 1000);
+	return (1);
 }
-int		has_everyone_ate(t_philo *philo);
 
 // TO desynchronise even philos
 // if (philo->id % 2 == 0)
@@ -55,6 +53,7 @@ void	*start_routine(void *ptr)
 	if (ptr == NULL)
 		return (NULL);
 	philo = (t_philo *)ptr;
+	philo->is_dead = FALSE;
 	philo->time.born_time = get_time();
 	philo->time.last_meal = philo->time.born_time;
 	pthread_mutex_lock(&philo->shared->read_shared);
@@ -64,10 +63,12 @@ void	*start_routine(void *ptr)
 		waits_for_equals(&philo->shared->read_shared, &philo->shared->ready,
 			&philo->rules->nb_philo);
 	index = 0;
-	while (index < 10 && is_running(philo) && has_everyone_ate(philo) == 0)
+	while (index < 50 && is_running(philo))
 	{
-		philo_routine(philo);
+		if (philo_routine(philo) == 0)
+			return (NULL);
 		index++;
 	}
+	philo_died(philo);
 	return (NULL);
 }

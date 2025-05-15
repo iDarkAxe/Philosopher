@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:03:57 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/13 12:48:38 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 12:53:10 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	init_philos(t_rules *rules, t_shared *shared, t_philo **philo)
 		(*philo)[count].rules = rules;
 		count++;
 	}
-	shared->is_running = 1;
+	shared->is_running = TRUE;
+	if (gettimeofday(&rules->start, NULL) != 0)
+		return (1);
 	return (0);
 }
 
@@ -55,6 +57,8 @@ static int	init_forks_mutex(t_shared *shared, int count)
 		return (1);
 	if (pthread_mutex_init(&shared->read_shared, NULL) != 0)
 		return (2);
+	if (pthread_mutex_init(&shared->is_running_access, NULL) != 0)
+		return (6);
 	shared->forks_nbr = NULL;
 	shared->forks = ft_calloc(sizeof(pthread_mutex_t), (size_t)count);
 	if (shared->forks == NULL)
@@ -95,7 +99,7 @@ int	init_mutex(t_shared *shared, t_philo *philo, int count)
 			free_philos(philo, count);
 			return (4);
 		}
-		shared->forks_nbr[index] = TRUE;
+		shared->forks_nbr[index] = FALSE;
 		index++;
 	}
 	return (0);

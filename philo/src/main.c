@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:45:40 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/13 13:10:52 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 14:26:14 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo);
+static void	observer_task(t_philo *philo);
+static int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo);
 
-int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo)
+static void	observer_task(t_philo *philo)
+{
+	while (is_running(philo) == 1)
+	{
+		if (has_everyone_ate(philo) == 1)
+		{
+			pthread_mutex_lock(&philo->shared->is_running_access);
+			philo->shared->is_running = FALSE;
+			pthread_mutex_unlock(&philo->shared->is_running_access);
+			break ;
+		}
+		usleep(500);
+	}
+}
+
+static int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo)
 {
 	int	count;
 
@@ -33,13 +49,13 @@ int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo)
 		}
 		count++;
 	}
+	observer_task(philo);
 	count = 0;
 	while (count < rules->nb_philo)
 	{
 		pthread_join(philo[count].philosopher, NULL);
 		count++;
 	}
-	print_eat(philo);
 	return (0);
 }
 
