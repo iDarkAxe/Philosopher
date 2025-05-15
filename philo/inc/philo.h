@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/15 14:13:35 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 17:40:17 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int						try_taking_fork(t_philo *philo, char is_left);
 int						set_back_fork(t_philo *philo, char is_left);
 int						try_eating(t_philo *philo);
 int						has_everyone_ate(t_philo *philo);
+void					philo_died(t_philo *philo);
 
 // Free
 void					free_shared(t_shared *shared, int count, int flag);

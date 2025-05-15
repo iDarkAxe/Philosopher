@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:56:48 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/15 14:11:56 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 18:01:28 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,6 @@ size_t	get_time(void)
 	return ((size_t)(timer.tv_sec * 1000 + timer.tv_usec / 1000));
 }
 
-// SINCE BORN TIME
-// size_t	get_dtime(t_philo *philo)
-// {
-// 	struct timeval	timer;
-
-// 	if (philo == NULL)
-// 		return (0);
-// 	if (gettimeofday(&timer, NULL) != 0)
-// 	{
-// 		timer.tv_sec = 0;
-// 		timer.tv_usec = 0;
-// 		write(2, "gettimeofday : error\n", 22);
-// 	}
-// 	timer.tv_sec -= philo->time.born_time / 1000;
-// 	timer.tv_usec -= (philo->time.born_time % 1000) * 1000;
-// 	if (timer.tv_usec < 0)
-// 	{
-// 		timer.tv_sec -= 1;
-// 		timer.tv_usec += 1000000;
-// 	}
-// 	return ((size_t)(timer.tv_sec * 1000 + timer.tv_usec / 1000));
-// }
-
 size_t	get_dtime(t_philo *philo)
 {
 	struct timeval	timer;
@@ -87,26 +64,22 @@ size_t	get_dtime(t_philo *philo)
 
 int	does_have_time(t_philo *philo, enum e_philo_state p_state)
 {
-	int		time;
+	int	timer;
 
 	if (philo == NULL)
 		return (-1);
 	if (p_state == TOOK_FORK || p_state == EATING)
-		time = philo->rules->time_to_eat;
+		timer = philo->rules->time_to_eat;
 	else if (p_state == SLEEPING)
-		time = philo->rules->time_to_sleep;
+		timer = philo->rules->time_to_sleep;
 	else
-		time = 1;
+		timer = 1;
 	pthread_mutex_lock(&philo->shared->meal_access);
-	if ((philo->time.last_meal + (size_t)time) > philo->time.last_meal
+	if ((get_dtime(philo) + (size_t)timer) > philo->time.last_meal
 		+ (size_t)philo->rules->time_to_die)
 	{
-		pthread_mutex_lock(&philo->shared->read_shared);
-		philo->shared->is_running = FALSE;
-		pthread_mutex_unlock(&philo->shared->read_shared);
-		pthread_mutex_lock(&philo->shared->print);
-		printf("%ld\t%d\tdied\n", get_dtime(philo), philo->id);
-		pthread_mutex_unlock(&philo->shared->print);
+		ft_usleep((size_t)timer, philo);
+		philo_died(philo);
 		pthread_mutex_unlock(&philo->shared->meal_access);
 		return (1);
 	}

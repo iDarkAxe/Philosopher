@@ -6,16 +6,14 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/15 14:25:17 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/15 17:59:29 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdio.h>
 
-static void	philo_died(t_philo *philo);
-
-static void	philo_died(t_philo *philo)
+void	philo_died(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->shared->is_running_access);
 	if (philo->shared->is_running == TRUE)
@@ -48,7 +46,6 @@ int	philo_routine(t_philo *philo)
 void	*start_routine(void *ptr)
 {
 	t_philo	*philo;
-	size_t	index;
 
 	if (ptr == NULL)
 		return (NULL);
@@ -62,12 +59,10 @@ void	*start_routine(void *ptr)
 	if (WAIT_EVERYONE == 1)
 		waits_for_equals(&philo->shared->read_shared, &philo->shared->ready,
 			&philo->rules->nb_philo);
-	index = 0;
-	while (index < 50 && is_running(philo))
+	while (is_running(philo))
 	{
 		if (philo_routine(philo) == 0)
 			return (NULL);
-		index++;
 	}
 	philo_died(philo);
 	return (NULL);
