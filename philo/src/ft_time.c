@@ -23,7 +23,7 @@ void	ft_usleep(size_t wait_time, t_philo *philo)
 	{
 		if (is_running(philo) != 0)
 			return ;
-		usleep(500);
+		usleep(DELAY);
 	}
 }
 
@@ -99,6 +99,6 @@ void	waits_for_equals(pthread_mutex_t *mutex, const int *const value1,
 			return ;
 		}
 		pthread_mutex_unlock(mutex);
-		usleep(500);
+		usleep(DELAY);
 	}
 }

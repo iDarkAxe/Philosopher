@@ -29,7 +29,7 @@ static void	observer_task(t_philo *philo)
 			pthread_mutex_unlock(&philo->shared->is_running_access);
 			break ;
 		}
-		usleep(500);
+		usleep(DELAY);
 	}
 }
 

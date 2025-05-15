@@ -40,7 +40,7 @@ int	try_taking_fork(t_philo *philo, char is_left)
 			break ;
 		}
 		pthread_mutex_unlock(&philo->shared->forks[assign_fork]);
-		usleep(1000);
+		usleep(DELAY);
 	}
 	pthread_mutex_unlock(&philo->shared->forks[assign_fork]);
 	if (is_running(philo) == 0)

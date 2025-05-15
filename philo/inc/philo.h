@@ -21,6 +21,10 @@
 #  define DEBUG 0
 # endif
 
+# ifndef DELAY
+#  define DELAY 500
+# endif
+
 # ifndef WAIT_EVERYONE
 #  define WAIT_EVERYONE 0
 # endif
