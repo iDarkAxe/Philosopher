@@ -1,0 +1,50 @@
+.TH "s_rules" 3 "Philosopher" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s_rules
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <philo\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "int \fBnb_philo\fP"
+.br
+.ti -1c
+.RI "struct timeval \fBstart\fP"
+.br
+.ti -1c
+.RI "int \fBtime_to_die\fP"
+.br
+.ti -1c
+.RI "int \fBtime_to_eat\fP"
+.br
+.ti -1c
+.RI "int \fBtime_to_sleep\fP"
+.br
+.ti -1c
+.RI "int \fBnb_eat_target\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "int s_rules::nb_eat_target"
+Nbr of time each philo should eat 
+.SS "int s_rules::nb_philo"
+
+.SS "struct timeval s_rules::start"
+Time of the start of the simulation 
+.SS "int s_rules::time_to_die"
+Time before dying 
+.SS "int s_rules::time_to_eat"
+Time took for eating 
+.SS "int s_rules::time_to_sleep"
+Time took for sleeping 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Philosopher from the source code\&.

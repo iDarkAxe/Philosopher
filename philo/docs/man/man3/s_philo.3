@@ -1,0 +1,55 @@
+.TH "s_philo" 3 "Philosopher" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s_philo
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <philo\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "const \fBt_rules\fP * \fBrules\fP"
+.br
+.ti -1c
+.RI "\fBt_shared\fP * \fBshared\fP"
+.br
+.ti -1c
+.RI "pthread_t \fBphilosopher\fP"
+.br
+.ti -1c
+.RI "\fBt_time\fP \fBtime\fP"
+.br
+.ti -1c
+.RI "int \fBid\fP"
+.br
+.ti -1c
+.RI "int \fBnb_eat\fP"
+.br
+.ti -1c
+.RI "char \fBis_dead\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "int s_philo::id"
+Philosopher ID 
+.SS "char s_philo::is_dead"
+Flag to check if philo is dead 
+.SS "int s_philo::nb_eat"
+Nbr of time the philosopher has eaten 
+.SS "pthread_t s_philo::philosopher"
+Philosopher thread 
+.SS "const \fBt_rules\fP* s_philo::rules"
+Rules of the simulation 
+.SS "\fBt_shared\fP* s_philo::shared"
+Ptr to Shared data between philos 
+.SS "\fBt_time\fP s_philo::time"
+Time of the philosopher 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Philosopher from the source code\&.

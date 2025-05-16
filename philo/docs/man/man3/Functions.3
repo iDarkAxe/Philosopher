@@ -1,0 +1,269 @@
+.TH "Functions" 3 "Philosopher" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Functions \- Functions for the philosopher's project
+.PP
+ \- Function used by the observer of philosophers\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBparse_args\fP (int argc, char **argv, \fBt_rules\fP *rules)"
+.br
+.RI "Parse arguments and store them in the rules structure Uses simple atoi function to convert strings to int\&. "
+.ti -1c
+.RI "int \fBinit_philos\fP (\fBt_rules\fP *rules, \fBt_shared\fP *shared, \fBt_philo\fP **philo)"
+.br
+.RI "Initialize the philosophers\&. "
+.ti -1c
+.RI "int \fBinit_mutex\fP (\fBt_shared\fP *shared, \fBt_philo\fP *philo, int count)"
+.br
+.RI "Initialize the forks and mutex\&. "
+.ti -1c
+.RI "int \fBis_running\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Check if it's running\&. "
+.ti -1c
+.RI "void \fBfree_shared\fP (\fBt_shared\fP *shared, int count, int flag)"
+.br
+.RI "Free all the data in \fBs_shared\fP structure\&. "
+.ti -1c
+.RI "void \fBfree_philos\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Free the philo structure\&. "
+.ti -1c
+.RI "void * \fBft_calloc\fP (size_t element_count, size_t element_size)"
+.br
+.RI "Allocates a new memory zone, and set all bits to zero\&. "
+.ti -1c
+.RI "void \fBft_bzero\fP (void *s, size_t n)"
+.br
+.RI "Set at 0, the n first bytes at the pointer adress\&. "
+.ti -1c
+.RI "void * \fBft_memcpy\fP (void *destination, const void *source, size_t size)"
+.br
+.RI "Set a memory zone with a value, count times\&. "
+.ti -1c
+.RI "size_t \fBft_strlen\fP (const char *str)"
+.br
+.RI "Count the number of characters in a string\&. "
+.ti -1c
+.RI "ssize_t \fBerror_message\fP (enum \fBe_error_message\fP state)"
+.br
+.RI "Function to print the error message\&. "
+.ti -1c
+.RI "void \fBprint_eat\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Just prints the number of times each philosopher has eaten\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Function used by the observer of philosophers\&. 
+
+
+.SH "Function Documentation"
+.PP 
+.SS "ssize_t error_message (enum \fBe_error_message\fP state)"
+
+.PP
+Function to print the error message\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIstate\fP error message state 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+ssize_t number of bytes written 
+.RE
+.PP
+
+.SS "void free_philos (\fBt_philo\fP * philo)"
+
+.PP
+Free the philo structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIphilo\fP philosopher structure 
+.RE
+.PP
+
+.SS "void free_shared (\fBt_shared\fP * shared, int count, int flag)"
+
+.PP
+Free all the data in \fBs_shared\fP structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIshared\fP structure of shared variables 
+.br
+\fIcount\fP number of element 
+.br
+\fIflag\fP specific for print mutex 
+.RE
+.PP
+
+.SS "void ft_bzero (void * s, size_t n)"
+
+.PP
+Set at 0, the n first bytes at the pointer adress\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP pointer to the memory to set 
+.br
+\fIn\fP number of bytes to set at 0 
+.RE
+.PP
+
+.SS "void * ft_calloc (size_t element_count, size_t element_size)"
+
+.PP
+Allocates a new memory zone, and set all bits to zero\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIelement_count\fP number of elements 
+.br
+\fIelement_size\fP size of each element 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void* pointer to the new memory zone 
+.RE
+.PP
+
+.SS "void * ft_memcpy (void * destination, const void * source, size_t size)"
+
+.PP
+Set a memory zone with a value, count times\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdestination\fP memory zone to paste 
+.br
+\fIsource\fP memory zone to copy 
+.br
+\fIsize\fP number of times to set the value 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void* pointer to the memory zone 
+.RE
+.PP
+
+.SS "size_t ft_strlen (const char * str)"
+
+.PP
+Count the number of characters in a string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIstr\fP string to count 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+size_t 
+.RE
+.PP
+
+.SS "int init_mutex (\fBt_shared\fP * shared, \fBt_philo\fP * philo, int count)"
+
+.PP
+Initialize the forks and mutex\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIshared\fP structure of shared variables 
+.br
+\fIphilo\fP philosopher structure 
+.br
+\fIcount\fP number of element 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SS "int init_philos (\fBt_rules\fP * rules, \fBt_shared\fP * shared, \fBt_philo\fP ** philo)"
+
+.PP
+Initialize the philosophers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIrules\fP structure of const rules 
+.br
+\fIshared\fP structure of shared variables 
+.br
+\fIphilo\fP head of philosopher structure 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SS "int is_running (\fBt_philo\fP * philo)"
+
+.PP
+Check if it's running\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIphilo\fP philo structure 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 1 is running, 0 otherwise 
+.RE
+.PP
+
+.SS "int parse_args (int argc, char ** argv, \fBt_rules\fP * rules)"
+
+.PP
+Parse arguments and store them in the rules structure Uses simple atoi function to convert strings to int\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIargc\fP number of arguments 
+.br
+\fIargv\fP array of strings 
+.br
+\fIrules\fP pointer to the rules structure 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 if OK, 1 if error 
+.RE
+.PP
+
+.SS "void print_eat (\fBt_philo\fP * philo)"
+
+.PP
+Just prints the number of times each philosopher has eaten\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIphilo\fP philosopher structure 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Philosopher from the source code\&.

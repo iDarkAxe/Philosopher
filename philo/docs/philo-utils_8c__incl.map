@@ -1,0 +1,19 @@
+<map id="src/philo/philo&#45;utils.c" name="src/philo/philo&#45;utils.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="133,5,290,31"/>
+<area shape="rect" id="Node000002" href="$philo_8h.html" title="Header file for the philosopher&#39;s project." alt="" coords="126,152,193,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="173,33,138,51,122,64,110,80,106,96,111,112,121,127,135,141,131,145,117,130,106,114,101,96,105,78,118,60,135,47,171,28"/>
+<area shape="rect" id="Node000006" href="$routine_8h.html" title=" " alt="" coords="119,79,199,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="205,33,178,69,174,66,201,29"/>
+<area shape="rect" id="Node000007" href="$ft__time_8h.html" title=" " alt="" coords="223,79,303,104"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="222,29,249,66,245,69,218,33"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="327,79,394,104"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="236,28,325,70,323,75,234,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,225,89,251"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="143,180,79,220,76,215,140,175"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="114,225,205,251"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="162,178,162,212,157,212,157,178"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="229,225,303,251"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="178,175,239,215,236,220,175,180"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="162,104,162,138,157,138,157,104"/>
+<area shape="poly" id="edge8_Node000007_Node000002" title=" " alt="" coords="248,106,189,146,186,142,245,102"/>
+</map>

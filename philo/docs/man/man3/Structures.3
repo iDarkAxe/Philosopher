@@ -1,0 +1,173 @@
+.TH "Structures" 3 "Philosopher" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Structures \- Structures for managing the philosophers
+.PP
+ \- Structures to manipulate the philosophers and their states\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs_time\fP"
+.br
+.ti -1c
+.RI "struct \fBs_rules\fP"
+.br
+.ti -1c
+.RI "struct \fBs_philo\fP"
+.br
+.ti -1c
+.RI "struct \fBs_shared\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDELAY\fP   200"
+.br
+.RI "Delay for the usleep function\&. "
+.ti -1c
+.RI "#define \fBWAIT_EVERYONE\fP   0"
+.br
+.RI "Macro to make all the philosophers wait starting simultaneously\&. "
+.ti -1c
+.RI "#define \fBNBR_OF_ARGUMENT_INVALID_MSG\fP   'Error:\\nWrong number of arguments\\n'"
+.br
+.RI "Error messages for the program\&. "
+.ti -1c
+.RI "#define \fBARGUMENT_INVALID_MSG\fP   	'Values accepted :\\n\\tnb_philo 0\-400\\n\\	die_time > 0\\n\\teat_time > 0\\n\\tsleep_time > 0\\n\\tnb_eat \\t>= 0\\n'"
+.br
+.ti -1c
+.RI "#define \fBWRONG_ARGUMENT_MSG\fP   'Error:\\nArguments should be only integers\\n'"
+.br
+.ti -1c
+.RI "#define \fBTOO_MUCH_PHILOS_MSG\fP   'Error:\\nToo much philos, should be under 400\\n'"
+.br
+.ti -1c
+.RI "#define \fBRULES_NOT_CREATED_MSG\fP   'Error:\\nCreation of rules\\n'"
+.br
+.ti -1c
+.RI "#define \fBPTHREAD_CREATING_MSG\fP   'Error pthread_create\\n'"
+.br
+.ti -1c
+.RI "#define \fBPTHREAD_DETACH_MSG\fP   'Error pthread_detach\\n'"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBs_rules\fP \fBt_rules\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBs_philo\fP \fBt_philo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBs_shared\fP \fBt_shared\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBs_time\fP \fBt_time\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBe_error_message\fP { \fBNBR_OF_ARGUMENT_INVALID\fP, \fBARGUMENT_INVALID\fP, \fBWRONG_ARGUMENT\fP, \fBTOO_MUCH_PHILOS\fP, \fBRULES_NOT_CREATED\fP, \fBPTHREAD_CREATING\fP, \fBPTHREAD_DETACH\fP }"
+.br
+.RI "Error codes for the program\&. "
+.ti -1c
+.RI "enum \fBe_philo_state\fP { \fBTOOK_FORK\fP = 0, \fBEATING\fP = 1, \fBSLEEPING\fP = 2, \fBTHINKING\fP = 3, \fBDIED\fP = 4 }"
+.br
+.RI "State of the philosopher\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Structures to manipulate the philosophers and their states\&. 
+
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ARGUMENT_INVALID_MSG   	'Values accepted :\\n\\tnb_philo 0\-400\\n\\	die_time > 0\\n\\teat_time > 0\\n\\tsleep_time > 0\\n\\tnb_eat \\t>= 0\\n'"
+
+.SS "#define DELAY   200"
+
+.PP
+Delay for the usleep function\&. Best values seems to be 50ms-1000ms with 100 philosophers 500ms is a good value overall as it don't overload the CPU too much with context switching 
+.SS "#define NBR_OF_ARGUMENT_INVALID_MSG   'Error:\\nWrong number of arguments\\n'"
+
+.PP
+Error messages for the program\&. 
+.SS "#define PTHREAD_CREATING_MSG   'Error pthread_create\\n'"
+
+.SS "#define PTHREAD_DETACH_MSG   'Error pthread_detach\\n'"
+
+.SS "#define RULES_NOT_CREATED_MSG   'Error:\\nCreation of rules\\n'"
+
+.SS "#define TOO_MUCH_PHILOS_MSG   'Error:\\nToo much philos, should be under 400\\n'"
+
+.SS "#define WAIT_EVERYONE   0"
+
+.PP
+Macro to make all the philosophers wait starting simultaneously\&. 
+.SS "#define WRONG_ARGUMENT_MSG   'Error:\\nArguments should be only integers\\n'"
+
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBs_philo\fP \fBt_philo\fP"
+
+.SS "typedef struct \fBs_rules\fP \fBt_rules\fP"
+
+.SS "typedef struct \fBs_shared\fP \fBt_shared\fP"
+
+.SS "typedef struct \fBs_time\fP \fBt_time\fP"
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBe_error_message\fP"
+
+.PP
+Error codes for the program\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\f(BINBR_OF_ARGUMENT_INVALID \fP
+.TP
+\f(BIARGUMENT_INVALID \fP
+.TP
+\f(BIWRONG_ARGUMENT \fP
+.TP
+\f(BITOO_MUCH_PHILOS \fP
+.TP
+\f(BIRULES_NOT_CREATED \fP
+.TP
+\f(BIPTHREAD_CREATING \fP
+.TP
+\f(BIPTHREAD_DETACH \fP
+.SS "enum \fBe_philo_state\fP"
+
+.PP
+State of the philosopher\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\f(BITOOK_FORK \fP
+.TP
+\f(BIEATING \fP
+.TP
+\f(BISLEEPING \fP
+.TP
+\f(BITHINKING \fP
+.TP
+\f(BIDIED \fP
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Philosopher from the source code\&.

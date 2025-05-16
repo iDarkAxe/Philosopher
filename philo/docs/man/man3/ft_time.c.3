@@ -1,0 +1,46 @@
+.TH "src/ft_time.c" 3 "Philosopher" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/ft_time.c
+.SH SYNOPSIS
+.br
+.PP
+\fR#include 'philo\&.h'\fP
+.br
+\fR#include 'routine\&.h'\fP
+.br
+\fR#include 'ft_time\&.h'\fP
+.br
+\fR#include <stdio\&.h>\fP
+.br
+\fR#include <time\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBft_usleep\fP (size_t wait_time, \fBt_philo\fP *philo)"
+.br
+.RI "Special usleep function that checks if the simulation is running during it's sleep time\&. "
+.ti -1c
+.RI "size_t \fBget_time\fP (void)"
+.br
+.RI "Return the current time in ms\&. "
+.ti -1c
+.RI "size_t \fBget_dtime\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Get the delta time since the start of the simulation\&. "
+.ti -1c
+.RI "int \fBdoes_have_time\fP (\fBt_philo\fP *philo, enum \fBe_philo_state\fP p_state)"
+.br
+.RI "Check if the philosopher has time to do something\&. "
+.ti -1c
+.RI "void \fBwait_everyone\fP (\fBt_philo\fP *philo, const int *const value1, const int *const value2)"
+.br
+.RI "Wait for everyone to be ready before starting the simulation\&. "
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Philosopher from the source code\&.

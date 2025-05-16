@@ -1,0 +1,7 @@
+<map id="ft_usleep" name="ft_usleep">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,87,56"/>
+<area shape="rect" id="Node000002" href="$ft__time_8c.html#a90332f1586aa4a4d2d42eaef99983050" title=" " alt="" coords="139,5,219,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,33,125,25,126,31,87,38"/>
+<area shape="rect" id="Node000003" href="$philo-utils_8c.html#a40f2cba74096931f31b597aeb3d9342a" title="Check if it&#39;s running." alt="" coords="135,55,224,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="87,48,122,54,121,60,86,53"/>
+</map>

@@ -1,0 +1,161 @@
+.TH "inc/philo.h" 3 "Philosopher" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+inc/philo.h \- Header file for the philosopher's project\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fR#include <pthread\&.h>\fP
+.br
+\fR#include <sys/time\&.h>\fP
+.br
+\fR#include <unistd\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBs_time\fP"
+.br
+.ti -1c
+.RI "struct \fBs_rules\fP"
+.br
+.ti -1c
+.RI "struct \fBs_philo\fP"
+.br
+.ti -1c
+.RI "struct \fBs_shared\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBALL_ATE_MSG\fP   0"
+.br
+.ti -1c
+.RI "#define \fBDELAY\fP   200"
+.br
+.RI "Delay for the usleep function\&. "
+.ti -1c
+.RI "#define \fBWAIT_EVERYONE\fP   0"
+.br
+.RI "Macro to make all the philosophers wait starting simultaneously\&. "
+.ti -1c
+.RI "#define \fBNBR_OF_ARGUMENT_INVALID_MSG\fP   'Error:\\nWrong number of arguments\\n'"
+.br
+.RI "Error messages for the program\&. "
+.ti -1c
+.RI "#define \fBARGUMENT_INVALID_MSG\fP   	'Values accepted :\\n\\tnb_philo 0\-400\\n\\	die_time > 0\\n\\teat_time > 0\\n\\tsleep_time > 0\\n\\tnb_eat \\t>= 0\\n'"
+.br
+.ti -1c
+.RI "#define \fBWRONG_ARGUMENT_MSG\fP   'Error:\\nArguments should be only integers\\n'"
+.br
+.ti -1c
+.RI "#define \fBTOO_MUCH_PHILOS_MSG\fP   'Error:\\nToo much philos, should be under 400\\n'"
+.br
+.ti -1c
+.RI "#define \fBRULES_NOT_CREATED_MSG\fP   'Error:\\nCreation of rules\\n'"
+.br
+.ti -1c
+.RI "#define \fBPTHREAD_CREATING_MSG\fP   'Error pthread_create\\n'"
+.br
+.ti -1c
+.RI "#define \fBPTHREAD_DETACH_MSG\fP   'Error pthread_detach\\n'"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBs_rules\fP \fBt_rules\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBs_philo\fP \fBt_philo\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBs_shared\fP \fBt_shared\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBs_time\fP \fBt_time\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBe_error_message\fP { \fBNBR_OF_ARGUMENT_INVALID\fP, \fBARGUMENT_INVALID\fP, \fBWRONG_ARGUMENT\fP, \fBTOO_MUCH_PHILOS\fP, \fBRULES_NOT_CREATED\fP, \fBPTHREAD_CREATING\fP, \fBPTHREAD_DETACH\fP }"
+.br
+.RI "Error codes for the program\&. "
+.ti -1c
+.RI "enum \fBe_philo_state\fP { \fBTOOK_FORK\fP = 0, \fBEATING\fP = 1, \fBSLEEPING\fP = 2, \fBTHINKING\fP = 3, \fBDIED\fP = 4 }"
+.br
+.RI "State of the philosopher\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBparse_args\fP (int argc, char **argv, \fBt_rules\fP *rules)"
+.br
+.RI "Parse arguments and store them in the rules structure Uses simple atoi function to convert strings to int\&. "
+.ti -1c
+.RI "int \fBinit_philos\fP (\fBt_rules\fP *rules, \fBt_shared\fP *shared, \fBt_philo\fP **philo)"
+.br
+.RI "Initialize the philosophers\&. "
+.ti -1c
+.RI "int \fBinit_mutex\fP (\fBt_shared\fP *shared, \fBt_philo\fP *philo, int count)"
+.br
+.RI "Initialize the forks and mutex\&. "
+.ti -1c
+.RI "int \fBis_running\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Check if it's running\&. "
+.ti -1c
+.RI "void \fBfree_shared\fP (\fBt_shared\fP *shared, int count, int flag)"
+.br
+.RI "Free all the data in \fBs_shared\fP structure\&. "
+.ti -1c
+.RI "void \fBfree_philos\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Free the philo structure\&. "
+.ti -1c
+.RI "void * \fBft_calloc\fP (size_t element_count, size_t element_size)"
+.br
+.RI "Allocates a new memory zone, and set all bits to zero\&. "
+.ti -1c
+.RI "void \fBft_bzero\fP (void *s, size_t n)"
+.br
+.RI "Set at 0, the n first bytes at the pointer adress\&. "
+.ti -1c
+.RI "void * \fBft_memcpy\fP (void *destination, const void *source, size_t size)"
+.br
+.RI "Set a memory zone with a value, count times\&. "
+.ti -1c
+.RI "size_t \fBft_strlen\fP (const char *str)"
+.br
+.RI "Count the number of characters in a string\&. "
+.ti -1c
+.RI "ssize_t \fBerror_message\fP (enum \fBe_error_message\fP state)"
+.br
+.RI "Function to print the error message\&. "
+.ti -1c
+.RI "void \fBprint_eat\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Just prints the number of times each philosopher has eaten\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for the philosopher's project\&. 
+
+Contains all structures, function prototypes, and constants used in the project\&. 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ALL_ATE_MSG   0"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Philosopher from the source code\&.

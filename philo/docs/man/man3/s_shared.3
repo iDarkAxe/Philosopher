@@ -1,0 +1,60 @@
+.TH "s_shared" 3 "Philosopher" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+s_shared
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <philo\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "int \fBready\fP"
+.br
+.ti -1c
+.RI "char \fBis_running\fP"
+.br
+.ti -1c
+.RI "char * \fBis_fork_taken\fP"
+.br
+.ti -1c
+.RI "pthread_mutex_t * \fBforks\fP"
+.br
+.ti -1c
+.RI "pthread_mutex_t \fBprint\fP"
+.br
+.ti -1c
+.RI "pthread_mutex_t \fBis_running_access\fP"
+.br
+.ti -1c
+.RI "pthread_mutex_t \fBmeal_access\fP"
+.br
+.ti -1c
+.RI "pthread_mutex_t \fBread_shared\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "pthread_mutex_t* s_shared::forks"
+Forks mutex 
+.SS "char* s_shared::is_fork_taken"
+Forks state 
+.SS "char s_shared::is_running"
+Flag to check if sim is running 
+.SS "pthread_mutex_t s_shared::is_running_access"
+Mutex to access is_running 
+.SS "pthread_mutex_t s_shared::meal_access"
+Mutex to access last meal 
+.SS "pthread_mutex_t s_shared::print"
+Mutex to have access to printing 
+.SS "pthread_mutex_t s_shared::read_shared"
+Mutex to access shared data 
+.SS "int s_shared::ready"
+Flag to check if philos are ready 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Philosopher from the source code\&.

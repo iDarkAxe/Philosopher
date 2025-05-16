@@ -1,0 +1,30 @@
+<map id="philo_routine" name="philo_routine">
+<area shape="rect" id="Node000001" title="Philosopher&#39;s routine." alt="" coords="5,157,112,183"/>
+<area shape="rect" id="Node000002" href="$group__Time.html#ga844586d4dbc43f992ff72dc089a8e060" title="Check if the philosopher has time to do something." alt="" coords="296,259,425,284"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,180,310,252,308,257,97,185"/>
+<area shape="rect" id="Node000008" href="$group__Routine.html#gae9a96e6067d5f774afe68dabb3cadfa0" title="Print message for the state of the philosopher." alt="" coords="473,107,592,132"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="111,155,159,143,227,127,296,115,361,113,425,115,459,116,459,121,425,121,361,118,296,121,228,132,161,149,112,160"/>
+<area shape="rect" id="Node000009" href="$group__Routine.html#gaed8a38c46b47caaf084aa231f67be889" title="Try eating, if there is no time remaining, Stops it&#39;s execution and return 0." alt="" coords="160,157,248,183"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="112,167,146,167,146,173,112,173"/>
+<area shape="rect" id="Node000003" href="$group__Time.html#gaf95270984b980e2b1023b373aa788315" title="Special usleep function that checks if the simulation is running during it&#39;s sleep time." alt="" coords="492,156,573,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="382,256,497,186,500,191,384,261"/>
+<area shape="rect" id="Node000006" href="$group__Time.html#ga15213046e43cb166dac4e21cc5f39c35" title="Get the delta time since the start of the simulation." alt="" coords="641,233,729,259"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="402,281,442,291,489,299,541,301,591,294,624,281,653,264,656,269,627,286,593,299,541,306,489,304,440,297,400,287"/>
+<area shape="rect" id="Node000007" href="$group__Routine.html#ga61b47cad0fd3592e8b5faddb1ea1f560" title="Philosopher&#39;s death that sets the is_dead flag detected by the observer." alt="" coords="488,259,577,284"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="426,269,474,269,474,274,426,274"/>
+<area shape="rect" id="Node000004" href="$group__Time.html#ga90332f1586aa4a4d2d42eaef99983050" title="Return the current time in ms." alt="" coords="645,156,725,181"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="574,166,631,166,631,171,574,171"/>
+<area shape="rect" id="Node000005" href="$group__Functions.html#ga40f2cba74096931f31b597aeb3d9342a" title="Check if it&#39;s running." alt="" coords="640,107,729,132"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="572,153,631,134,632,139,573,158"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="577,261,627,253,628,258,578,267"/>
+<area shape="poly" id="edge10_Node000008_Node000005" title=" " alt="" coords="592,117,627,117,627,122,592,122"/>
+<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="571,130,594,143,628,176,666,221,662,224,624,180,590,147,568,134"/>
+<area shape="poly" id="edge12_Node000009_Node000002" title=" " alt="" coords="222,181,256,208,297,237,320,250,318,255,295,242,252,212,218,185"/>
+<area shape="poly" id="edge13_Node000009_Node000006" title=" " alt="" coords="247,180,297,193,477,222,628,239,627,244,477,227,295,198,245,185"/>
+<area shape="poly" id="edge14_Node000009_Node000008" title=" " alt="" coords="248,155,295,143,380,130,459,122,460,127,381,136,297,149,249,160"/>
+<area shape="rect" id="Node000010" href="$group__Routine.html#ga5e1f268b2e73cdb68f766672edd79cb5" title="Set back the fork object to not taken." alt="" coords="304,157,417,183"/>
+<area shape="poly" id="edge15_Node000009_Node000010" title=" " alt="" coords="248,167,290,167,290,173,248,173"/>
+<area shape="rect" id="Node000011" href="$group__Routine.html#ga10fb113a2555f4cd4d13e49adfc9bd44" title="Try taking a fork." alt="" coords="300,5,421,31"/>
+<area shape="poly" id="edge16_Node000009_Node000011" title=" " alt="" coords="217,155,335,39,339,42,220,159"/>
+<area shape="poly" id="edge17_Node000011_Node000005" title=" " alt="" coords="403,28,631,100,629,105,402,33"/>
+</map>

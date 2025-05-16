@@ -1,0 +1,9 @@
+<map id="inc/philo.h" name="inc/philo.h">
+<area shape="rect" id="Node000001" title="Header file for the philosopher&#39;s project." alt="" coords="115,5,204,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,89,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,33,79,73,76,69,140,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="114,79,205,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="162,31,162,65,157,65,157,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="229,79,303,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="178,28,239,69,236,73,175,33"/>
+</map>

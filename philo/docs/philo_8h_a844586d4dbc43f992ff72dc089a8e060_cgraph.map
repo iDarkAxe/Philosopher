@@ -1,0 +1,14 @@
+<map id="does_have_time" name="does_have_time">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,80,135,105"/>
+<area shape="rect" id="Node000002" href="$ft__time_8c.html#af95270984b980e2b1023b373aa788315" title=" " alt="" coords="187,29,268,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,77,173,57,175,62,111,82"/>
+<area shape="rect" id="Node000005" href="$ft__time_8c.html#a15213046e43cb166dac4e21cc5f39c35" title=" " alt="" coords="321,105,409,131"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="135,96,307,110,307,116,134,101"/>
+<area shape="rect" id="Node000006" href="$philo_8c.html#a61b47cad0fd3592e8b5faddb1ea1f560" title=" " alt="" coords="183,131,272,156"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="111,103,175,124,173,129,110,108"/>
+<area shape="rect" id="Node000003" href="$ft__time_8c.html#a90332f1586aa4a4d2d42eaef99983050" title=" " alt="" coords="325,5,405,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="268,32,311,25,312,30,269,38"/>
+<area shape="rect" id="Node000004" href="$philo-utils_8c.html#a40f2cba74096931f31b597aeb3d9342a" title="Check if it&#39;s running." alt="" coords="320,55,409,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="269,47,307,54,306,59,268,52"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="272,133,307,126,308,131,273,138"/>
+</map>

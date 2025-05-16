@@ -1,0 +1,5 @@
+<map id="philo_died" name="philo_died">
+<area shape="rect" id="Node000001" title="Philosopher&#39;s death that sets the is_dead flag detected by the observer." alt="" coords="5,5,95,31"/>
+<area shape="rect" id="Node000002" href="$group__Time.html#ga15213046e43cb166dac4e21cc5f39c35" title="Get the delta time since the start of the simulation." alt="" coords="143,5,231,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,15,129,15,129,21,95,21"/>
+</map>

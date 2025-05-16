@@ -1,0 +1,26 @@
+<map id="try_eating" name="try_eating">
+<area shape="rect" id="Node000001" title="Try eating, if there is no time remaining, Stops it&#39;s execution and return 0." alt="" coords="5,132,93,157"/>
+<area shape="rect" id="Node000002" href="$group__Time.html#ga844586d4dbc43f992ff72dc089a8e060" title="Check if the philosopher has time to do something." alt="" coords="141,132,271,157"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,142,128,142,128,147,94,147"/>
+<area shape="rect" id="Node000006" href="$group__Time.html#ga15213046e43cb166dac4e21cc5f39c35" title="Get the delta time since the start of the simulation." alt="" coords="486,156,574,181"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="92,155,142,166,224,177,289,181,437,175,472,173,473,178,437,181,289,186,224,182,141,171,91,160"/>
+<area shape="rect" id="Node000008" href="$group__Routine.html#gae9a96e6067d5f774afe68dabb3cadfa0" title="Print message for the state of the philosopher." alt="" coords="319,81,437,107"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="90,129,141,117,226,104,305,96,305,101,226,109,142,122,92,134"/>
+<area shape="rect" id="Node000009" href="$group__Routine.html#ga5e1f268b2e73cdb68f766672edd79cb5" title="Set back the fork object to not taken." alt="" coords="149,283,263,308"/>
+<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="60,156,93,206,116,235,143,261,162,274,159,279,140,265,112,239,88,209,56,159"/>
+<area shape="rect" id="Node000010" href="$group__Routine.html#ga10fb113a2555f4cd4d13e49adfc9bd44" title="Try taking a fork." alt="" coords="145,5,267,31"/>
+<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="65,130,177,37,180,41,68,134"/>
+<area shape="rect" id="Node000003" href="$group__Time.html#gaf95270984b980e2b1023b373aa788315" title="Special usleep function that checks if the simulation is running during it&#39;s sleep time." alt="" coords="337,32,419,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="222,130,264,99,317,66,329,61,331,65,320,71,267,104,225,134"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="260,155,319,165,399,169,472,169,472,174,399,174,318,170,259,160"/>
+<area shape="rect" id="Node000007" href="$group__Routine.html#ga61b47cad0fd3592e8b5faddb1ea1f560" title="Philosopher&#39;s death that sets the is_dead flag detected by the observer." alt="" coords="333,131,423,156"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="271,141,319,141,319,146,271,147"/>
+<area shape="rect" id="Node000004" href="$group__Time.html#ga90332f1586aa4a4d2d42eaef99983050" title="Return the current time in ms." alt="" coords="490,8,570,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="419,36,476,26,477,32,419,41"/>
+<area shape="rect" id="Node000005" href="$group__Functions.html#ga40f2cba74096931f31b597aeb3d9342a" title="Check if it&#39;s running." alt="" coords="485,57,575,83"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="419,49,472,58,472,63,419,54"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="423,148,473,156,472,162,422,153"/>
+<area shape="poly" id="edge11_Node000008_Node000005" title=" " alt="" coords="437,82,471,76,472,82,438,87"/>
+<area shape="poly" id="edge10_Node000008_Node000006" title=" " alt="" coords="413,104,439,116,497,147,494,151,436,120,411,109"/>
+<area shape="poly" id="edge14_Node000010_Node000005" title=" " alt="" coords="267,8,349,5,394,8,438,17,496,48,494,53,436,22,393,14,349,10,267,13"/>
+</map>

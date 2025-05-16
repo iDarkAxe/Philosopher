@@ -1,0 +1,181 @@
+.TH "Routine" 3 "Philosopher" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Routine \- Functions for the philosopher's routine
+.PP
+ \- Function used by philos to manage their routine\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBphilo_routine\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Philosopher's routine\&. "
+.ti -1c
+.RI "void * \fBstart_routine\fP (void *ptr)"
+.br
+.RI "Starting point of the philosopher's thread\&. "
+.ti -1c
+.RI "void \fBprint_message\fP (\fBt_philo\fP *philo, enum \fBe_philo_state\fP p_state)"
+.br
+.RI "Print message for the state of the philosopher\&. "
+.ti -1c
+.RI "int \fBtry_taking_fork\fP (\fBt_philo\fP *philo, char is_left)"
+.br
+.RI "Try taking a fork\&. "
+.ti -1c
+.RI "int \fBset_back_fork\fP (\fBt_philo\fP *philo, char is_left)"
+.br
+.RI "Set back the fork object to not taken\&. "
+.ti -1c
+.RI "int \fBtry_eating\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Try eating, if there is no time remaining, Stops it's execution and return 0\&. "
+.ti -1c
+.RI "int \fBhas_everyone_ate\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Function to check if all philosophers have eaten enough\&. "
+.ti -1c
+.RI "void \fBphilo_died\fP (\fBt_philo\fP *philo)"
+.br
+.RI "Philosopher's death that sets the is_dead flag detected by the observer\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Function used by philos to manage their routine\&. 
+
+
+.SH "Function Documentation"
+.PP 
+.SS "int has_everyone_ate (\fBt_philo\fP * philo)"
+
+.PP
+Function to check if all philosophers have eaten enough\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIphilo\fP philosopher structure 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 1 if all philosophers have eaten enough, 0 otherwise 
+.RE
+.PP
+
+.SS "void philo_died (\fBt_philo\fP * philo)"
+
+.PP
+Philosopher's death that sets the is_dead flag detected by the observer\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIphilo\fP philosopher structure 
+.RE
+.PP
+
+.SS "int philo_routine (\fBt_philo\fP * philo)"
+
+.PP
+Philosopher's routine\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIphilo\fP pointer to the philosopher structure 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 1 if the routine is successful, 0 otherwise 
+.RE
+.PP
+
+.SS "void print_message (\fBt_philo\fP * philo, enum \fBe_philo_state\fP p_state)"
+
+.PP
+Print message for the state of the philosopher\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIphilo\fP philosopher 
+.br
+\fIp_state\fP philosopher state to print 
+.RE
+.PP
+
+.SS "int set_back_fork (\fBt_philo\fP * philo, char is_left)"
+
+.PP
+Set back the fork object to not taken\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIphilo\fP philo structure 
+.br
+\fIis_left\fP 1 for left fork, 0 for right fork 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 1 if successful, 0 otherwise 
+.RE
+.PP
+
+.SS "void * start_routine (void * ptr)"
+
+.PP
+Starting point of the philosopher's thread\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIptr\fP pointer to the philosopher structure 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void* NULL 
+.RE
+.PP
+
+.SS "int try_eating (\fBt_philo\fP * philo)"
+
+.PP
+Try eating, if there is no time remaining, Stops it's execution and return 0\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIphilo\fP philo structure 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 1 if successful, 0 otherwise 
+.RE
+.PP
+
+.SS "int try_taking_fork (\fBt_philo\fP * philo, char is_left)"
+
+.PP
+Try taking a fork\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIphilo\fP philo structure 
+.br
+\fIis_left\fP 1 for left fork, 0 for right fork 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Philosopher from the source code\&.

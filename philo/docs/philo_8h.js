@@ -1,0 +1,45 @@
+var philo_8h =
+[
+    [ "ALL_ATE_MSG", "philo_8h.html#a42bcacede44956f32e227d2af59518b9", null ],
+    [ "ARGUMENT_INVALID_MSG", "group__Structures.html#ga8b74fdf0e6d6a2ac917204ee0d7a2e94", null ],
+    [ "DELAY", "group__Structures.html#ga62249e384b997229a3e2ae74ade334e2", null ],
+    [ "NBR_OF_ARGUMENT_INVALID_MSG", "group__Structures.html#ga2a713d85f700c827ca98f9df249686bc", null ],
+    [ "PTHREAD_CREATING_MSG", "group__Structures.html#ga1ed965f6b8c441c2eb6ed0c7206c11fb", null ],
+    [ "PTHREAD_DETACH_MSG", "group__Structures.html#ga1c89191e429208b7f7aa8f8692143c4b", null ],
+    [ "RULES_NOT_CREATED_MSG", "group__Structures.html#gad69620a654b18f31805fe17478ccbe73", null ],
+    [ "TOO_MUCH_PHILOS_MSG", "group__Structures.html#ga2e6b14b6b68c5243d65cd3eb8313226d", null ],
+    [ "WAIT_EVERYONE", "group__Structures.html#ga7441740922a69582259f404e6fb51c97", null ],
+    [ "WRONG_ARGUMENT_MSG", "group__Structures.html#ga1afa09b5604002b50dd32db91c4d8768", null ],
+    [ "t_philo", "group__Structures.html#ga7b20ce4f97b6f0dc2e44a50c149be74d", null ],
+    [ "t_rules", "group__Structures.html#gae0691034cd87bb4269c048376b16901c", null ],
+    [ "t_shared", "group__Structures.html#gafb115465f4e65c70b3d89ddda89a7c22", null ],
+    [ "t_time", "group__Structures.html#gad406b3468d25a4ca6c335f673434389d", null ],
+    [ "e_error_message", "group__Structures.html#ga77308378cb256194bf991866c670cc6c", [
+      [ "NBR_OF_ARGUMENT_INVALID", "group__Structures.html#gga77308378cb256194bf991866c670cc6ca600ad401a1cfac6089d4072444e7486b", null ],
+      [ "ARGUMENT_INVALID", "group__Structures.html#gga77308378cb256194bf991866c670cc6ca9f610834514fcb4640157505d29d14c7", null ],
+      [ "WRONG_ARGUMENT", "group__Structures.html#gga77308378cb256194bf991866c670cc6ca9dcac3d34722cb93b3cb8d6260b0d2f9", null ],
+      [ "TOO_MUCH_PHILOS", "group__Structures.html#gga77308378cb256194bf991866c670cc6caa19acd033e53a31536fb0c10bafc3671", null ],
+      [ "RULES_NOT_CREATED", "group__Structures.html#gga77308378cb256194bf991866c670cc6ca72de8aca70517c0b361cccd7a61ee706", null ],
+      [ "PTHREAD_CREATING", "group__Structures.html#gga77308378cb256194bf991866c670cc6ca66b53da1ec38bac3bcd32e92b1dc8494", null ],
+      [ "PTHREAD_DETACH", "group__Structures.html#gga77308378cb256194bf991866c670cc6ca12713a468604e75736c5cb1e9e8a98eb", null ]
+    ] ],
+    [ "e_philo_state", "group__Structures.html#gad4984849a1bc585c7e0d380d1bef1667", [
+      [ "TOOK_FORK", "group__Structures.html#ggad4984849a1bc585c7e0d380d1bef1667ae03e0dbb3bd838ac9ac0ce55a1d23e3b", null ],
+      [ "EATING", "group__Structures.html#ggad4984849a1bc585c7e0d380d1bef1667a7dea639cac54c049540bc4c3074749fa", null ],
+      [ "SLEEPING", "group__Structures.html#ggad4984849a1bc585c7e0d380d1bef1667a488282601451a751e0f0e770b15d4235", null ],
+      [ "THINKING", "group__Structures.html#ggad4984849a1bc585c7e0d380d1bef1667a95fa912d68ac097a4a83d1b1f3527401", null ],
+      [ "DIED", "group__Structures.html#ggad4984849a1bc585c7e0d380d1bef1667a77cfb3f8b737b27529fe9d616dc0720a", null ]
+    ] ],
+    [ "error_message", "group__Functions.html#gadb26ba620b055a4b3ea2a7d1f5f178bc", null ],
+    [ "free_philos", "group__Functions.html#ga85259d606797d4332ffbb831ddf96ef8", null ],
+    [ "free_shared", "group__Functions.html#ga153368a581c1bb34243319a62c5d1cb4", null ],
+    [ "ft_bzero", "group__Functions.html#ga5937ab0d08e31d0e3e4a16ec71e293a1", null ],
+    [ "ft_calloc", "group__Functions.html#ga187061b485627b05f783c980d5a9e518", null ],
+    [ "ft_memcpy", "group__Functions.html#ga8258f5e699ea29aab4f133954cf033b6", null ],
+    [ "ft_strlen", "group__Functions.html#ga828402378653640f545a4be2e00e92f9", null ],
+    [ "init_mutex", "group__Functions.html#ga671b7f1c742657791eb05f6b464d59f4", null ],
+    [ "init_philos", "group__Functions.html#ga216d5b87113245177d6f4c83ee14e03e", null ],
+    [ "is_running", "group__Functions.html#ga40f2cba74096931f31b597aeb3d9342a", null ],
+    [ "parse_args", "group__Functions.html#ga019ef94142dca2dd46c700ccc5bb0524", null ],
+    [ "print_eat", "group__Functions.html#gac84af318addc77c349c893a33e0bfddf", null ]
+];

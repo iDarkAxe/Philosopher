@@ -1,0 +1,19 @@
+<map id="src/main.c" name="src/main.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="217,5,306,31"/>
+<area shape="rect" id="Node000002" href="$philo_8h.html" title="Header file for the philosopher&#39;s project." alt="" coords="124,152,191,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="218,30,171,47,151,61,134,80,129,94,130,109,143,139,138,141,125,110,124,93,130,77,147,57,169,43,216,25"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="219,225,303,251"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="264,31,264,211,259,211,259,31"/>
+<area shape="rect" id="Node000006" href="$routine_8h.html" title=" " alt="" coords="144,79,224,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="251,33,209,71,205,67,247,29"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="299,79,365,104"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="275,29,313,67,309,71,271,33"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="390,79,461,104"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="289,28,387,71,385,76,287,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="176,175,234,215,231,219,173,180"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,225,96,251"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="142,180,81,220,78,215,139,175"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="120,225,195,251"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="160,178,160,212,155,212,155,178"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="182,105,169,140,164,138,177,103"/>
+</map>

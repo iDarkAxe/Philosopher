@@ -1,0 +1,23 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title="Main function of the program philo." alt="" coords="5,85,60,110"/>
+<area shape="rect" id="Node000002" href="$group__Functions.html#ga85259d606797d4332ffbb831ddf96ef8" title="Free the philo structure." alt="" coords="261,9,356,34"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="40,83,66,49,85,32,107,19,142,8,179,4,248,7,248,12,179,9,143,14,109,24,88,36,70,53,44,86"/>
+<area shape="rect" id="Node000003" href="$group__Functions.html#ga153368a581c1bb34243319a62c5d1cb4" title="Free all the data in s_shared structure." alt="" coords="259,71,358,97"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="60,94,246,84,246,90,60,99"/>
+<area shape="rect" id="Node000004" href="$group__Functions.html#ga671b7f1c742657791eb05f6b464d59f4" title="Initialize the forks and mutex." alt="" coords="109,34,201,59"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="59,84,110,62,112,67,62,89"/>
+<area shape="rect" id="Node000005" href="$group__Functions.html#ga216d5b87113245177d6f4c83ee14e03e" title="Initialize the philosophers." alt="" coords="110,135,199,161"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="62,106,112,128,110,133,59,111"/>
+<area shape="rect" id="Node000008" href="$group__Functions.html#ga019ef94142dca2dd46c700ccc5bb0524" title="Parse arguments and store them in the rules structure Uses simple atoi function to convert strings to..." alt="" coords="108,185,201,210"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="46,109,74,139,110,171,115,175,112,180,106,176,70,143,42,112"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="201,37,247,29,248,34,201,42"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="202,55,247,66,245,72,200,61"/>
+<area shape="rect" id="Node000006" href="$group__Functions.html#ga187061b485627b05f783c980d5a9e518" title="Allocates a new memory zone, and set all bits to zero." alt="" coords="271,135,347,161"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="199,145,257,145,257,151,199,151"/>
+<area shape="rect" id="Node000007" href="$group__Functions.html#ga5937ab0d08e31d0e3e4a16ec71e293a1" title="Set at 0, the n first bytes at the pointer adress." alt="" coords="416,135,491,161"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="347,145,402,145,402,151,347,151"/>
+<area shape="rect" id="Node000009" href="$group__Functions.html#gadb26ba620b055a4b3ea2a7d1f5f178bc" title="Function to print the error message." alt="" coords="249,185,368,210"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="201,195,236,195,236,200,201,200"/>
+<area shape="rect" id="Node000010" href="$group__Functions.html#ga828402378653640f545a4be2e00e92f9" title="Count the number of characters in a string." alt="" coords="416,185,491,210"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="368,195,402,195,402,200,368,200"/>
+</map>
