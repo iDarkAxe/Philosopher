@@ -1,0 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo-utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/11 16:23:43 by ppontet           #+#    #+#             */
+/*   Updated: 2025/05/16 12:32:14 by ppontet          ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+#include "routine.h"
+#include "ft_time.h"
+#include <stdio.h>
+
+int		is_running(t_philo *philo);
+int		has_everyone_ate(t_philo *philo);
+
+/**
+ * @brief Check if it's running
+ *
+ * @param philo philo structure
+ * @return int 1 is running, 0 otherwise
+ */
+int	is_running(t_philo *philo)
+{
+	if (philo == NULL)
+		return (0);
+	pthread_mutex_lock(&philo->shared->is_running_access);
+	if (philo->shared->is_running == 1)
+	{
+		pthread_mutex_unlock(&philo->shared->is_running_access);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->shared->is_running_access);
+	return (0);
+}
+
+/**
+ * @brief Function to check if all philosophers have eaten enough
+ * 
+ * @param philo philosopher structure
+ * @return int 1 if all philosophers have eaten enough, 0 otherwise
+ */
+int	has_everyone_ate(t_philo *philo)
+{
+	int	index;
+
+	if (philo == NULL)
+		return (0);
+	if (philo->rules->nb_eat_target < 0)
+		return (0);
+	index = 0;
+	pthread_mutex_lock(&philo->shared->meal_access);
+	while (index < philo->rules->nb_philo)
+	{
+		if (philo[index].is_dead == 1)
+			break ;
+		if (philo[index].nb_eat < philo->rules->nb_eat_target)
+		{
+			pthread_mutex_unlock(&philo->shared->meal_access);
+			return (0);
+		}
+		index++;
+	}
+	pthread_mutex_unlock(&philo->shared->meal_access);
+	return (1);
+}
+
+/**
+ * @brief Print message for the state of the philosopher
+ *
+ * @param philo philosopher
+ * @param p_state philosopher state to print
+ */
+void	print_message(t_philo *philo, enum e_philo_state p_state)
+{
+	static const char	*state[] = {"has taken a fork", "is eating",
+		"is sleeping", "is thinking", "died"};
+
+	pthread_mutex_lock(&philo->shared->print);
+	if (is_running(philo) == 0)
+	{
+		pthread_mutex_unlock(&philo->shared->print);
+		return ;
+	}
+	printf("%ld\t%d\t%s\n", get_dtime(philo), philo->id, state[(int)p_state]);
+	pthread_mutex_unlock(&philo->shared->print);
+}

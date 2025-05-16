@@ -6,42 +6,49 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/02/09 10:53:14 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/13 12:47:23 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-//! @TODO: remove this include and printf
-#include <stdio.h>
 
 static char	verify_char(char letter);
 static int	verify_arguments(int argc, char **argv);
 static int	ft_atoi(const char *nptr);
 
-int	parse_args(int argc, char **argv, t_philo *philo)
+/**
+ * @brief Parse arguments and store them in the rules structure
+ * Uses simple atoi function to convert strings to int
+ *
+ * @param argc number of arguments
+ * @param argv array of strings
+ * @param rules pointer to the rules structure
+ * @return int 0 if OK, 1 if error
+ */
+int	parse_args(int argc, char **argv, t_rules *rules)
 {
-	(void)argc;
-	(void)argv;
-	if (verify_arguments(argc, argv) == -1)
+	if (argc < 5 || argc > 6)
 	{
-		write(2, "Error:\nWrong arguments\n", 24);
+		error_message(NBR_OF_ARGUMENT_INVALID);
 		return (1);
 	}
-	philo->nb_philo = ft_atoi(argv[1]);
-	philo->time_to_die = ft_atoi(argv[2]);
-	philo->time_to_eat = ft_atoi(argv[3]);
-	philo->time_to_sleep = ft_atoi(argv[4]);
+	if (verify_arguments(argc, argv) == -1)
+		return (2);
+	rules->nb_philo = ft_atoi(argv[1]);
+	rules->time_to_die = ft_atoi(argv[2]);
+	rules->time_to_eat = ft_atoi(argv[3]);
+	rules->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		philo->nb_eat = ft_atoi(argv[5]);
+		rules->nb_eat_target = ft_atoi(argv[5]);
 	else
-		philo->nb_eat = -1;
-	printf("nb_philo: %zu\ntime_to_die: %d\ntime_to_eat: %d\ntime_to_sleep:\
-		%d\nnb_eat: %d\n",
-		philo->nb_philo,
-		philo->time_to_die,
-		philo->time_to_eat,
-		philo->time_to_sleep,
-		philo->nb_eat);
+		rules->nb_eat_target = -1;
+	if (rules->nb_philo <= 0 || rules->nb_philo > 400
+		|| rules->time_to_die <= 0 || rules->time_to_eat <= 0
+		|| rules->time_to_sleep <= 0 || rules->nb_eat_target < -1)
+	{
+		error_message(ARGUMENT_INVALID);
+		return (3);
+	}
 	return (0);
 }
 
@@ -53,8 +60,7 @@ int	parse_args(int argc, char **argv, t_philo *philo)
  */
 static char	verify_char(char letter)
 {
-	if ((letter >= '0' && letter <= '9') || letter == ' ' || letter == '-'
-		|| letter == '+')
+	if ((letter >= '0' && letter <= '9') || letter == ' ' || letter == '+')
 		return (letter);
 	return (0);
 }
@@ -78,7 +84,10 @@ static int	verify_arguments(int argc, char **argv)
 		while (argv[arg_index][index] != '\0')
 		{
 			if (verify_char(argv[arg_index][index]) == 0)
+			{
+				error_message(WRONG_ARGUMENT);
 				return (-1);
+			}
 			index++;
 		}
 		arg_index++;

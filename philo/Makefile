@@ -1,15 +1,16 @@
 .PHONY : all clean fclean re bonus clean-lib clean-bin clean-obj debug debug-cc debug-print
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ofast
+CFLAGS = -Wall -Wextra -Werror $(WAIT_STATE) -pthread
 DEPENDANCIES = -MMD -MP
 NO_DIR = --no-print-directory
 MAKE := $(MAKE) -j $(NO_DIR)
 NAME = philo
 
 # Debugging flags
-CFLAGS_DEBUG = -Wall -Wextra -g3 -D DEBUG=1
+WAIT_STATE= -D WAIT_EVERYONE=0
+CFLAGS_DEBUG = -Wall -Wextra -g3 $(WAIT_STATE)
 CC_DEBUG = clang
-CC_DEBUG_CFLAGS = -g3 -D DEBUG=1 -Weverything -Wno-padded -pedantic -O2 -Wwrite-strings -Wconversion -fsanitize=address -fsanitize=leak
+CC_DEBUG_CFLAGS = -g3 -Weverything -Wno-padded -pedantic -Wwrite-strings -Wconversion -fsanitize=address -fsanitize=leak
 #############################################################################################
 #                                                                                           #
 #                                         DIRECTORIES                                       #
@@ -18,6 +19,8 @@ CC_DEBUG_CFLAGS = -g3 -D DEBUG=1 -Weverything -Wno-padded -pedantic -O2 -Wwrite-
 # Source directories
 P_SRC = src/
 P_PARSER = parser/
+P_THREAD = thread/
+P_PHILO = philo/
 
 # Object directories
 P_OBJ = .obj/
@@ -35,17 +38,29 @@ P_LIB = lib/
 #############################################################################################
 # Headers
 INC = \
-	ft_pushswap.h
+	philo.h \
+	routine.h \
+	ft_time.h 
 
 # Source files
 SRC = \
-	main.c
+	main.c \
+	error_message.c \
+	ft_utils.c \
+	ft_free.c \
+	ft_init.c \
+	ft_time.c \
+	debug-print.c
 
 PARSER = \
 	parser.c
 
+PHILO = \
+	philo-utils.c \
+	philo-eating.c \
+	philo.c
+
 LIBS = \
-	libpush_swap.a
 
 #############################################################################################
 #                                                                                           #
@@ -54,7 +69,9 @@ LIBS = \
 #############################################################################################
 SRCS =	\
 	$(addprefix $(P_SRC), $(SRC)) \
-	$(addprefix $(P_SRC)$(P_PARSER), $(PARSER)) 
+	$(addprefix $(P_SRC)$(P_PARSER), $(PARSER)) \
+	$(addprefix $(P_SRC)$(P_PHILO), $(PHILO)) \
+	$(addprefix $(P_SRC)$(P_THREAD), $(THREAD)) 
 
 # List of object files (redirect to P_OBJ)
 OBJS = $(subst $(P_SRC), $(P_OBJ), $(SRCS:.c=.o))
@@ -73,15 +90,18 @@ INCS = $(addprefix $(P_INC), $(INC))
 #############################################################################################
 all: 
 	@$(MAKE) $(NAME)
+# @$(MAKE) $(NAME)
 
-# Create push_swap executable
-$(NAME): $(P_OBJ)main.o $(OBJS)
-	$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -o $(NAME) $(OBJS) -L$(P_LIB)
+# Create $(NAME) executable
+$(NAME): $(P_OBJ)main.o $(OBJS) $(INCS)
+	@echo "$(Green)Creating executable $@$(Color_Off)"
+	@$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -o $(NAME) $(OBJS) 
 
 # Custom rule to compilate all .c with there path
-$(P_OBJ)%.o: $(P_SRC)%.c
+$(P_OBJ)%.o: $(P_SRC)%.c $(INCS)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -c $< -o $@
+	@echo "$(Cyan)Compiling $<$(Color_Off)"
+	@$(CC) $(CFLAGS) $(DEPENDANCIES) $(DEBUG_STATE) -I $(P_INC) -I ft_printf/ -c $< -o $@
 
 #############################################################################################
 #                                                                                           #
@@ -125,33 +145,33 @@ flcear: fclean
 debug:
 	@$(MAKE) $(NAME) CFLAGS="$(CFLAGS_DEBUG)"
 
-debug-checker:
-	@$(MAKE) checker CFLAGS="$(CFLAGS_DEBUG)"
-
 debug-cc:
-	@$(MAKE) $(NAME) CFLAGS="$(CC_DEBUG_CFLAGS)" CC="$(CC_DEBUG)"
-	@$(MAKE) checker CFLAGS="$(CC_DEBUG_CFLAGS)" CC="$(CC_DEBUG)"
+	@$(MAKE) $(NAME) CFLAGS="$(CC_DEBUG_CFLAGS)" CC="$(CC_DEBUG)" Cyan="$(Yellow)" Green="$(Purple)"
 
 # Debugging print
 debug-print:
 	@$(MAKE) debug-print-project
-	@$(MAKE) debug-print-separator
+# @$(MAKE) debug-print-separator
 
 debug-print-separator:
 	@echo ""
 	@echo "$(On_Yellow)____________________$(Color_Off)"
 	@echo ""
 
+define check_var
+	@if [ "$(strip $(1))" = "" ]; then \
+		echo "$(Red)No $(2) found$(Color_Off)"; \
+	else \
+		echo "$(Red)$(2): \n\t$(Blue)$(1)$(Color_Off)"; \
+	fi
+endef
+
 debug-print-project:
-	@echo "$(Red)Project:\n\t$(Blue)$(NAME)$(Color_Off)"
-	@echo ""
-	@echo "$(Red)SRCS:\n\t$(Blue)$(SRCS)$(Color_Off)"
-	@echo ""
-	@echo "$(Red)OBJS:\n\t$(Blue)$(OBJS)$(Color_Off)"
-	@echo ""
-	@echo "$(Red)INCS:\n\t$(Blue)$(INCS)$(Color_Off)"
-	@echo ""
-	@echo "$(Red)LIBS:\n\t$(Blue)$(LIBS)$(Color_Off)"
+	$(call check_var,$(NAME),"Project")
+	$(call check_var,$(SRCS),"SRCS")
+	$(call check_var,$(OBJS),"OBJS")
+	$(call check_var,$(INCS),"INCS")
+	$(call check_var,$(LIBS),"LIBS")
 
 #############################################################################################
 #                                                                                           #
