@@ -6,11 +6,12 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:45:40 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/15 14:26:14 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:40:59 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "routine.h"
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +19,11 @@
 static void	observer_task(t_philo *philo);
 static int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo);
 
+/**
+ * @brief Function to create the observer thread
+ *
+ * @param philo head of philosopher structure
+ */
 static void	observer_task(t_philo *philo)
 {
 	while (is_running(philo) == 1)
@@ -25,7 +31,13 @@ static void	observer_task(t_philo *philo)
 		if (has_everyone_ate(philo) == 1)
 		{
 			pthread_mutex_lock(&philo->shared->is_running_access);
-			philo->shared->is_running = FALSE;
+			philo->shared->is_running = 0;
+			if (ALL_ATE_MSG == 1)
+			{
+				pthread_mutex_lock(&philo->shared->print);
+				printf("All philosophers have eaten enough\n");
+				pthread_mutex_unlock(&philo->shared->print);
+			}
 			pthread_mutex_unlock(&philo->shared->is_running_access);
 			break ;
 		}
@@ -33,6 +45,14 @@ static void	observer_task(t_philo *philo)
 	}
 }
 
+/**
+ * @brief Function to create the threads and join them
+ *
+ * @param rules structure of const rules
+ * @param shared structure of shared variables
+ * @param philo head of philosopher structure
+ * @return int 0 if successful, 1 otherwise
+ */
 static int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo)
 {
 	int	count;
@@ -43,7 +63,7 @@ static int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo)
 		if (pthread_create(&philo[count].philosopher, NULL,
 				(void *(*)(void *))start_routine, (void *)&philo[count]) != 0)
 		{
-			free_philos(philo, rules->nb_philo);
+			free_philos(philo);
 			free_shared(shared, rules->nb_philo, 0);
 			return (1);
 		}
@@ -85,7 +105,7 @@ int	main(int argc, char **argv)
 		return (3);
 	}
 	thread_manip(&rules, &shared, philo);
-	free_philos(philo, rules.nb_philo);
+	free_philos(philo);
 	free_shared(&shared, rules.nb_philo, 0);
 	return (0);
 }

@@ -8,9 +8,9 @@ NAME = philo
 
 # Debugging flags
 WAIT_STATE= -D WAIT_EVERYONE=0
-CFLAGS_DEBUG = -Wall -Wextra -g3 -D DEBUG=1 $(WAIT_STATE)
+CFLAGS_DEBUG = -Wall -Wextra -g3 $(WAIT_STATE)
 CC_DEBUG = clang
-CC_DEBUG_CFLAGS = -g3 -D DEBUG=1 -Weverything -Wno-padded -pedantic -Wwrite-strings -Wconversion -fsanitize=address -fsanitize=leak
+CC_DEBUG_CFLAGS = -g3 -Weverything -Wno-padded -pedantic -Wwrite-strings -Wconversion -fsanitize=address -fsanitize=leak
 #############################################################################################
 #                                                                                           #
 #                                         DIRECTORIES                                       #
@@ -38,7 +38,9 @@ P_LIB = lib/
 #############################################################################################
 # Headers
 INC = \
-	philo.h
+	philo.h \
+	routine.h \
+	ft_time.h 
 
 # Source files
 SRC = \
@@ -52,9 +54,6 @@ SRC = \
 
 PARSER = \
 	parser.c
-
-# THREAD = \
-# 	ft_thread_join.c
 
 PHILO = \
 	philo-utils.c \
@@ -90,7 +89,7 @@ INCS = $(addprefix $(P_INC), $(INC))
 #                                                                                           #
 #############################################################################################
 all: 
-	@$(MAKE) debug
+	@$(MAKE) $(NAME)
 # @$(MAKE) $(NAME)
 
 # Create $(NAME) executable
@@ -147,7 +146,7 @@ debug:
 	@$(MAKE) $(NAME) CFLAGS="$(CFLAGS_DEBUG)"
 
 debug-cc:
-	@$(MAKE) $(NAME) CFLAGS="$(CC_DEBUG_CFLAGS)" CC="$(CC_DEBUG)"
+	@$(MAKE) $(NAME) CFLAGS="$(CC_DEBUG_CFLAGS)" CC="$(CC_DEBUG)" Cyan="$(Yellow)" Green="$(Purple)"
 
 # Debugging print
 debug-print:

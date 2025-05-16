@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:42:07 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/11 15:31:33 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:36:43 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,12 @@ void	*ft_memcpy(void *destination, const void *source, size_t size)
 	return (destination);
 }
 
+/**
+ * @brief Count the number of characters in a string
+ * 
+ * @param str string to count
+ * @return size_t 
+ */
 size_t	ft_strlen(const char *str)
 {
 	size_t	count;

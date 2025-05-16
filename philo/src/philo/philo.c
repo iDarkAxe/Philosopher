@@ -6,25 +6,40 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/15 17:59:29 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:21:41 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "routine.h"
+#include "ft_time.h"
 #include <stdio.h>
 
+// FIXME: DON'T WORK IF there is only one philosopher
+
+/**
+ * @brief Philosopher's death that sets the is_dead flag detected by the observer
+ * 
+ * @param philo philosopher structure
+ */
 void	philo_died(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->shared->is_running_access);
-	if (philo->shared->is_running == TRUE)
+	if (philo->shared->is_running == 1)
 	{
 		printf("%ld\t%d\tdied\n", get_dtime(philo), philo->id);
-		philo->shared->is_running = FALSE;
+		philo->shared->is_running = 0;
 	}
 	pthread_mutex_unlock(&philo->shared->is_running_access);
-	philo->is_dead = TRUE;
+	philo->is_dead = 1;
 }
 
+/**
+ * @brief Philosopher's routine
+ * 
+ * @param philo pointer to the philosopher structure
+ * @return int 1 if the routine is successful, 0 otherwise
+ */
 int	philo_routine(t_philo *philo)
 {
 	if (philo == NULL)
@@ -42,7 +57,13 @@ int	philo_routine(t_philo *philo)
 // TO desynchronise even philos
 // if (philo->id % 2 == 0)
 // 	ft_usleep(1);
-// philo->time.last_meal = get_time(); // FOR EXACT TIME
+
+/**
+ * @brief Starting point of the philosopher's thread
+ * 
+ * @param ptr pointer to the philosopher structure
+ * @return void* NULL
+ */
 void	*start_routine(void *ptr)
 {
 	t_philo	*philo;
@@ -50,14 +71,11 @@ void	*start_routine(void *ptr)
 	if (ptr == NULL)
 		return (NULL);
 	philo = (t_philo *)ptr;
-	philo->is_dead = FALSE;
+	philo->is_dead = 0;
 	philo->time.born_time = get_time();
 	philo->time.last_meal = philo->time.born_time;
-	pthread_mutex_lock(&philo->shared->read_shared);
-	philo->shared->ready++;
-	pthread_mutex_unlock(&philo->shared->read_shared);
 	if (WAIT_EVERYONE == 1)
-		waits_for_equals(&philo->shared->read_shared, &philo->shared->ready,
+		wait_everyone(philo, &philo->shared->ready,
 			&philo->rules->nb_philo);
 	while (is_running(philo))
 	{

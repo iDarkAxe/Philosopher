@@ -6,12 +6,18 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:06:21 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/11 16:40:29 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:34:25 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief Function to print the error message
+ * 
+ * @param state error message state
+ * @return ssize_t number of bytes written
+ */
 ssize_t	error_message(enum e_error_message state)
 {
 	static const char	*msg[] = {NBR_OF_ARGUMENT_INVALID_MSG,

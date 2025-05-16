@@ -6,11 +6,13 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:23:43 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/15 14:08:56 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:32:14 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "routine.h"
+#include "ft_time.h"
 #include <stdio.h>
 
 int		is_running(t_philo *philo);
@@ -27,7 +29,7 @@ int	is_running(t_philo *philo)
 	if (philo == NULL)
 		return (0);
 	pthread_mutex_lock(&philo->shared->is_running_access);
-	if (philo->shared->is_running == TRUE)
+	if (philo->shared->is_running == 1)
 	{
 		pthread_mutex_unlock(&philo->shared->is_running_access);
 		return (1);
@@ -36,6 +38,12 @@ int	is_running(t_philo *philo)
 	return (0);
 }
 
+/**
+ * @brief Function to check if all philosophers have eaten enough
+ * 
+ * @param philo philosopher structure
+ * @return int 1 if all philosophers have eaten enough, 0 otherwise
+ */
 int	has_everyone_ate(t_philo *philo)
 {
 	int	index;
@@ -48,7 +56,7 @@ int	has_everyone_ate(t_philo *philo)
 	pthread_mutex_lock(&philo->shared->meal_access);
 	while (index < philo->rules->nb_philo)
 	{
-		if (philo[index].is_dead == TRUE)
+		if (philo[index].is_dead == 1)
 			break ;
 		if (philo[index].nb_eat < philo->rules->nb_eat_target)
 		{
@@ -72,8 +80,6 @@ void	print_message(t_philo *philo, enum e_philo_state p_state)
 	static const char	*state[] = {"has taken a fork", "is eating",
 		"is sleeping", "is thinking", "died"};
 
-	(void)state;
-	(void)p_state;
 	pthread_mutex_lock(&philo->shared->print);
 	if (is_running(philo) == 0)
 	{

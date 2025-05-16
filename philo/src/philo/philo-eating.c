@@ -6,11 +6,13 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:09:59 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/15 14:10:48 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:25:01 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "routine.h"
+#include "ft_time.h"
 
 /**
  * @brief Try taking a fork
@@ -34,9 +36,9 @@ int	try_taking_fork(t_philo *philo, char is_left)
 		pthread_mutex_lock(&philo->shared->forks[assign_fork]);
 		if (is_running(philo) == 0)
 			break ;
-		if (philo->shared->forks_nbr[assign_fork] == FALSE)
+		if (philo->shared->is_fork_taken[assign_fork] == 0)
 		{
-			philo->shared->forks_nbr[assign_fork] = TRUE;
+			philo->shared->is_fork_taken[assign_fork] = 1;
 			break ;
 		}
 		pthread_mutex_unlock(&philo->shared->forks[assign_fork]);
@@ -48,6 +50,13 @@ int	try_taking_fork(t_philo *philo, char is_left)
 	return (1);
 }
 
+/**
+ * @brief Set back the fork object to not taken
+ * 
+ * @param philo philo structure
+ * @param is_left 1 for left fork, 0 for right fork
+ * @return int 1 if successful, 0 otherwise
+ */
 int	set_back_fork(t_philo *philo, char is_left)
 {
 	int	assign_fork;
@@ -59,11 +68,18 @@ int	set_back_fork(t_philo *philo, char is_left)
 	else
 		assign_fork = (philo->id + 1) % philo->rules->nb_philo;
 	pthread_mutex_lock(&philo->shared->forks[assign_fork]);
-	philo->shared->forks_nbr[assign_fork] = FALSE;
+	philo->shared->is_fork_taken[assign_fork] = 0;
 	pthread_mutex_unlock(&philo->shared->forks[assign_fork]);
 	return (1);
 }
 
+/**
+ * @brief Try eating, if there is no time remaining, 
+ * Stops it's execution and return 0
+ * 
+ * @param philo philo structure
+ * @return int 1 if successful, 0 otherwise
+ */
 int	try_eating(t_philo *philo)
 {
 	if (philo == NULL)

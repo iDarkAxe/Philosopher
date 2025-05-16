@@ -6,29 +6,58 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/15 17:40:17 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:40:50 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+/**
+ * @file philo.h
+ * @brief Header file for the philosopher's project.
+ *
+ * Contains all structures, function prototypes,
+ *	and constants used in the project.
+ */
+
 # include <pthread.h>
 # include <sys/time.h>
 # include <unistd.h>
 
-# ifndef DEBUG
-#  define DEBUG 0
+# ifndef ALL_ATE_MSG
+#  define ALL_ATE_MSG 0
 # endif
 
+/**
+ * @defgroup Structures Structures for managing the philosophers
+ * @brief Structures to manipulate the philosophers and their states.
+ * @{
+ */
+
+/**
+ * @brief Delay for the usleep function
+ *
+ * Best values seems to be 50ms-1000ms with 100 philosophers
+ * 500ms is a good value overall as it don't overload
+ * the CPU too much with context switching
+ */
 # ifndef DELAY
-#  define DELAY 500
+#  define DELAY 200
 # endif
 
+/**
+ * @brief Macro to make all the philosophers wait starting simultaneously
+ *
+ */
 # ifndef WAIT_EVERYONE
 #  define WAIT_EVERYONE 0
 # endif
 
+/**
+ * @brief Error codes for the program
+ *
+ */
 enum					e_error_message
 {
 	NBR_OF_ARGUMENT_INVALID,
@@ -40,6 +69,10 @@ enum					e_error_message
 	PTHREAD_DETACH,
 };
 
+/**
+ * @brief Error messages for the program
+ *
+ */
 # define NBR_OF_ARGUMENT_INVALID_MSG "Error:\nWrong number of arguments\n"
 # define ARGUMENT_INVALID_MSG \
 	"Values accepted :\n\tnb_philo 0-400\n\
@@ -50,6 +83,10 @@ enum					e_error_message
 # define PTHREAD_CREATING_MSG "Error pthread_create\n"
 # define PTHREAD_DETACH_MSG "Error pthread_detach\n"
 
+/**
+ * @brief State of the philosopher
+ * 
+ */
 enum					e_philo_state
 {
 	TOOK_FORK = 0,
@@ -59,12 +96,6 @@ enum					e_philo_state
 	DIED = 4
 };
 
-enum					e_bool
-{
-	TRUE = 1,
-	FALSE = 0
-};
-
 typedef struct s_rules	t_rules;
 typedef struct s_philo	t_philo;
 typedef struct s_shared	t_shared;
@@ -72,70 +103,61 @@ typedef struct s_time	t_time;
 
 struct					s_time
 {
-	size_t				die;
-	size_t				eat;
-	size_t				sleep;
-	size_t				last_meal;
-	size_t				born_time;
+	size_t				last_meal; /**< Time of the last meal*/
+	size_t				born_time; /**< Time when philo started*/
 };
 
 struct					s_rules
 {
-	int					nb_philo;
-	struct timeval		start;
-	int					time_to_die;
-	int					time_to_eat;
-	int					time_to_sleep;
-	int					nb_eat_target;
+	int				nb_philo;
+	struct timeval	start;			/**< Time of the start of the simulation*/
+	int				time_to_die;	/**< Time before dying*/
+	int				time_to_eat;	/**< Time took for eating*/
+	int				time_to_sleep;	/**< Time took for sleeping*/
+	int				nb_eat_target;	/**< Nbr of time each philo should eat*/
 };
 
 struct					s_philo
 {
-	const t_rules		*rules;
-	t_shared			*shared;
-	pthread_t			philosopher;
-	t_time				time;
-	int					id;
-	int					nb_eat;
-	enum e_bool			is_dead;
+	const t_rules	*rules;		/**<	Rules of the simulation*/
+	t_shared		*shared;	/**< Ptr to Shared data between philos*/
+	pthread_t		philosopher;/**< Philosopher thread*/
+	t_time			time;		/**< Time of the philosopher*/
+	int				id;			/**< Philosopher ID*/
+	int				nb_eat;		/**< Nbr of time the philosopher has eaten*/
+	char			is_dead;	/**< Flag to check if philo is dead*/
 };
 
 struct					s_shared
 {
-	int					ready;
-	enum e_bool			is_running;
-	enum e_bool			*forks_nbr;
-	pthread_mutex_t		*forks;
-	pthread_mutex_t		print;
-	pthread_mutex_t		is_running_access;
-	pthread_mutex_t		meal_access;
-	pthread_mutex_t		read_shared;
+	int					ready;			/**< Flag to check if philos are ready*/
+	char				is_running;		/**< Flag to check if sim is running*/
+	char				*is_fork_taken;	/**< Forks state*/
+	pthread_mutex_t		*forks;			/**< Forks mutex*/
+	pthread_mutex_t		print;			/**< Mutex to have access to printing*/
+	pthread_mutex_t		is_running_access;	/**< Mutex to access is_running*/
+	pthread_mutex_t		meal_access;/**< Mutex to access last meal*/
+	pthread_mutex_t		read_shared;/**< Mutex to access shared data*/
 };
+/** @} */
 
+/**
+ * @defgroup Functions Functions for the philosopher's project
+ * @brief Function used by the observer of philosophers
+ * @{
+ */
 // Parsing
 int						parse_args(int argc, char **argv, t_rules *rules);
 
-// Init
+// Preparation
 int						init_philos(t_rules *rules, t_shared *shared,
 							t_philo **philo);
-// int init_forks_mutex(t_shared *shared, int count);
 int						init_mutex(t_shared *shared, t_philo *philo, int count);
-
-// Philo
-int						philo_routine(t_philo *philo);
-void					*start_routine(void *ptr);
-void					print_message(t_philo *philo,
-							enum e_philo_state p_state);
 int						is_running(t_philo *philo);
-int						try_taking_fork(t_philo *philo, char is_left);
-int						set_back_fork(t_philo *philo, char is_left);
-int						try_eating(t_philo *philo);
-int						has_everyone_ate(t_philo *philo);
-void					philo_died(t_philo *philo);
 
 // Free
 void					free_shared(t_shared *shared, int count, int flag);
-void					free_philos(t_philo *philo, int count);
+void					free_philos(t_philo *philo);
 
 // Utils
 void					*ft_calloc(size_t element_count, size_t element_size);
@@ -144,19 +166,11 @@ void					*ft_memcpy(void *destination, const void *source,
 							size_t size);
 size_t					ft_strlen(const char *str);
 
-// Time
-size_t					get_time(void);
-size_t					get_dtime(t_philo *philo);
-void					ft_usleep(size_t wait_time, t_philo *philo);
-void					waits_for_equals(pthread_mutex_t *mutex,
-							const int *const value1, const int *const value2);
-int						does_have_time(t_philo *philo,
-							enum e_philo_state p_state);
-
 // Error handling
 ssize_t					error_message(enum e_error_message state);
 
-// DEBUG
+// Debug print
 void					print_eat(t_philo *philo);
+/** @} */
 
 #endif

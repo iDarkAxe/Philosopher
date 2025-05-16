@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:03:57 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/15 12:53:10 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 12:17:58 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	init_philos(t_rules *rules, t_shared *shared, t_philo **philo)
 		(*philo)[count].rules = rules;
 		count++;
 	}
-	shared->is_running = TRUE;
+	shared->is_running = 1;
 	if (gettimeofday(&rules->start, NULL) != 0)
 		return (1);
 	return (0);
@@ -57,17 +57,17 @@ static int	init_forks_mutex(t_shared *shared, int count)
 		return (1);
 	if (pthread_mutex_init(&shared->read_shared, NULL) != 0)
 		return (2);
-	if (pthread_mutex_init(&shared->is_running_access, NULL) != 0)
-		return (6);
-	shared->forks_nbr = NULL;
+	shared->is_fork_taken = NULL;
 	shared->forks = ft_calloc(sizeof(pthread_mutex_t), (size_t)count);
 	if (shared->forks == NULL)
 		return (3);
-	shared->forks_nbr = ft_calloc(sizeof(enum e_bool), (size_t)count);
-	if (shared->forks_nbr == NULL)
+	shared->is_fork_taken = ft_calloc(sizeof(char), (size_t)count);
+	if (shared->is_fork_taken == NULL)
 		return (4);
 	if (pthread_mutex_init(&shared->meal_access, NULL) != 0)
 		return (5);
+	if (pthread_mutex_init(&shared->is_running_access, NULL) != 0)
+		return (6);
 	return (0);
 }
 
@@ -87,7 +87,7 @@ int	init_mutex(t_shared *shared, t_philo *philo, int count)
 	if (index != 0)
 	{
 		free_shared(shared, 0, index);
-		free_philos(philo, count);
+		free_philos(philo);
 		return (3);
 	}
 	index = 0;
@@ -96,10 +96,10 @@ int	init_mutex(t_shared *shared, t_philo *philo, int count)
 		if (pthread_mutex_init(&shared->forks[index], NULL) != 0)
 		{
 			free_shared(shared, count, 0);
-			free_philos(philo, count);
+			free_philos(philo);
 			return (4);
 		}
-		shared->forks_nbr[index] = FALSE;
+		shared->is_fork_taken[index] = 0;
 		index++;
 	}
 	return (0);
