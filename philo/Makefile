@@ -19,7 +19,6 @@ CC_DEBUG_CFLAGS = -g3 -Weverything -Wno-padded -pedantic -Wwrite-strings -Wconve
 # Source directories
 P_SRC = src/
 P_PARSER = parser/
-P_THREAD = thread/
 P_PHILO = philo/
 
 # Object directories
@@ -50,6 +49,7 @@ SRC = \
 	ft_free.c \
 	ft_init.c \
 	ft_time.c \
+	thread.c \
 	debug-print.c
 
 PARSER = \

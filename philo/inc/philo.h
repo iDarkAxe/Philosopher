@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 12:40:50 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 15:21:10 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ struct					s_philo
 	t_time			time;		/**< Time of the philosopher*/
 	int				id;			/**< Philosopher ID*/
 	int				nb_eat;		/**< Nbr of time the philosopher has eaten*/
-	char			is_dead;	/**< Flag to check if philo is dead*/
 };
 
 struct					s_shared
@@ -154,6 +153,13 @@ int						init_philos(t_rules *rules, t_shared *shared,
 							t_philo **philo);
 int						init_mutex(t_shared *shared, t_philo *philo, int count);
 int						is_running(t_philo *philo);
+
+// Thread
+int						thread_create(t_rules *rules, t_shared *shared,
+							t_philo *philo);
+int						thread_join(t_rules *rules, t_philo *philo);
+int						thread_createone(t_rules *rules, t_shared *shared,
+							t_philo *philo);
 
 // Free
 void					free_shared(t_shared *shared, int count, int flag);

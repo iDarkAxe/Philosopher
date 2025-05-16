@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:45:40 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 12:40:59 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 15:19:43 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <stdlib.h>
 
 static void	observer_task(t_philo *philo);
-static int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo);
 
 /**
  * @brief Function to create the observer thread
@@ -46,40 +45,6 @@ static void	observer_task(t_philo *philo)
 }
 
 /**
- * @brief Function to create the threads and join them
- *
- * @param rules structure of const rules
- * @param shared structure of shared variables
- * @param philo head of philosopher structure
- * @return int 0 if successful, 1 otherwise
- */
-static int	thread_manip(t_rules *rules, t_shared *shared, t_philo *philo)
-{
-	int	count;
-
-	count = 0;
-	while (count < rules->nb_philo)
-	{
-		if (pthread_create(&philo[count].philosopher, NULL,
-				(void *(*)(void *))start_routine, (void *)&philo[count]) != 0)
-		{
-			free_philos(philo);
-			free_shared(shared, rules->nb_philo, 0);
-			return (1);
-		}
-		count++;
-	}
-	observer_task(philo);
-	count = 0;
-	while (count < rules->nb_philo)
-	{
-		pthread_join(philo[count].philosopher, NULL);
-		count++;
-	}
-	return (0);
-}
-
-/**
  * @brief Main function of the program philo
  *
  * @param argc argument count
@@ -104,7 +69,12 @@ int	main(int argc, char **argv)
 		printf("Erreur Init Mutex\n");
 		return (3);
 	}
-	thread_manip(&rules, &shared, philo);
+	if (rules.nb_philo == 1)
+		thread_createone(&rules, &shared, philo);
+	else
+		thread_create(&rules, &shared, philo);
+	observer_task(philo);
+	thread_join(&rules, philo);
 	free_philos(philo);
 	free_shared(&shared, rules.nb_philo, 0);
 	return (0);

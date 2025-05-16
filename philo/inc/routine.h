@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:46:44 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 12:06:57 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 14:50:02 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
  * @{
  */
 int						philo_routine(t_philo *philo);
+void					*one_philo_routine(void *ptr);
 void					*start_routine(void *ptr);
 void					print_message(t_philo *philo,
 							enum e_philo_state p_state);

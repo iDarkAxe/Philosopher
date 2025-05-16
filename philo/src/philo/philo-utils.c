@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:23:43 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 12:32:14 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 15:15:15 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ int	has_everyone_ate(t_philo *philo)
 	pthread_mutex_lock(&philo->shared->meal_access);
 	while (index < philo->rules->nb_philo)
 	{
-		if (philo[index].is_dead == 1)
-			break ;
 		if (philo[index].nb_eat < philo->rules->nb_eat_target)
 		{
 			pthread_mutex_unlock(&philo->shared->meal_access);
@@ -80,12 +78,9 @@ void	print_message(t_philo *philo, enum e_philo_state p_state)
 	static const char	*state[] = {"has taken a fork", "is eating",
 		"is sleeping", "is thinking", "died"};
 
-	pthread_mutex_lock(&philo->shared->print);
 	if (is_running(philo) == 0)
-	{
-		pthread_mutex_unlock(&philo->shared->print);
 		return ;
-	}
+	pthread_mutex_lock(&philo->shared->print);
 	printf("%ld\t%d\t%s\n", get_dtime(philo), philo->id, state[(int)p_state]);
 	pthread_mutex_unlock(&philo->shared->print);
 }
