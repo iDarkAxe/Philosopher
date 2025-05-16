@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:03:57 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 12:17:58 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 16:54:53 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	init_philos(t_rules *rules, t_shared *shared, t_philo **philo)
 		count++;
 	}
 	shared->is_running = 1;
-	if (gettimeofday(&rules->start, NULL) != 0)
-		return (1);
 	return (0);
 }
 

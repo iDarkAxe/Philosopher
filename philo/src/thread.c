@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:50 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 15:30:28 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 16:55:12 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 int	thread_createone(t_rules *rules, t_shared *shared, t_philo *philo)
 {
 	if (!rules || !shared || !philo)
+		return (1);
+	if (gettimeofday(&rules->start, NULL) != 0)
 		return (1);
 	if (pthread_create(&philo[0].philosopher, NULL,
 			(void *(*)(void *))one_philo_routine, (void *)&philo[0]) != 0)
@@ -50,6 +52,8 @@ int	thread_create(t_rules *rules, t_shared *shared, t_philo *philo)
 	if (!rules || !shared || !philo)
 		return (1);
 	count = 0;
+	if (gettimeofday(&rules->start, NULL) != 0)
+		return (1);
 	while (count < rules->nb_philo)
 	{
 		if (pthread_create(&philo[count].philosopher, NULL,

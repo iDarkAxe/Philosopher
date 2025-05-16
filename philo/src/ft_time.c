@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:56:48 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 12:36:16 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 17:25:14 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,6 @@
 #include "ft_time.h"
 #include <stdio.h>
 #include <time.h>
-
-/**
- * @brief Special usleep function that checks if the simulation is running
- * during it's sleep time
- * 
- * @param wait_time time to wait in ms
- * @param philo philosopher structure
- */
-void	ft_usleep(size_t wait_time, t_philo *philo)
-{
-	size_t	start;
-
-	start = get_time();
-	while (get_time() - start < wait_time)
-	{
-		if (is_running(philo) != 0)
-			return ;
-		usleep(DELAY);
-	}
-}
 
 /**
  * @brief Return the current time in ms
@@ -55,7 +35,7 @@ size_t	get_time(void)
 }
 
 /**
- * @brief Get the delta time since the start of the simulation
+ * @brief Get the delta time since the born time of the philo
  * 
  * @param philo philosopher structure
  * @return size_t time in ms
@@ -72,8 +52,8 @@ size_t	get_dtime(t_philo *philo)
 		timer.tv_usec = 0;
 		write(2, "gettimeofday : error\n", 22);
 	}
-	timer.tv_sec -= philo->rules->start.tv_sec;
-	timer.tv_usec -= philo->rules->start.tv_usec;
+	timer.tv_sec -= philo->time.born_time;
+	timer.tv_usec -= philo->time.born_time;
 	if (timer.tv_usec < 0)
 	{
 		timer.tv_sec -= 1;
@@ -91,7 +71,8 @@ size_t	get_dtime(t_philo *philo)
  */
 int	does_have_time(t_philo *philo, enum e_philo_state p_state)
 {
-	int	timer;
+	int		timer;
+	size_t	timer2;
 
 	if (philo == NULL)
 		return (-1);
@@ -102,10 +83,13 @@ int	does_have_time(t_philo *philo, enum e_philo_state p_state)
 	else
 		timer = 1;
 	pthread_mutex_lock(&philo->shared->meal_access);
-	if ((get_dtime(philo) + (size_t)timer) > philo->time.last_meal
+	if ((get_time() + (size_t)timer) > philo->time.last_meal
 		+ (size_t)philo->rules->time_to_die)
 	{
-		ft_usleep((size_t)timer, philo);
+		timer2 = get_time();
+		if (timer2 < philo->time.born_time + (size_t)philo->rules->time_to_die)
+			usleep((__useconds_t)(philo->time.born_time
+					+ (size_t)philo->rules->time_to_die - timer2) * 1000);
 		philo_died(philo);
 		pthread_mutex_unlock(&philo->shared->meal_access);
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 15:28:20 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 17:25:00 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ void	philo_died(t_philo *philo)
 	if (philo->shared->is_running == 1)
 	{
 		pthread_mutex_lock(&philo->shared->print);
-		printf("%ld\t%d\tdied\n", get_dtime(philo), philo->id);
-		pthread_mutex_unlock(&philo->shared->print);
+		printf("%ld\t%d\tdied\n", get_time()
+			- (size_t)(philo->rules->start.tv_sec * 1000
+				+ philo->rules->start.tv_usec / 1000), philo->id);
 		philo->shared->is_running = 0;
+		pthread_mutex_unlock(&philo->shared->print);
 	}
 	pthread_mutex_unlock(&philo->shared->is_running_access);
 }
@@ -81,8 +83,7 @@ int	philo_routine(t_philo *philo)
 
 // TO desynchronise even philos
 // if (philo->id % 2 == 0)
-// 	ft_usleep(1);
-
+// 	usleep(500);
 /**
  * @brief Starting point of the philosopher's thread
  *
@@ -105,6 +106,5 @@ void	*start_routine(void *ptr)
 		if (philo_routine(philo) == 0)
 			return (NULL);
 	}
-	philo_died(philo);
 	return (NULL);
 }

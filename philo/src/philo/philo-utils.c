@@ -6,13 +6,13 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:23:43 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 15:15:15 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 17:19:28 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_time.h"
 #include "philo.h"
 #include "routine.h"
-#include "ft_time.h"
 #include <stdio.h>
 
 int		is_running(t_philo *philo);
@@ -40,7 +40,7 @@ int	is_running(t_philo *philo)
 
 /**
  * @brief Function to check if all philosophers have eaten enough
- * 
+ *
  * @param philo philosopher structure
  * @return int 1 if all philosophers have eaten enough, 0 otherwise
  */
@@ -81,6 +81,8 @@ void	print_message(t_philo *philo, enum e_philo_state p_state)
 	if (is_running(philo) == 0)
 		return ;
 	pthread_mutex_lock(&philo->shared->print);
-	printf("%ld\t%d\t%s\n", get_dtime(philo), philo->id, state[(int)p_state]);
+	printf("%ld\t%d\t%s\n", get_time() - (size_t)(philo->rules->start.tv_sec
+			* 1000 + philo->rules->start.tv_usec / 1000), philo->id,
+		state[(int)p_state]);
 	pthread_mutex_unlock(&philo->shared->print);
 }

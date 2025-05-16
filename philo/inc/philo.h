@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 15:21:10 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/16 16:57:10 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
  * the CPU too much with context switching
  */
 # ifndef DELAY
-#  define DELAY 200
+#  define DELAY 500
 # endif
 
 /**

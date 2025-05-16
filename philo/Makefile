@@ -90,7 +90,6 @@ INCS = $(addprefix $(P_INC), $(INC))
 #############################################################################################
 all: 
 	@$(MAKE) $(NAME)
-# @$(MAKE) $(NAME)
 
 # Create $(NAME) executable
 $(NAME): $(P_OBJ)main.o $(OBJS) $(INCS)
