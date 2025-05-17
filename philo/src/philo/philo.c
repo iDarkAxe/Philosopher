@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 17:25:00 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 13:54:01 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@
  */
 void	philo_died(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->shared->is_running_access);
+	pthread_mutex_lock(&philo->shared->mutex_is_running);
 	if (philo->shared->is_running == 1)
 	{
-		pthread_mutex_lock(&philo->shared->print);
+		pthread_mutex_lock(&philo->shared->mutex_printing);
 		printf("%ld\t%d\tdied\n", get_time()
 			- (size_t)(philo->rules->start.tv_sec * 1000
 				+ philo->rules->start.tv_usec / 1000), philo->id);
 		philo->shared->is_running = 0;
-		pthread_mutex_unlock(&philo->shared->print);
+		pthread_mutex_unlock(&philo->shared->mutex_printing);
 	}
-	pthread_mutex_unlock(&philo->shared->is_running_access);
+	pthread_mutex_unlock(&philo->shared->mutex_is_running);
 }
 
 /**
@@ -74,7 +74,7 @@ int	philo_routine(t_philo *philo)
 	print_message(philo, THINKING);
 	if (try_eating(philo) == 0)
 		return (0);
-	if (does_have_time(philo, SLEEPING) == 1)
+	if (does_not_have_time(philo, SLEEPING) == 1)
 		return (0);
 	print_message(philo, SLEEPING);
 	usleep((__useconds_t)philo->rules->time_to_sleep * 1000);
@@ -101,7 +101,7 @@ void	*start_routine(void *ptr)
 	philo->time.last_meal = philo->time.born_time;
 	if (WAIT_EVERYONE == 1)
 		wait_everyone(philo, &philo->shared->ready, &philo->rules->nb_philo);
-	while (is_running(philo))
+	while (is_sim_running(philo))
 	{
 		if (philo_routine(philo) == 0)
 			return (NULL);

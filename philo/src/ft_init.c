@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:03:57 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 16:54:53 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 13:56:13 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int	init_philos(t_rules *rules, t_shared *shared, t_philo **philo)
  */
 static int	init_forks_mutex(t_shared *shared, int count)
 {
-	if (pthread_mutex_init(&shared->print, NULL) != 0)
+	if (pthread_mutex_init(&shared->mutex_printing, NULL) != 0)
 		return (1);
-	if (pthread_mutex_init(&shared->read_shared, NULL) != 0)
+	if (pthread_mutex_init(&shared->mutex_ready, NULL) != 0)
 		return (2);
 	shared->is_fork_taken = NULL;
 	shared->forks = ft_calloc(sizeof(pthread_mutex_t), (size_t)count);
@@ -62,9 +62,9 @@ static int	init_forks_mutex(t_shared *shared, int count)
 	shared->is_fork_taken = ft_calloc(sizeof(char), (size_t)count);
 	if (shared->is_fork_taken == NULL)
 		return (4);
-	if (pthread_mutex_init(&shared->meal_access, NULL) != 0)
+	if (pthread_mutex_init(&shared->mutex_nb_eat, NULL) != 0)
 		return (5);
-	if (pthread_mutex_init(&shared->is_running_access, NULL) != 0)
+	if (pthread_mutex_init(&shared->mutex_is_running, NULL) != 0)
 		return (6);
 	return (0);
 }

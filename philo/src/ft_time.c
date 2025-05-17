@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:56:48 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 17:25:14 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 13:43:02 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ size_t	get_dtime(t_philo *philo)
  * 
  * @param philo philosopher structure
  * @param p_state state of the philosopher
- * @return int 1 if the philosopher has time, 0 otherwise
+ * @return int 0 if the philosopher has time, 1 otherwise
  */
-int	does_have_time(t_philo *philo, enum e_philo_state p_state)
+int	does_not_have_time(t_philo *philo, enum e_philo_state p_state)
 {
 	int		timer;
 	size_t	timer2;
@@ -82,7 +82,7 @@ int	does_have_time(t_philo *philo, enum e_philo_state p_state)
 		timer = philo->rules->time_to_sleep;
 	else
 		timer = 1;
-	pthread_mutex_lock(&philo->shared->meal_access);
+	pthread_mutex_lock(&philo->shared->mutex_nb_eat);
 	if ((get_time() + (size_t)timer) > philo->time.last_meal
 		+ (size_t)philo->rules->time_to_die)
 	{
@@ -91,10 +91,10 @@ int	does_have_time(t_philo *philo, enum e_philo_state p_state)
 			usleep((__useconds_t)(philo->time.born_time
 					+ (size_t)philo->rules->time_to_die - timer2) * 1000);
 		philo_died(philo);
-		pthread_mutex_unlock(&philo->shared->meal_access);
+		pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->shared->meal_access);
+	pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
 	return (0);
 }
 
@@ -108,18 +108,18 @@ int	does_have_time(t_philo *philo, enum e_philo_state p_state)
 void	wait_everyone(t_philo *philo, const int *const value1,
 		const int *const value2)
 {
-	pthread_mutex_lock(&philo->shared->read_shared);
+	pthread_mutex_lock(&philo->shared->mutex_ready);
 	philo->shared->ready++;
-	pthread_mutex_unlock(&philo->shared->read_shared);
+	pthread_mutex_unlock(&philo->shared->mutex_ready);
 	while (1)
 	{
-		pthread_mutex_lock(&philo->shared->read_shared);
+		pthread_mutex_lock(&philo->shared->mutex_ready);
 		if (*value1 == *value2)
 		{
-			pthread_mutex_unlock(&philo->shared->read_shared);
+			pthread_mutex_unlock(&philo->shared->mutex_ready);
 			return ;
 		}
-		pthread_mutex_unlock(&philo->shared->read_shared);
+		pthread_mutex_unlock(&philo->shared->mutex_ready);
 		usleep(DELAY);
 	}
 }

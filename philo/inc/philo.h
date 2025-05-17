@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 16:57:10 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 13:54:02 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,10 @@ struct					s_shared
 	char				is_running;		/**< Flag to check if sim is running*/
 	char				*is_fork_taken;	/**< Forks state*/
 	pthread_mutex_t		*forks;			/**< Forks mutex*/
-	pthread_mutex_t		print;			/**< Mutex to have access to printing*/
-	pthread_mutex_t		is_running_access;	/**< Mutex to access is_running*/
-	pthread_mutex_t		meal_access;/**< Mutex to access last meal*/
-	pthread_mutex_t		read_shared;/**< Mutex to access shared data*/
+	pthread_mutex_t		mutex_printing;	/**< Mutex to have access to printing*/
+	pthread_mutex_t		mutex_is_running;	/**< Mutex to access is_running*/
+	pthread_mutex_t		mutex_nb_eat;/**< Mutex to access last meal*/
+	pthread_mutex_t		mutex_ready;/**< Mutex to access shared data*/
 };
 /** @} */
 
@@ -152,7 +152,7 @@ int						parse_args(int argc, char **argv, t_rules *rules);
 int						init_philos(t_rules *rules, t_shared *shared,
 							t_philo **philo);
 int						init_mutex(t_shared *shared, t_philo *philo, int count);
-int						is_running(t_philo *philo);
+int						is_sim_running(t_philo *philo);
 
 // Thread
 int						thread_create(t_rules *rules, t_shared *shared,

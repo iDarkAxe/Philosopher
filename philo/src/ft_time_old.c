@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:56:48 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 17:26:09 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 13:44:02 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	ft_usleep(size_t wait_time, t_philo *philo)
 	start = get_time();
 	while (get_time() - start < wait_time)
 	{
-		if (is_running(philo) != 0)
+		if (is_sim_running(philo) != 0)
 			return ;
 		usleep(DELAY);
 	}

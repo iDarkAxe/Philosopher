@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:23:43 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 17:19:28 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 13:54:01 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "routine.h"
 #include <stdio.h>
 
-int		is_running(t_philo *philo);
+int		is_sim_running(t_philo *philo);
 int		has_everyone_ate(t_philo *philo);
 
 /**
@@ -24,17 +24,17 @@ int		has_everyone_ate(t_philo *philo);
  * @param philo philo structure
  * @return int 1 is running, 0 otherwise
  */
-int	is_running(t_philo *philo)
+int	is_sim_running(t_philo *philo)
 {
 	if (philo == NULL)
 		return (0);
-	pthread_mutex_lock(&philo->shared->is_running_access);
+	pthread_mutex_lock(&philo->shared->mutex_is_running);
 	if (philo->shared->is_running == 1)
 	{
-		pthread_mutex_unlock(&philo->shared->is_running_access);
+		pthread_mutex_unlock(&philo->shared->mutex_is_running);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->shared->is_running_access);
+	pthread_mutex_unlock(&philo->shared->mutex_is_running);
 	return (0);
 }
 
@@ -53,17 +53,17 @@ int	has_everyone_ate(t_philo *philo)
 	if (philo->rules->nb_eat_target < 0)
 		return (0);
 	index = 0;
-	pthread_mutex_lock(&philo->shared->meal_access);
+	pthread_mutex_lock(&philo->shared->mutex_nb_eat);
 	while (index < philo->rules->nb_philo)
 	{
 		if (philo[index].nb_eat < philo->rules->nb_eat_target)
 		{
-			pthread_mutex_unlock(&philo->shared->meal_access);
+			pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
 			return (0);
 		}
 		index++;
 	}
-	pthread_mutex_unlock(&philo->shared->meal_access);
+	pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
 	return (1);
 }
 
@@ -78,11 +78,11 @@ void	print_message(t_philo *philo, enum e_philo_state p_state)
 	static const char	*state[] = {"has taken a fork", "is eating",
 		"is sleeping", "is thinking", "died"};
 
-	if (is_running(philo) == 0)
+	if (is_sim_running(philo) == 0)
 		return ;
-	pthread_mutex_lock(&philo->shared->print);
+	pthread_mutex_lock(&philo->shared->mutex_printing);
 	printf("%ld\t%d\t%s\n", get_time() - (size_t)(philo->rules->start.tv_sec
 			* 1000 + philo->rules->start.tv_usec / 1000), philo->id,
 		state[(int)p_state]);
-	pthread_mutex_unlock(&philo->shared->print);
+	pthread_mutex_unlock(&philo->shared->mutex_printing);
 }

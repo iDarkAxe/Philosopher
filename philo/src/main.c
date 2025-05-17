@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:45:40 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 15:19:43 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/17 13:54:01 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ static void	observer_task(t_philo *philo);
  */
 static void	observer_task(t_philo *philo)
 {
-	while (is_running(philo) == 1)
+	while (is_sim_running(philo) == 1)
 	{
 		if (has_everyone_ate(philo) == 1)
 		{
-			pthread_mutex_lock(&philo->shared->is_running_access);
+			pthread_mutex_lock(&philo->shared->mutex_is_running);
 			philo->shared->is_running = 0;
 			if (ALL_ATE_MSG == 1)
 			{
-				pthread_mutex_lock(&philo->shared->print);
+				pthread_mutex_lock(&philo->shared->mutex_printing);
 				printf("All philosophers have eaten enough\n");
-				pthread_mutex_unlock(&philo->shared->print);
+				pthread_mutex_unlock(&philo->shared->mutex_printing);
 			}
-			pthread_mutex_unlock(&philo->shared->is_running_access);
+			pthread_mutex_unlock(&philo->shared->mutex_is_running);
 			break ;
 		}
 		usleep(DELAY);
