@@ -6,15 +6,15 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:56:48 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/17 13:44:02 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 12:38:11 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "ft_time.h"
 #include <time.h>
 
 static struct timeval	getdeltatime(struct timeval start_time);
-static void				ft_usleep(size_t wait_time, t_philo *philo);
 
 /**
  * @brief Special usleep function that checks if the simulation is running
@@ -23,18 +23,20 @@ static void				ft_usleep(size_t wait_time, t_philo *philo);
  * @param wait_time time to wait in ms
  * @param philo philosopher structure
  */
-__attribute__ ((__deprecated__))
-__attribute__ ((__unused__))
-static void	ft_usleep(size_t wait_time, t_philo *philo)
+void	ft_usleep(__useconds_t wait_time, t_philo *philo)
 {
-	size_t	start;
+	struct timeval	goal_time;
+	struct timeval	current_time;
 
-	start = get_time();
-	while (get_time() - start < wait_time)
+	goal_time = get_time();
+	add_ms_tv(&goal_time, wait_time);
+	current_time = get_time();
+	while (compare_timeval(&current_time, &goal_time) < 0)
 	{
 		if (is_sim_running(philo) != 0)
 			return ;
 		usleep(DELAY);
+		current_time = get_time();
 	}
 }
 

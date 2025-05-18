@@ -10,7 +10,7 @@ NAME = philo
 WAIT_STATE= -D WAIT_EVERYONE=0
 CFLAGS_DEBUG = -Wall -Wextra -g3 $(WAIT_STATE)
 CC_DEBUG = clang
-CC_DEBUG_CFLAGS = -g3 -Weverything -Wno-padded -pedantic -Wwrite-strings -Wconversion -fsanitize=address -fsanitize=leak
+CC_DEBUG_CFLAGS = -g3 -Weverything -Wno-padded -pedantic -Wwrite-strings -Wconversion
 #############################################################################################
 #                                                                                           #
 #                                         DIRECTORIES                                       #
@@ -146,6 +146,9 @@ debug:
 
 debug-cc:
 	@$(MAKE) $(NAME) CFLAGS="$(CC_DEBUG_CFLAGS)" CC="$(CC_DEBUG)" Cyan="$(Yellow)" Green="$(Purple)"
+
+test:
+	cc tests/launch.c -o launch && ./launch
 
 # Debugging print
 debug-print:

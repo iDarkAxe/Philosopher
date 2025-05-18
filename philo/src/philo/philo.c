@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/17 13:54:01 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 12:01:13 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,24 @@
  */
 void	philo_died(t_philo *philo)
 {
+	struct timeval		timer;
+
 	pthread_mutex_lock(&philo->shared->mutex_is_running);
 	if (philo->shared->is_running == 1)
 	{
 		pthread_mutex_lock(&philo->shared->mutex_printing);
-		printf("%ld\t%d\tdied\n", get_time()
-			- (size_t)(philo->rules->start.tv_sec * 1000
-				+ philo->rules->start.tv_usec / 1000), philo->id);
+		timer = get_time();
+		timer.tv_sec -= philo->rules->start.tv_sec;
+		timer.tv_usec -= philo->rules->start.tv_usec;
+		printf("%ld\t%d\tdied\n", (size_t)(timer.tv_sec * 1000 + timer.tv_usec
+				/ 1000), philo->id);
 		philo->shared->is_running = 0;
 		pthread_mutex_unlock(&philo->shared->mutex_printing);
 	}
 	pthread_mutex_unlock(&philo->shared->mutex_is_running);
 }
 
+// FIXME fix time
 /**
  * @brief Philosopher's routine when he is alone
  *
@@ -46,6 +51,7 @@ void	*one_philo_routine(void *ptr)
 	t_philo	*philo;
 	size_t	timer;
 
+	timer = 0;
 	if (ptr == NULL)
 		return (NULL);
 	philo = (t_philo *)ptr;
@@ -53,10 +59,10 @@ void	*one_philo_routine(void *ptr)
 	philo->time.last_meal = philo->time.born_time;
 	print_message(philo, THINKING);
 	print_message(philo, TOOK_FORK);
-	timer = get_time();
-	if (timer < philo->time.born_time + (size_t)philo->rules->time_to_die)
-		usleep((__useconds_t)(philo->time.born_time
-				+ (size_t)philo->rules->time_to_die - timer) * 1000);
+	// timer = get_time();
+	// if (timer < philo->time.born_time + (size_t)philo->rules->time_to_die)
+	// 	usleep((__useconds_t)(philo->time.born_time
+	// 			+ (size_t)philo->rules->time_to_die - timer) * 1000);
 	philo_died(philo);
 	return (NULL);
 }
@@ -97,7 +103,7 @@ void	*start_routine(void *ptr)
 	if (ptr == NULL)
 		return (NULL);
 	philo = (t_philo *)ptr;
-	philo->time.born_time = get_time();
+	// philo->time.born_time = get_time();
 	philo->time.last_meal = philo->time.born_time;
 	if (WAIT_EVERYONE == 1)
 		wait_everyone(philo, &philo->shared->ready, &philo->rules->nb_philo);

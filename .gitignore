@@ -13,3 +13,5 @@ philo/philo
 philo_reboot/philo
 LazyPhilosophersTester/
 tests/
+launch
+launch.c

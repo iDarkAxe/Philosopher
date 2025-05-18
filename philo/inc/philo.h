@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/17 13:54:02 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 11:58:20 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ typedef struct s_time	t_time;
 
 struct					s_time
 {
-	size_t				last_meal; /**< Time of the last meal*/
-	size_t				born_time; /**< Time when philo started*/
+	struct timeval		last_meal; /**< Time of the last meal*/
+	struct timeval		born_time; /**< Time when philo started*/
 };
 
 struct					s_rules

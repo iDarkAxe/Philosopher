@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:23:43 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/17 13:54:01 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 12:13:09 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,17 @@ int	has_everyone_ate(t_philo *philo)
  */
 void	print_message(t_philo *philo, enum e_philo_state p_state)
 {
+	struct timeval		timer;
 	static const char	*state[] = {"has taken a fork", "is eating",
 		"is sleeping", "is thinking", "died"};
 
 	if (is_sim_running(philo) == 0)
 		return ;
 	pthread_mutex_lock(&philo->shared->mutex_printing);
-	printf("%ld\t%d\t%s\n", get_time() - (size_t)(philo->rules->start.tv_sec
-			* 1000 + philo->rules->start.tv_usec / 1000), philo->id,
-		state[(int)p_state]);
+	timer = get_time();
+	timer.tv_sec -= philo->rules->start.tv_sec;
+	timer.tv_usec -= philo->rules->start.tv_usec;
+	printf("%ld\t%d\t%s\n", (size_t)(timer.tv_sec * 1000 + timer.tv_usec
+			/ 1000), philo->id, state[(int)p_state]);
 	pthread_mutex_unlock(&philo->shared->mutex_printing);
 }
