@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/18 11:58:20 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 18:33:43 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <unistd.h>
 
 # ifndef ALL_ATE_MSG
-#  define ALL_ATE_MSG 0
+#  define ALL_ATE_MSG 1
 # endif
 
 /**
@@ -85,7 +85,7 @@ enum					e_error_message
 
 /**
  * @brief State of the philosopher
- * 
+ *
  */
 enum					e_philo_state
 {
@@ -103,14 +103,14 @@ typedef struct s_time	t_time;
 
 struct					s_time
 {
-	struct timeval		last_meal; /**< Time of the last meal*/
-	struct timeval		born_time; /**< Time when philo started*/
+	struct timeval	last_meal; /**< Time of the last meal*/
+	struct timeval	born_time; /**< Time when philo started*/
 };
 
 struct					s_rules
 {
-	int				nb_philo;
 	struct timeval	start;			/**< Time of the start of the simulation*/
+	int				nb_philo;
 	int				time_to_die;	/**< Time before dying*/
 	int				time_to_eat;	/**< Time took for eating*/
 	int				time_to_sleep;	/**< Time took for sleeping*/
@@ -119,24 +119,24 @@ struct					s_rules
 
 struct					s_philo
 {
-	const t_rules	*rules;		/**<	Rules of the simulation*/
-	t_shared		*shared;	/**< Ptr to Shared data between philos*/
-	pthread_t		philosopher;/**< Philosopher thread*/
-	t_time			time;		/**< Time of the philosopher*/
-	int				id;			/**< Philosopher ID*/
-	int				nb_eat;		/**< Nbr of time the philosopher has eaten*/
+	const t_rules	*rules;			/**<	Rules of the simulation*/
+	t_shared		*shared;		/**< Ptr to Shared data between philos*/
+	pthread_mutex_t	mutex_nb_eat;	/**< Mutex to access last meal*/
+	pthread_t		philosopher;	/**< Philosopher thread*/
+	t_time			time;			/**< Time of the philosopher*/
+	int				id;				/**< Philosopher ID*/
+	int				nb_eat;			/**< Nbr of time the philosopher has eaten*/
 };
 
 struct					s_shared
 {
-	int					ready;			/**< Flag to check if philos are ready*/
-	char				is_running;		/**< Flag to check if sim is running*/
-	char				*is_fork_taken;	/**< Forks state*/
-	pthread_mutex_t		*forks;			/**< Forks mutex*/
-	pthread_mutex_t		mutex_printing;	/**< Mutex to have access to printing*/
-	pthread_mutex_t		mutex_is_running;	/**< Mutex to access is_running*/
-	pthread_mutex_t		mutex_nb_eat;/**< Mutex to access last meal*/
-	pthread_mutex_t		mutex_ready;/**< Mutex to access shared data*/
+	pthread_mutex_t	mutex_ready;		/**< Mutex to access shared data*/
+	pthread_mutex_t	mutex_is_running;	/**< Mutex to access is_running*/
+	pthread_mutex_t	mutex_printing;		/**< Mutex to have access to printing*/
+	pthread_mutex_t	*forks;				/**< Forks mutex*/
+	char			*is_fork_taken;		/**< Forks state*/
+	int				ready;				/**< Flag to check if philos are ready*/
+	char			is_running;			/**< Flag to check if sim is running*/
 };
 /** @} */
 
@@ -149,9 +149,8 @@ struct					s_shared
 int						parse_args(int argc, char **argv, t_rules *rules);
 
 // Preparation
-int						init_philos(t_rules *rules, t_shared *shared,
+int						init_fx(t_rules *rules, t_shared *shared,
 							t_philo **philo);
-int						init_mutex(t_shared *shared, t_philo *philo, int count);
 int						is_sim_running(t_philo *philo);
 
 // Thread

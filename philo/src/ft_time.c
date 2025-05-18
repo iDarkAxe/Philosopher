@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:56:48 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/18 13:41:17 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 17:55:54 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,64 +100,26 @@ struct timeval	*add_ms_timeval(struct timeval *tv, long milliseconds)
 	return (tv);
 }
 
-// FIXME needs to fix the calc
 /**
- * @brief Check if the philosopher has time to do something
- *
+ * @brief Special usleep function that checks if the simulation is running
+ * during it's sleep time
+ * 
+ * @param wait_time time to wait in ms
  * @param philo philosopher structure
- * @param p_state state of the philosopher
- * @return int 0 if the philosopher has time, 1 otherwise
  */
-int	does_not_have_time(t_philo *philo, enum e_philo_state p_state)
+void	ft_usleep(__useconds_t wait_time, t_philo *philo)
 {
-	int				timer;
-	struct timeval	tv;
+	struct timeval	goal_time;
+	struct timeval	current_time;
 
-	if (philo == NULL)
-		return (-1);
-	if (p_state == TOOK_FORK || p_state == EATING)
-		timer = philo->rules->time_to_eat;
-	else if (p_state == SLEEPING)
-		timer = philo->rules->time_to_sleep;
-	else
-		timer = 1;
-	pthread_mutex_lock(&philo->shared->mutex_nb_eat);
-	tv = get_time();
-	if (compare_time(&philo->time.last_meal, add_ms_timeval(&tv,
-				(long)timer)) == 1)
+	goal_time = get_time();
+	add_ms_timeval(&goal_time, wait_time);
+	current_time = get_time();
+	while (compare_time(&current_time, &goal_time) < 0)
 	{
-		// Attendre le temps restant
-		// ft_usleep()
-		philo_died(philo);
-		pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
-	return (0);
-}
-
-/**
- * @brief Wait for everyone to be ready before starting the simulation
- *
- * @param philo philosopher structure
- * @param value1 pointer to the value to check
- * @param value2 pointer to the value to compare with
- */
-void	wait_everyone(t_philo *philo, const int *const value1,
-		const int *const value2)
-{
-	pthread_mutex_lock(&philo->shared->mutex_ready);
-	philo->shared->ready++;
-	pthread_mutex_unlock(&philo->shared->mutex_ready);
-	while (1)
-	{
-		pthread_mutex_lock(&philo->shared->mutex_ready);
-		if (*value1 == *value2)
-		{
-			pthread_mutex_unlock(&philo->shared->mutex_ready);
+		if (is_sim_running(philo) != 0)
 			return ;
-		}
-		pthread_mutex_unlock(&philo->shared->mutex_ready);
 		usleep(DELAY);
+		current_time = get_time();
 	}
 }

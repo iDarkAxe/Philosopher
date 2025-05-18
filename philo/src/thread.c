@@ -6,12 +6,13 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:19:50 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/16 16:55:12 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 17:59:57 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "routine.h"
+#include "ft_time.h"
 
 /**
  * @brief Function to create only one thread and uses a special routine
@@ -56,6 +57,8 @@ int	thread_create(t_rules *rules, t_shared *shared, t_philo *philo)
 		return (1);
 	while (count < rules->nb_philo)
 	{
+		philo[count].time.born_time = get_time();
+		philo[count].time.last_meal = philo[count].time.born_time;
 		if (pthread_create(&philo[count].philosopher, NULL,
 				(void *(*)(void *))start_routine, (void *)&philo[count]) != 0)
 		{

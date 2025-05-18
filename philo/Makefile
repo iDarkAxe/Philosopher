@@ -49,6 +49,7 @@ SRC = \
 	ft_free.c \
 	ft_init.c \
 	ft_time.c \
+	ft_time-utils.c \
 	thread.c \
 	debug-print.c
 

@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:09:59 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/17 13:44:02 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/18 18:34:25 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	set_back_fork(t_philo *philo, char is_left)
 	return (1);
 }
 
+// FIXME Ordre correct des fourchettes ??
 /**
  * @brief Try eating, if there is no time remaining, 
  * Stops it's execution and return 0
@@ -90,15 +91,56 @@ int	try_eating(t_philo *philo)
 	if (try_taking_fork(philo, 0) == 0)
 		return (0);
 	print_message(philo, TOOK_FORK);
-	if (does_not_have_time(philo, EATING) == 1)
-		return (0);
-	pthread_mutex_lock(&philo->shared->mutex_nb_eat);
+	pthread_mutex_lock(&philo->mutex_nb_eat);
 	print_message(philo, EATING);
-	philo->time.last_meal = get_dtime(philo);
+	philo->time.last_meal = get_time();
 	philo->nb_eat += 1;
-	pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
+	pthread_mutex_unlock(&philo->mutex_nb_eat);
 	usleep((__useconds_t)philo->rules->time_to_eat * 1000);
 	set_back_fork(philo, 1);
 	set_back_fork(philo, 0);
 	return (1);
 }
+
+/* int	try_eating(t_philo *philo)
+{
+	if (philo == NULL)
+		return (0);
+	if (philo->id % 2 == 0)
+	{
+		if (try_taking_fork(philo, 0) == 0)
+			return (0);
+		print_message(philo, TOOK_FORK);
+		if (try_taking_fork(philo, 1) == 0)
+			return (0);
+		print_message(philo, TOOK_FORK);
+	}
+	else
+	{
+		if (try_taking_fork(philo, 1) == 0)
+			return (0);
+		print_message(philo, TOOK_FORK);
+		if (try_taking_fork(philo, 0) == 0)
+			return (0);
+		print_message(philo, TOOK_FORK);
+	}
+	pthread_mutex_lock(&philo->mutex_nb_eat);
+	print_message(philo, EATING);
+	philo->time.last_meal = get_time();
+	philo->nb_eat += 1;
+	pthread_mutex_unlock(&philo->mutex_nb_eat);
+	usleep((__useconds_t)philo->rules->time_to_eat * 1000);
+
+	if (philo->id % 2 == 0)
+	{
+		set_back_fork(philo, 1);
+		set_back_fork(philo, 0);
+	}
+	else
+	{
+		set_back_fork(philo, 0);
+		set_back_fork(philo, 1);
+	}
+	return (1);
+}
+ */
