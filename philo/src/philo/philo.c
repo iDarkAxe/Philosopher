@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/18 18:30:18 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 13:06:25 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	*one_philo_routine(void *ptr)
 	if (ptr == NULL)
 		return (NULL);
 	philo = (t_philo *)ptr;
-	usleep(50000);
 	philo->time.born_time = get_time();
 	philo->time.last_meal = philo->time.born_time;
 	print_message(philo, THINKING);

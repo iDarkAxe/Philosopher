@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:45:40 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/18 18:36:10 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 13:08:53 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ static void	observer_task_eat(const t_rules *rules, t_philo *philo);
  */
 static void	observer_task(const t_rules *rules, t_philo *philo)
 {
-	int				count;
 	struct timeval	timer;
 	struct timeval	limit;
+	int				count;
 
 	count = 0;
 	while (is_sim_running(philo) == 1)
@@ -124,7 +124,9 @@ int	main(int argc, char **argv)
 		thread_createone(&rules, &shared, philo);
 	else
 		thread_create(&rules, &shared, philo);
-	if (rules.nb_eat_target == -1)
+	if (rules.nb_philo == 1)
+		;
+	else if (rules.nb_eat_target == -1)
 		observer_task(&rules, philo);
 	else
 		observer_task_eat(&rules, philo);

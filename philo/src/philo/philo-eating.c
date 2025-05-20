@@ -6,13 +6,16 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:09:59 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/18 18:34:25 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 13:13:01 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "routine.h"
 #include "ft_time.h"
+
+static int is_philo_even_take_fork(t_philo *philo);
+static int is_philo_even_setback_fork(t_philo *philo);
 
 /**
  * @brief Try taking a fork
@@ -73,7 +76,46 @@ int	set_back_fork(t_philo *philo, char is_left)
 	return (1);
 }
 
-// FIXME Ordre correct des fourchettes ??
+static int	is_philo_even_take_fork(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		if (!try_taking_fork(philo, 1))
+			return (0);
+		if (!try_taking_fork(philo, 0))
+		{
+			set_back_fork(philo, 1);
+			return (0);
+		}
+	}
+	else
+	{
+		if (!try_taking_fork(philo, 0))
+			return (0);
+		if (!try_taking_fork(philo, 1))
+		{
+			set_back_fork(philo, 0);
+			return (0);
+		}
+	}
+	return (1);
+}
+
+static int	is_philo_even_setback_fork(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		set_back_fork(philo, 0);
+		set_back_fork(philo, 1);
+	}
+	else
+	{
+		set_back_fork(philo, 1);
+		set_back_fork(philo, 0);
+	}
+	return (1);
+}
+
 /**
  * @brief Try eating, if there is no time remaining, 
  * Stops it's execution and return 0
@@ -85,10 +127,7 @@ int	try_eating(t_philo *philo)
 {
 	if (philo == NULL)
 		return (0);
-	if (try_taking_fork(philo, 1) == 0)
-		return (0);
-	print_message(philo, TOOK_FORK);
-	if (try_taking_fork(philo, 0) == 0)
+	if (is_philo_even_take_fork(philo) != 1)
 		return (0);
 	print_message(philo, TOOK_FORK);
 	pthread_mutex_lock(&philo->mutex_nb_eat);
@@ -97,50 +136,7 @@ int	try_eating(t_philo *philo)
 	philo->nb_eat += 1;
 	pthread_mutex_unlock(&philo->mutex_nb_eat);
 	usleep((__useconds_t)philo->rules->time_to_eat * 1000);
-	set_back_fork(philo, 1);
-	set_back_fork(philo, 0);
-	return (1);
-}
-
-/* int	try_eating(t_philo *philo)
-{
-	if (philo == NULL)
+	if (is_philo_even_setback_fork(philo) == 0)
 		return (0);
-	if (philo->id % 2 == 0)
-	{
-		if (try_taking_fork(philo, 0) == 0)
-			return (0);
-		print_message(philo, TOOK_FORK);
-		if (try_taking_fork(philo, 1) == 0)
-			return (0);
-		print_message(philo, TOOK_FORK);
-	}
-	else
-	{
-		if (try_taking_fork(philo, 1) == 0)
-			return (0);
-		print_message(philo, TOOK_FORK);
-		if (try_taking_fork(philo, 0) == 0)
-			return (0);
-		print_message(philo, TOOK_FORK);
-	}
-	pthread_mutex_lock(&philo->mutex_nb_eat);
-	print_message(philo, EATING);
-	philo->time.last_meal = get_time();
-	philo->nb_eat += 1;
-	pthread_mutex_unlock(&philo->mutex_nb_eat);
-	usleep((__useconds_t)philo->rules->time_to_eat * 1000);
-
-	if (philo->id % 2 == 0)
-	{
-		set_back_fork(philo, 1);
-		set_back_fork(philo, 0);
-	}
-	else
-	{
-		set_back_fork(philo, 0);
-		set_back_fork(philo, 1);
-	}
 	return (1);
 }
- */

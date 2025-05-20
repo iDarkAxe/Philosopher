@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:02:20 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/18 16:02:26 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/20 11:52:53 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
  */
 void	free_philos(t_philo *philo)
 {
+	int	temp;
+
+	temp = philo->rules->nb_philo;
+	while (temp > 0)
+		pthread_mutex_destroy(&philo[--temp].mutex_nb_eat);
 	if (philo != NULL)
 		free(philo);
 }
@@ -41,9 +46,6 @@ void	free_shared(t_shared *shared, int count, int flag)
 	if (flag == 2 || flag == 0)
 		pthread_mutex_destroy(&shared->mutex_printing);
 	pthread_mutex_destroy(&shared->mutex_is_running);
-	temp = count;
-	while (shared->forks != NULL && temp > 0)
-		pthread_mutex_destroy(&shared->forks[--temp]);
 	if (shared->forks != NULL)
 	{
 		free(shared->forks);
