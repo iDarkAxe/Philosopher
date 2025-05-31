@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:46 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/18 18:33:43 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/31 13:21:34 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <unistd.h>
 
 # ifndef ALL_ATE_MSG
-#  define ALL_ATE_MSG 1
+#  define ALL_ATE_MSG 0
 # endif
 
 /**
@@ -121,7 +121,7 @@ struct					s_philo
 {
 	const t_rules	*rules;			/**<	Rules of the simulation*/
 	t_shared		*shared;		/**< Ptr to Shared data between philos*/
-	pthread_mutex_t	mutex_nb_eat;	/**< Mutex to access last meal*/
+	// pthread_mutex_t	mutex_nb_eat;	/**< Mutex to access last meal*/
 	pthread_t		philosopher;	/**< Philosopher thread*/
 	t_time			time;			/**< Time of the philosopher*/
 	int				id;				/**< Philosopher ID*/
@@ -130,6 +130,7 @@ struct					s_philo
 
 struct					s_shared
 {
+	pthread_mutex_t	mutex_nb_eat;		/**< Mutex to access last meal*/
 	pthread_mutex_t	mutex_ready;		/**< Mutex to access shared data*/
 	pthread_mutex_t	mutex_is_running;	/**< Mutex to access is_running*/
 	pthread_mutex_t	mutex_printing;		/**< Mutex to have access to printing*/
@@ -160,9 +161,23 @@ int						thread_join(t_rules *rules, t_philo *philo);
 int						thread_createone(t_rules *rules, t_shared *shared,
 							t_philo *philo);
 
+// Observer
+void					observer_task(const t_rules *rules, t_philo *philo);
+void					observer_task_eat(const t_rules *rules, t_philo *philo);
+
 // Free
 void					free_shared(t_shared *shared, int count, int flag);
 void					free_philos(t_philo *philo);
+
+// Error handling
+ssize_t					error_message(enum e_error_message state);
+
+// Debug print
+void					print_eat(t_philo *philo);
+void					print_timings(t_philo *philo, int count,
+							struct timeval timer, struct timeval limit);
+// void					print_timings_fd(t_philo *philo, int count,
+// 							struct timeval timer, struct timeval limit);
 
 // Utils
 void					*ft_calloc(size_t element_count, size_t element_size);
@@ -170,12 +185,6 @@ void					ft_bzero(void *s, size_t n);
 void					*ft_memcpy(void *destination, const void *source,
 							size_t size);
 size_t					ft_strlen(const char *str);
-
-// Error handling
-ssize_t					error_message(enum e_error_message state);
-
-// Debug print
-void					print_eat(t_philo *philo);
 /** @} */
 
 #endif

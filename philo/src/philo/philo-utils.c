@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:23:43 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/18 16:00:23 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/22 09:54:30 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ int	has_everyone_ate(t_philo *philo)
 	index = 0;
 	while (index < philo->rules->nb_philo)
 	{
-		pthread_mutex_lock(&philo[index].mutex_nb_eat);
+		pthread_mutex_lock(&philo->shared->mutex_nb_eat);
 		if (philo[index].nb_eat < philo->rules->nb_eat_target)
 		{
-			pthread_mutex_unlock(&philo[index].mutex_nb_eat);
+			pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
 			return (0);
 		}
 		index++;
-		pthread_mutex_unlock(&philo[index].mutex_nb_eat);
+		pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
 	}
 	return (1);
 }

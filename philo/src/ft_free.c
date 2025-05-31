@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:02:20 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/20 11:52:53 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/31 12:17:43 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,19 @@
  */
 void	free_philos(t_philo *philo)
 {
-	int	temp;
-
-	temp = philo->rules->nb_philo;
-	while (temp > 0)
-		pthread_mutex_destroy(&philo[--temp].mutex_nb_eat);
+	pthread_mutex_destroy(&philo->shared->mutex_nb_eat);
 	if (philo != NULL)
 		free(philo);
 }
+
+// void free_philos_each_nb_eat(t_philo *philo)
+// {
+// 	int	temp;
+
+// 	temp = philo->rules->nb_philo;
+// 	while (temp > 0)
+// 		pthread_mutex_destroy(&philo[--temp].mutex_nb_eat);
+// }
 
 /**
  * @brief Free all the data in s_shared structure

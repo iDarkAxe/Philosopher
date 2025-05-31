@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:03:57 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/18 17:50:51 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/31 12:19:10 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,13 @@ int	init_mutex(t_shared *shared, t_philo *philo, int count)
 		return (3);
 	}
 	index = 0;
+	pthread_mutex_init(&shared->mutex_nb_eat, NULL);
+	return (0);
+}
+
+/* int	init_mutex_each_nb_eat(t_shared *shared, t_philo *philo, int count,
+	int index)
+{
 	while (index < count)
 	{
 		if (pthread_mutex_init(&philo[index].mutex_nb_eat, NULL) != 0)
@@ -151,5 +158,5 @@ int	init_mutex(t_shared *shared, t_philo *philo, int count)
 		shared->is_fork_taken[index] = 0;
 		index++;
 	}
-	return (0);
 }
+ */

@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:56:48 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/18 18:31:35 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/05/31 13:22:27 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
  * @param p_state state of the philosopher
  * @return int 0 if the philosopher has time, 1 otherwise
  */
-int	does_not_have_time(t_philo *philo, enum e_philo_state p_state)
+/* int	does_not_have_time(t_philo *philo, enum e_philo_state p_state)
 {
 	int				timer;
 	struct timeval	tv;
@@ -38,17 +38,17 @@ int	does_not_have_time(t_philo *philo, enum e_philo_state p_state)
 		timer = philo->rules->time_to_sleep;
 	else
 		timer = 1;
-	pthread_mutex_lock(&philo->mutex_nb_eat);
+	pthread_mutex_lock(&philo->shared->mutex_nb_eat);
 	tv = get_time();
 	if (compare_time(&philo->time.last_meal, &tv) == 1)
 	{
 		philo_died(philo);
-		pthread_mutex_unlock(&philo->mutex_nb_eat);
+		pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->mutex_nb_eat);
+	pthread_mutex_unlock(&philo->shared->mutex_nb_eat);
 	return (0);
-}
+} */
 
 /**
  * @brief Wait for everyone to be ready before starting the simulation

@@ -51,6 +51,7 @@ SRC = \
 	ft_time.c \
 	ft_time-utils.c \
 	thread.c \
+	observer.c \
 	debug-print.c
 
 PARSER = \
@@ -149,7 +150,7 @@ debug-cc:
 	@$(MAKE) $(NAME) CFLAGS="$(CC_DEBUG_CFLAGS)" CC="$(CC_DEBUG)" Cyan="$(Yellow)" Green="$(Purple)"
 
 test:
-	cc tests/launch.c -o launch && ./launch
+	cc -Wall -Wextra tests/launch.c tests/launch-utils.c -o tests/launch
 
 # Debugging print
 debug-print:
