@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:09:59 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 13:23:13 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 12:31:23 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,12 @@ int	set_back_fork(t_philo *philo, char is_left)
 	return (1);
 }
 
+/**
+ * @brief Take the fork according to philo's id
+ * 
+ * @param philo philo structure
+ * @return int 1 OK, otherwise couln't take the fork in time
+ */
 static int	is_philo_even_take_fork(t_philo *philo)
 {
 	char	first_fork;
@@ -104,6 +110,12 @@ static int	is_philo_even_take_fork(t_philo *philo)
 	return (1);
 }
 
+/**
+ * @brief Set back the fork according to philo's id
+ * 
+ * @param philo philo structure
+ * @return int 1 OK, otherwise error
+ */
 static int	is_philo_even_setback_fork(t_philo *philo)
 {
 	char	first_fork;

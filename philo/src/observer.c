@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:12:39 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 13:23:47 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 12:36:23 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 static void	observer_check_timings(const t_rules *rules, t_philo *philo,
 				int *count);
 
+/**
+ * @brief Simple task for observer to verify the timings of each philo
+ * 
+ * @param rules rules structure
+ * @param philo philo structure
+ * @param count actual philo checked
+ */
 void	observer_check_timings(const t_rules *rules, t_philo *philo, int *count)
 {
 	struct timeval	timer;
@@ -68,7 +75,7 @@ void	observer_task_eat(const t_rules *rules, t_philo *philo)
 		observer_check_timings(rules, philo, &count);
 		if (has_everyone_ate(philo) == 1)
 		{
-			printf("\n\n\nsalut\n\n\n");
+			printf("\n\n\nEveryone has ate\n\n\n");
 			pthread_mutex_lock(&philo->shared->mutex_is_running);
 			philo->shared->is_running = 0;
 			pthread_mutex_unlock(&philo->shared->mutex_is_running);

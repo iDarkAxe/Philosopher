@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:03:57 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 12:19:10 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/02 12:33:00 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ static int	init_philos(t_rules *rules, t_shared *shared, t_philo **philo);
 static int	init_forks_mutex(t_shared *shared, int count);
 static int	init_mutex(t_shared *shared, t_philo *philo, int count);
 
+/**
+ * @brief Function to initialise all the structures 
+ * 
+ * @param rules rules structure
+ * @param shared shared structure
+ * @param philo philo structure
+ * @return int 0 OK, error otherwise
+ */
 int	init_fx(t_rules *rules, t_shared *shared, t_philo **philo)
 {
 	if (init_philos(rules, shared, philo) != 0)
@@ -44,7 +52,7 @@ int	init_fx(t_rules *rules, t_shared *shared, t_philo **philo)
  * @param rules structure of const rules
  * @param shared structure of shared variables
  * @param philo head of philosopher structure
- * @return int
+ * @return int 0 OK, error otherwise
  */
 int	init_philos(t_rules *rules, t_shared *shared, t_philo **philo)
 {
@@ -73,7 +81,7 @@ int	init_philos(t_rules *rules, t_shared *shared, t_philo **philo)
  *
  * @param shared structure of shared variables
  * @param count number of element
- * @return int
+ * @return int 0 OK, error otherwise
  */
 static int	init_forks_mutex(t_shared *shared, int count)
 {
@@ -99,7 +107,7 @@ static int	init_forks_mutex(t_shared *shared, int count)
  * @param shared structure of shared variables
  * @param philo philosopher structure
  * @param count number of element
- * @return int
+ * @return int 0 OK, error otherwise
  */
 int	init_forks(t_shared *shared, t_philo *philo, int count)
 {
@@ -126,7 +134,7 @@ int	init_forks(t_shared *shared, t_philo *philo, int count)
  * @param shared structure of shared variables
  * @param philo philosopher structure
  * @param count number of element
- * @return int
+ * @return int 0 OK, error otherwise
  */
 int	init_mutex(t_shared *shared, t_philo *philo, int count)
 {
