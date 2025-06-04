@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:12:39 by ppontet           #+#    #+#             */
-/*   Updated: 2025/06/02 12:36:23 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/04 16:34:46 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	observer_task_eat(const t_rules *rules, t_philo *philo)
 		observer_check_timings(rules, philo, &count);
 		if (has_everyone_ate(philo) == 1)
 		{
-			printf("\n\n\nEveryone has ate\n\n\n");
 			pthread_mutex_lock(&philo->shared->mutex_is_running);
 			philo->shared->is_running = 0;
 			pthread_mutex_unlock(&philo->shared->mutex_is_running);
