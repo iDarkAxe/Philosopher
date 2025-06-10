@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:56:48 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 12:17:51 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 13:22:38 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ struct timeval	get_dtime(t_philo *philo)
  */
 int	compare_time(struct timeval *t1, struct timeval *t2)
 {
+	if (t1 == NULL || t2 == NULL)
+		return (400);
 	if (t1->tv_sec < t2->tv_sec)
 		return (-1);
 	if (t1->tv_sec > t2->tv_sec)
@@ -89,6 +91,8 @@ int	compare_time(struct timeval *t1, struct timeval *t2)
  */
 struct timeval	*add_ms_timeval(struct timeval *tv, long milliseconds)
 {
+	if (tv == NULL)
+		return (NULL);
 	tv->tv_sec += milliseconds / 1000;
 	milliseconds %= 1000;
 	tv->tv_usec += milliseconds * 1000;

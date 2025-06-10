@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:07:38 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 12:56:59 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 13:26:28 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	print_eat(t_philo *philo)
 void	print_timings(t_philo *philo, int count, struct timeval timer,
 		struct timeval limit)
 {
+	if (philo == NULL)
+	{
+		write(2, "print_timings : NULL pointer\n", 29);
+		return ;
+	}
 	dprintf(2, "Philo %d\n", philo[count].id);
 	dprintf(2, "- last_meal:\t%ld.%06ld \n", philo[count].time.last_meal.tv_sec,
 		philo[count].time.last_meal.tv_usec);

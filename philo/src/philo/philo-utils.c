@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 16:23:43 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/22 09:54:30 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 13:27:20 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ void	print_message(t_philo *philo, enum e_philo_state p_state)
 	static const char	*state[] = {"has taken a fork", "is eating",
 		"is sleeping", "is thinking", "died"};
 
+	if (philo == NULL)
+	{
+		write(2, "print_message : NULL pointer or invalid state\n", 46);
+		return ;
+	}
 	if (is_sim_running(philo) == 0)
 		return ;
 	pthread_mutex_lock(&philo->shared->mutex_printing);

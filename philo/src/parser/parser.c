@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 12:06:53 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 13:28:16 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ static int	ft_atoi(const char *nptr);
  */
 int	parse_args(int argc, char **argv, t_rules *rules)
 {
+	if (rules == NULL || argv == NULL)
+	{
+		error_message(ARGUMENT_INVALID_MSG);
+		return (1);
+	}
 	if (argc < 5 || argc > 6)
 	{
 		error_message(NBR_OF_ARGUMENT_INVALID);

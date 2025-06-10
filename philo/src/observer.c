@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:12:39 by ppontet           #+#    #+#             */
-/*   Updated: 2025/06/04 16:34:46 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 13:24:14 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	observer_check_timings(const t_rules *rules, t_philo *philo, int *count)
 	struct timeval	timer;
 	struct timeval	limit;
 
+	if (rules == NULL || philo == NULL || count == NULL)
+	{
+		write(2, "observer_check_timings : NULL pointer\n", 38);
+		return ;
+	}
 	if (*count >= rules->nb_philo)
 		*count = 0;
 	timer = get_time();
@@ -52,7 +57,12 @@ void	observer_check_timings(const t_rules *rules, t_philo *philo, int *count)
 void	observer_task(const t_rules *rules, t_philo *philo)
 {
 	int				count;
-
+	
+	if (rules == NULL || philo == NULL)
+	{
+		write(2, "observer_task : NULL pointer\n", 30);
+		return ;
+	}
 	count = 0;
 	while (is_sim_running(philo) == 1)
 	{
@@ -69,6 +79,11 @@ void	observer_task_eat(const t_rules *rules, t_philo *philo)
 {
 	int				count;
 
+	if (rules == NULL || philo == NULL)
+	{
+		write(2, "observer_task_eat : NULL pointer\n", 30);
+		return ;
+	}
 	count = 0;
 	while (is_sim_running(philo) == 1)
 	{

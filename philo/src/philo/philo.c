@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 13:17:21 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 13:26:35 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	philo_died(t_philo *philo)
 {
 	struct timeval	timer;
 
+	if (philo == NULL)
+		return ;
 	pthread_mutex_lock(&philo->shared->mutex_is_running);
 	if (philo->shared->is_running == 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:56:48 by ppontet           #+#    #+#             */
-/*   Updated: 2025/06/02 12:33:34 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/10 13:24:34 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 void	wait_everyone(t_philo *philo, const int *const value1,
 		const int *const value2)
 {
+	if (philo == NULL || value1 == NULL || value2 == NULL)
+	{
+		write(2, "wait_everyone : NULL pointer\n", 30);
+		return ;
+	}
 	pthread_mutex_lock(&philo->shared->mutex_ready);
 	philo->shared->ready++;
 	pthread_mutex_unlock(&philo->shared->mutex_ready);
