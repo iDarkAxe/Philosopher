@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:03:57 by ppontet           #+#    #+#             */
-/*   Updated: 2025/06/02 12:33:00 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 10:09:38 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int	init_mutex(t_shared *shared, t_philo *philo, int count);
  */
 int	init_fx(t_rules *rules, t_shared *shared, t_philo **philo)
 {
+	if (!rules || !shared || !philo)
+		return (1);
 	if (init_philos(rules, shared, philo) != 0)
 	{
 		write(2, "Erreur Init philos\n", 20);
@@ -85,6 +87,8 @@ int	init_philos(t_rules *rules, t_shared *shared, t_philo **philo)
  */
 static int	init_forks_mutex(t_shared *shared, int count)
 {
+	if (!shared)
+		return (7);
 	if (pthread_mutex_init(&shared->mutex_printing, NULL) != 0)
 		return (1);
 	if (pthread_mutex_init(&shared->mutex_ready, NULL) != 0)
@@ -113,6 +117,8 @@ int	init_forks(t_shared *shared, t_philo *philo, int count)
 {
 	int	index;
 
+	if (!shared || !philo)
+		return (1);
 	index = 0;
 	while (index < count)
 	{
@@ -140,6 +146,8 @@ int	init_mutex(t_shared *shared, t_philo *philo, int count)
 {
 	int	index;
 
+	if (!shared || !philo)
+		return (1);
 	index = init_forks_mutex(shared, count);
 	if (index != 0)
 	{

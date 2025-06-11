@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:02:20 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 12:17:43 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 10:20:22 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,15 @@
  */
 void	free_philos(t_philo *philo)
 {
+	if (!philo || !philo->shared)
+		return ;
 	pthread_mutex_destroy(&philo->shared->mutex_nb_eat);
 	if (philo != NULL)
+	{
 		free(philo);
+		philo = NULL;
+	}
 }
-
-// void free_philos_each_nb_eat(t_philo *philo)
-// {
-// 	int	temp;
-
-// 	temp = philo->rules->nb_philo;
-// 	while (temp > 0)
-// 		pthread_mutex_destroy(&philo[--temp].mutex_nb_eat);
-// }
 
 /**
  * @brief Free all the data in s_shared structure
@@ -45,6 +41,8 @@ void	free_shared(t_shared *shared, int count, int flag)
 {
 	int	temp;
 
+	if (!shared)
+		return ;
 	temp = count;
 	while (shared->forks != NULL && temp > 0)
 		pthread_mutex_destroy(&shared->forks[--temp]);
@@ -62,3 +60,12 @@ void	free_shared(t_shared *shared, int count, int flag)
 		shared->is_fork_taken = NULL;
 	}
 }
+
+// void free_philos_each_nb_eat(t_philo *philo)
+// {
+// 	int	temp;
+
+// 	temp = philo->rules->nb_philo;
+// 	while (temp > 0)
+// 		pthread_mutex_destroy(&philo[--temp].mutex_nb_eat);
+// }

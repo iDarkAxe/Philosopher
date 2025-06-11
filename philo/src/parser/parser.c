@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 21:24:11 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 12:06:53 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 10:18:54 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static int	ft_atoi(const char *nptr);
  */
 int	parse_args(int argc, char **argv, t_rules *rules)
 {
-	if (argc < 5 || argc > 6)
+	if (rules == NULL || argv == NULL)
 	{
-		error_message(NBR_OF_ARGUMENT_INVALID);
+		error_message(ARGUMENT_INVALID);
 		return (1);
 	}
-	if (verify_arguments(argc, argv) == -1)
+	if (verify_arguments(argc, argv) != 0)
 		return (2);
 	rules->nb_philo = ft_atoi(argv[1]);
 	rules->time_to_die = ft_atoi(argv[2]);
@@ -78,6 +78,11 @@ static int	verify_arguments(int argc, char **argv)
 	int		arg_index;
 
 	arg_index = 1;
+	if (argc < 5 || argc > 6)
+	{
+		error_message(NBR_OF_ARGUMENT_INVALID);
+		return (1);
+	}
 	while (arg_index < argc)
 	{
 		index = 0;

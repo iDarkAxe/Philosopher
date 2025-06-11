@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:56:48 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 12:17:51 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 10:22:53 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ struct timeval	get_dtime(t_philo *philo)
  */
 int	compare_time(struct timeval *t1, struct timeval *t2)
 {
+	if (!t1 || !t2)
+	{
+		write(2, "compare_time: No time to compare !\n", 36);
+		return (400);
+	}
 	if (t1->tv_sec < t2->tv_sec)
 		return (-1);
 	if (t1->tv_sec > t2->tv_sec)
@@ -89,6 +94,11 @@ int	compare_time(struct timeval *t1, struct timeval *t2)
  */
 struct timeval	*add_ms_timeval(struct timeval *tv, long milliseconds)
 {
+	if (!tv)
+	{
+		write(2, "add_ms_timeval: No time in tv variable !\n", 42);
+		return (NULL);
+	}
 	tv->tv_sec += milliseconds / 1000;
 	milliseconds %= 1000;
 	tv->tv_usec += milliseconds * 1000;
@@ -112,6 +122,11 @@ void	ft_usleep(__useconds_t wait_time, t_philo *philo)
 	struct timeval	goal_time;
 	struct timeval	current_time;
 
+	if (!philo)
+	{
+		write(2, "ft_usleep: no philo so can't verify if sim is running\n", 55);
+		return ;
+	}
 	goal_time = get_time();
 	add_ms_timeval(&goal_time, wait_time);
 	current_time = get_time();

@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 12:12:39 by ppontet           #+#    #+#             */
-/*   Updated: 2025/06/04 16:34:46 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 10:16:51 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* 
+	Rules, philo and count not null states are avoided to perform faster
+	As observer_check_timings is static, it should'nt cause a problem
+*/
 static void	observer_check_timings(const t_rules *rules, t_philo *philo,
 				int *count);
 
@@ -53,6 +57,11 @@ void	observer_task(const t_rules *rules, t_philo *philo)
 {
 	int				count;
 
+	if (!rules || !philo)
+	{
+		write(2, "observer_task: Needs rules and philo to observe !\n", 51);
+		return ;
+	}
 	count = 0;
 	while (is_sim_running(philo) == 1)
 	{
@@ -69,6 +78,11 @@ void	observer_task_eat(const t_rules *rules, t_philo *philo)
 {
 	int				count;
 
+	if (!rules || !philo)
+	{
+		write(2, "observer_task_eat: Needs rules and philo to observe !\n", 55);
+		return ;
+	}
 	count = 0;
 	while (is_sim_running(philo) == 1)
 	{

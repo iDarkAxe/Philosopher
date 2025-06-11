@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:56:02 by ppontet           #+#    #+#             */
-/*   Updated: 2025/05/31 13:17:21 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 10:18:24 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	philo_died(t_philo *philo)
 {
 	struct timeval	timer;
 
+	if (philo == NULL)
+		return ;
 	pthread_mutex_lock(&philo->shared->mutex_is_running);
 	if (philo->shared->is_running == 1)
 	{
@@ -100,7 +102,7 @@ void	*start_routine(void *ptr)
 	philo = (t_philo *)ptr;
 	if (philo->id % 2 == 0)
 		usleep(500);
-	if (WAIT_EVERYONE == 1)
+	if (WAIT_EVERYONE == 1 && philo->shared && philo->rules)
 		wait_everyone(philo, &philo->shared->ready, &philo->rules->nb_philo);
 	while (is_sim_running(philo))
 	{

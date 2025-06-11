@@ -6,7 +6,7 @@
 /*   By: ppontet <ppontet@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:09:59 by ppontet           #+#    #+#             */
-/*   Updated: 2025/06/02 12:31:23 by ppontet          ###   ########lyon.fr   */
+/*   Updated: 2025/06/11 10:04:52 by ppontet          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ static int	is_philo_even_take_fork(t_philo *philo)
 	char	first_fork;
 	char	second_fork;
 
+	if (philo == NULL)
+		return (0);
 	if (philo->id % 2 == 0)
 	{
 		first_fork = 0;
